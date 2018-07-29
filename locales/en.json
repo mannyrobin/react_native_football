@@ -1,0 +1,47 @@
+{
+  "app":{
+    "app_name": "Bet Masters" 
+  },
+  "navigation": {
+    "titles": {
+      "login_with_email": "Login With Email",
+      "forgot_password": "Forgot Password",
+      "main_league": "Main League",
+      "friendly_leagues": "Friendly Leagues",
+      "my_account": "My Account",
+      "log_out": "Log Out"
+    }
+  },
+  "login":{
+    "login_with_facebook_button_title": "Login With Facebook",
+    "login_with_google_button_title": "Login With Google",
+    "login_with_email_button_title": "Login With Email"
+  },
+  "login_with_email": {
+    "form": {
+      "text_field_email_placeholder": "email@gmail.com",
+      "text_field_password_placeholder": "Type your Password",
+      "button_login": "Log In",
+      "button_signup": "Sign Up",
+      "button_forgot_password": "Forgot Password?"
+    },
+    "login": {
+      "error_invalid_email": "The email is invalid\nCheck your email address.",
+      "error_user_disabled": "Your account is disabled!",
+      "error_user_not_found": "We couldn't find your user.\nMake sure you typed your email correctly",
+      "error_wrong_password": "Wrong password.",
+      "error_default": "Login failed.\nPlease try again!"
+    },
+    "signup": {
+      "error_weak_password": "Password needs to have at least 6 characters.",
+      "error_invalid_email": "The email is invalid\nCheck your email address.",
+      "error_operation_not_allowed": "Signing up with Email And Password is disabled.",
+      "error_email_already_in_use": "This email is already in use.\ntry to Log In with different password or Sign Up with different email",
+      "error_default": "Signup failed.\nPlease try again!"
+    },
+    "forgot_password": {
+      "text_field_email_placeholder": "email@gmail.com",
+      "button_forgot_password": "Recover Password"
+    }
+  }
+}

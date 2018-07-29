@@ -1,0 +1,51 @@
+{
+  "app":{
+    "app_name": "בט מאסטרס" 
+  },
+  "navigation": {
+    "titles": {
+      "login_with_email": "התחבר באמצעות דוא\"ל",
+      "forgot_password": "שכחתי סיסמה",
+      "main_league": "ליגה ראשית",
+      "friendly_leagues": "ליגות חברתיות",
+      "my_account": "הפרופיל שלי",
+      "log_out": "התנתק"
+    }
+  },
+  "Intro": {
+    "button_next": "הבא",
+    "button_skip": "דלג"
+  },
+  "login":{
+    "login_with_facebook_button_title": "התחבר עם פייסבוק",
+    "login_with_google_button_title": "התחבר עם גוגל",
+    "login_with_email_button_title": "התחבר עם אימייל"
+  },
+  "login_with_email": {
+    "form": {
+      "text_field_email_placeholder": "email@gmail.com",
+      "text_field_password_placeholder": "הקלד סיסמה",
+      "button_login": "התחבר",
+      "button_signup": "הרשם",
+      "button_forgot_password": "שכחת סיסמה?"
+    },
+    "login": {
+      "error_invalid_email": "האימייל שגוי.\nאנא וודא שהכתובת נכונה.",
+      "error_user_disabled": "המשתמש שלך חסום",
+      "error_user_not_found": "לא מצאנו את המשתמש שלך\nאנא וודא שהקלדת את האימייל הנכון.",
+      "error_wrong_password": "סיסמה שגויה.",
+      "error_default": "ההתחברות נכשלה.\nאנא נסה שנית!"
+    },
+    "signup": {
+      "error_weak_password": "סיסמה חייבת להכיל לפחות 6 תווים.",
+      "error_invalid_email": "האימייל שגוי.\nאנא וודא שהכתובת נכונה.",
+      "error_operation_not_allowed": "הרשמה עם אימייל וסיסמה מבוטלת.",
+      "error_email_already_in_use": "אימייל זה כבר קיים במערכת\nנסה להתחבר עם סיסמה אחרת או הרשם עם אימייל אחר.",
+      "error_default": "ההרשמה נכשלה.\nאנא נסה שנית!"
+    },
+    "forgot_password": {
+      "text_field_email_placeholder": "email@gmail.com",
+      "button_forgot_password": "שחזר סיסמה"
+    }
+  }
+}

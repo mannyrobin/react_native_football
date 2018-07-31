@@ -1,10 +1,17 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { RkButton, RkTheme } from 'react-native-ui-kitten';
+import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { friendlyLeaguesFetch } from '../actions';
 import { locali } from '../../locales/i18n';
+import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
-export default class FriendlyLeagues extends Component {
+class FriendlyLeagues extends Component {
+  componentWillMount() {
+		this.props.friendlyLeaguesFetch();
+	}
 
   render() {
     RkTheme.setType('RkButton', 'fillScreen', {
@@ -18,7 +25,15 @@ export default class FriendlyLeagues extends Component {
 
     return (
       <View style={styles.container}>
-        
+        <View style={{ height: 200 }}>
+          <FlatList 
+            data={this.props.friendlyLeagues}
+            renderItem={friendlyLeague =>
+            <FriendlyLeagueListItem friendlyLeague={friendlyLeague.item} />}
+            keyExtractor={friendlyLeague => friendlyLeague.uid}
+          />
+        </View>
+
         <RkButton
           rkType="xlarge fillScreen"
           style={{ justifyContent: 'center' }}
@@ -43,3 +58,13 @@ const styles = StyleSheet.create({
     color: '#000'
   }
 });
+
+const mapStateToProps = state => {
+  const friendlyLeagues = _.map(state.friendlyLeagues.friendlyLeaguesListFetch, (val, uid) => {
+    return { ...val, uid };
+  });
+
+  return { friendlyLeagues };
+};
+
+export default connect(mapStateToProps, { friendlyLeaguesFetch })(FriendlyLeagues);

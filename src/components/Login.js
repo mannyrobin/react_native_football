@@ -60,7 +60,7 @@ class Login extends Component {
                             height: 150,
                             resizeMode: 'contain' }}
                     />
-
+                        <View style={{ padding: 20 }}>
                     <RkButton rkType="xlarge facebookLogin" >
                         <FontAwsomeIcon name="facebook" color="white" size={30} />
                         {locali('login.login_with_facebook_button_title')}
@@ -78,6 +78,7 @@ class Login extends Component {
                         <ZocialIcon name="email" color="white" size={30} />
                         {locali('login.login_with_email_button_title')}
                     </RkButton>
+                    </View>
 
                 </ImageBackground>
             </View>

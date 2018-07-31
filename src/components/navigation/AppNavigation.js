@@ -12,7 +12,8 @@ import ForgotPassword from '../ForgotPassword';
 
 //import Main screens
 import Main from '../Main';
-import Screen2 from '../Screen2';
+import FriendlyLeagues from '../FriendlyLeagues';
+import NewFriendlyLeague from '../NewFriendlyLeague';
 import Screen3 from '../Screen3';
 import DrawerContainer from '../DrawerContainer';
 
@@ -25,10 +26,22 @@ const noTransitionConfig = () => ({
   }
 });
 
+// friendly leagues stack
+
+const FriendlyLeaguesStack = createStackNavigator({
+  FriendlyLeagues: { screen: FriendlyLeagues },
+  NewFriendlyLeague: { screen: NewFriendlyLeague }
+}, {
+  // Default config for all screens
+  headerMode: 'none',
+  title: 'Friendly Leagues',
+  initialRouteName: 'FriendlyLeagues'
+});
+
 // drawer stack
 const DrawerStack = createDrawerNavigator({
   Main: { screen: Main },
-  screen2: { screen: Screen2 },
+  FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
   screen3: { screen: Screen3 }
 }, {
   gesturesEnabled: false,

@@ -12,8 +12,9 @@
       "log_out": "התנתק"
     }
   },
-  "Intro": {
+  "intro": {
     "button_next": "הבא",
+    "button_done": "סיום",
     "button_skip": "דלג"
   },
   "login":{
@@ -47,5 +48,13 @@
       "text_field_email_placeholder": "email@gmail.com",
       "button_forgot_password": "שחזר סיסמה"
     }
-  }
+  },
+    "friendly_leagues": 
+    {
+      "button_create_new": "צור ליגה חברתית חדשה",
+      "new_friendly_leagues": {
+        "name_placeholder": "שם הליגה",
+        "button_create": "צור"
+      }
+    }
 }

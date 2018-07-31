@@ -57,16 +57,20 @@ export default class DrawerContainer extends Component {
           </View>
         </View>
         <View
-        style={activeItemKey === 'screen2' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+        style={activeItemKey === 'FriendlyLeaguesStack' ?
+          styles.drawerActiveItem : styles.drawerInActiveItem}
         >
           <View style={styles.DrawerItemIconContainer}>
             <FontAwesomeIcon style={styles.DrawerItemIcon} name='trophy' />
           </View>
           <View style={styles.DrawerItemTextContainer}>
             <Text
-              onPress={() => navigation.navigate('screen2')}
-              style={[styles.DrawerItemText,
-                { color: activeItemKey === 'screen2' ? activeTintColor : inactiveTintColor }]}
+              onPress={() => navigation.navigate('FriendlyLeaguesStack')}
+              style={[
+                styles.DrawerItemText,
+                  { color: activeItemKey === 'FriendlyLeaguesStack' ?
+                    activeTintColor : inactiveTintColor 
+              }]}
             >
               {locali('navigation.titles.friendly_leagues')}
             </Text>

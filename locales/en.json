@@ -12,6 +12,11 @@
       "log_out": "Log Out"
     }
   },
+  "intro": {
+    "button_next": "Next",
+    "button_done": "Done",
+    "button_skip": "Skip"
+  },
   "login":{
     "login_with_facebook_button_title": "Login With Facebook",
     "login_with_google_button_title": "Login With Google",
@@ -43,5 +48,13 @@
       "text_field_email_placeholder": "email@gmail.com",
       "button_forgot_password": "Recover Password"
     }
-  }
+  },
+    "friendly_leagues": 
+    {
+      "button_create_new": "Create New Friendly League",
+      "new_friendly_leagues": {
+        "name_placeholder": "League Name",
+        "button_create": "Create"
+      }
+    }
 }

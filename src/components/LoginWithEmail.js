@@ -33,6 +33,15 @@ class LoginWithEmail extends Component {
     this.props.forgotPassword({ email, navigation });
   }
 
+  //TODO: Delete after developing app - this is a shortcut to logging in to user EtayRock.
+  loginToEtayRock() {
+    const email = 'etayrock@gmail.com';
+    const password = 'password';
+    const { navigation } = this.props;
+
+    this.props.loginUser({ email, password, navigation });
+  }
+
   renderButtons() {
     if (this.props.loading) {
       return (
@@ -69,6 +78,11 @@ class LoginWithEmail extends Component {
                 {locali('login_with_email.form.button_forgot_password')}
               </RkButton>
             </View>
+            <Text
+              onPress={this.loginToEtayRock.bind(this)}
+            >
+            Login to EtayRock
+            </Text>
           </View>
     );
   }

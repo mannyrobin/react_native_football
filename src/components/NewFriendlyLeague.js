@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import { RkTextInput, RkButton } from 'react-native-ui-kitten';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Card, CardSection } from './common';
+import { friendlyLeagueNameChanged, createNewFriendlyLeague } from '../actions';
 import { locali } from '../../locales/i18n';
 
-export default class NewFriendlyLeague extends Component {
+class NewFriendlyLeague extends Component {
+
+  onNewFriendlyLeagueButtonPress() {
+    const { friendlyLeagueName, navigation } = this.props;
+
+    this.props.createNewFriendlyLeague({ friendlyLeagueName }, navigation);
+  }
+
 
   render() {
+    console.log('here', this.props.friendlyLeagueName);
     return (
         <Card>
             <RkTextInput
               label={<FontAwesomeIcon style={styles.textInputIcon} name='trophy' />}
               placeholder={locali('friendly_leagues.new_friendly_leagues.name_placeholder')}
+              onChangeText={leagueName => this.props.friendlyLeagueNameChanged(leagueName)}
+              value={this.props.friendlyLeagueName}
             />
             <CardSection>
                 <RkButton
                     style={{ justifyContent: 'center', alignSelf: 'center' }}
+                    onPress={this.onNewFriendlyLeagueButtonPress.bind(this)}  
                 >
                     {locali('friendly_leagues.new_friendly_leagues.button_create')}
                 </RkButton>
@@ -42,3 +55,18 @@ const styles = StyleSheet.create({
     marginLeft: 15
   }
 });
+
+const mapStateToProps = state => {
+  const {
+    friendlyLeagueName
+  } = state.friendlyLeagues;
+
+  return {
+    friendlyLeagueName
+  };
+};
+
+export default connect(mapStateToProps, {
+  friendlyLeagueNameChanged,
+  createNewFriendlyLeague
+})(NewFriendlyLeague);

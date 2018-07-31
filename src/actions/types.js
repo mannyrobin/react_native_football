@@ -11,3 +11,4 @@ export const PASSWORD_RECOVERY = 'password_recovery';
 
 export const FRIENDLY_LEAGUE_NAME_CHANGED = 'friendly_league_name_changed';
 export const NEW_FRIENDLY_LEAGUE = 'new_friendly_league';
+export const FRIENDLY_LEAGUES_FETCH_SUCCESS = 'friendly_leagues_fetch_success';

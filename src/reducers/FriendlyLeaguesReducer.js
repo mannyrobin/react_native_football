@@ -1,10 +1,12 @@
 import { 
     FRIENDLY_LEAGUE_NAME_CHANGED,
-    NEW_FRIENDLY_LEAGUE
+    NEW_FRIENDLY_LEAGUE,
+    FRIENDLY_LEAGUES_FETCH_SUCCESS
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
-	friendlyLeagueName: ''
+    friendlyLeagueName: '',
+    friendlyLeaguesListFetch: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,6 +16,9 @@ export default (state = INITIAL_STATE, action) => {
         }
         case NEW_FRIENDLY_LEAGUE: {
             return { ...state, INITIAL_STATE };
+        }
+        case FRIENDLY_LEAGUES_FETCH_SUCCESS: {
+            return { ...state, friendlyLeaguesListFetch: action.payload };
         }
         default: {
             return state;

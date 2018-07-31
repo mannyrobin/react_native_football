@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import { 
     FRIENDLY_LEAGUE_NAME_CHANGED,
-    NEW_FRIENDLY_LEAGUE
+	NEW_FRIENDLY_LEAGUE,
+	FRIENDLY_LEAGUES_FETCH_SUCCESS
  } from './types.js';
 
  export const friendlyLeagueNameChanged = (leagueName) => {
@@ -22,4 +23,15 @@ import {
             navigation.pop();
 		});
     };
+};
+
+export const friendlyLeaguesFetch = () => {
+	const { currentUser } = firebase.auth();
+
+	return (dispatch) => {
+		firebase.database().ref(`/users/${currentUser.uid}/friendlyLeagues`)
+		.on('value', snapshot => {
+			dispatch({ type: FRIENDLY_LEAGUES_FETCH_SUCCESS, payload: snapshot.val() });
+		});
+	};
 };

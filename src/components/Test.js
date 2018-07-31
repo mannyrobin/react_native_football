@@ -13,7 +13,6 @@ class Test extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
     const {
       email,
       password

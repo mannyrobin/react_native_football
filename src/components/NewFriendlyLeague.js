@@ -17,7 +17,6 @@ class NewFriendlyLeague extends Component {
 
 
   render() {
-    console.log('here', this.props.friendlyLeagueName);
     return (
         <Card>
             <RkTextInput

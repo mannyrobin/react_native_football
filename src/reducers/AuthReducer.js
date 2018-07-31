@@ -7,7 +7,6 @@ import {
     FORGOT_PASSWORD,
     PASSWORD_RECOVERY
  } from '../actions/types.js';
-import { forgotPassword } from '../actions/index.js';
 
 const INITIAL_STATE = {
 	email: '',

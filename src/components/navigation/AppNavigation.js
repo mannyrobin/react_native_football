@@ -14,6 +14,8 @@ import ForgotPassword from '../ForgotPassword';
 import Main from '../Main';
 import FriendlyLeagues from '../FriendlyLeagues';
 import NewFriendlyLeague from '../NewFriendlyLeague';
+import FriendlyLeague from '../FriendlyLeague';
+import AddFriendsToFriendlyLeague from '../AddFriendsToFriendlyLeague';
 import Screen3 from '../Screen3';
 import DrawerContainer from '../DrawerContainer';
 
@@ -29,14 +31,27 @@ const noTransitionConfig = () => ({
 // friendly leagues stack
 
 const FriendlyLeaguesStack = createStackNavigator({
-  FriendlyLeagues: { screen: FriendlyLeagues },
-  NewFriendlyLeague: { screen: NewFriendlyLeague }
+  FriendlyLeagues: { screen: FriendlyLeagues,
+    navigationOptions: {
+      title: 'ליגות חברתיות'
+    }
+  },
+  NewFriendlyLeague: { screen: NewFriendlyLeague,
+    navigationOptions: {
+      title: 'ליגה חברתית חדשה'
+    }
+  },
+  FriendlyLeague: { screen: FriendlyLeague },
+    AddFriendsToFriendlyLeague: { screen: AddFriendsToFriendlyLeague }
 }, {
   // Default config for all screens
-  headerMode: 'none',
-  title: 'Friendly Leagues',
-  initialRouteName: 'FriendlyLeagues'
-});
+  initialRouteName: 'FriendlyLeagues',
+  navigationOptions: {
+    headerStyle: { backgroundColor: '#C1E15E' },
+    headerTintColor: 'black'
+  }
+}
+);
 
 // drawer stack
 const DrawerStack = createDrawerNavigator({

@@ -29,7 +29,10 @@ class FriendlyLeagues extends Component {
           <FlatList 
             data={this.props.friendlyLeagues}
             renderItem={friendlyLeague =>
-            <FriendlyLeagueListItem friendlyLeague={friendlyLeague.item} />}
+            <FriendlyLeagueListItem
+              friendlyLeague={friendlyLeague.item}
+              navigation={this.props.navigation}
+            />}
             keyExtractor={friendlyLeague => friendlyLeague.uid}
           />
         </View>

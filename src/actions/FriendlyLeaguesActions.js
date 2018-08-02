@@ -1,8 +1,11 @@
 import firebase from 'firebase';
 import { 
-    FRIENDLY_LEAGUE_NAME_CHANGED,
-	NEW_FRIENDLY_LEAGUE,
-	FRIENDLY_LEAGUES_FETCH_SUCCESS
+	FRIENDLY_LEAGUE_NAME_CHANGED,
+	FRIEND_UID_CHANGED,
+	NEW_FRIENDLY_LEAGUE_SUCCESS,
+	INVITE_FRIEND_SUCCESS,
+	FRIENDLY_LEAGUES_FETCH_SUCCESS,
+	FRIENDLY_LEAGUE_FETCH_SUCCESS
  } from './types.js';
 
  export const friendlyLeagueNameChanged = (leagueName) => {
@@ -12,26 +15,64 @@ import {
 	};
 };
 
+export const friendUidChanged = (friendUid) => {
+	return {
+		type: FRIEND_UID_CHANGED,
+		payload: friendUid
+	};
+};
+
  export const createNewFriendlyLeague = (leagueName, navigation) => {
     return (dispatch) => {
-        const { currentUser } = firebase.auth();
-        
-        firebase.database().ref(`/users/${currentUser.uid}/friendlyLeagues`)
-		.push(leagueName)
+		const { uid } = firebase.auth().currentUser;
+        const league = {
+			friendlyLeagueName: leagueName,
+			admin: uid,
+			participants: { [uid]: true }
+		};
+        firebase.database().ref('/friendlyLeagues')
+		.push(league)
 		.then(() => {
-			dispatch({ type: NEW_FRIENDLY_LEAGUE });
+			dispatch({ type: NEW_FRIENDLY_LEAGUE_SUCCESS });
             navigation.pop();
 		});
     };
+};
+
+export const inviteFriendToFriendlyLeague = (friendUid, leagueUid, navigation) => {
+	return (dispatch) => {
+		const invite = {
+			uid: friendUid,
+			leagueUid
+		};
+		firebase.database().ref('/invitations')
+		.push(invite)
+		.then(() => {
+			dispatch({ type: INVITE_FRIEND_SUCCESS });
+			navigation.pop();
+		});
+	};
 };
 
 export const friendlyLeaguesFetch = () => {
 	const { currentUser } = firebase.auth();
 
 	return (dispatch) => {
-		firebase.database().ref(`/users/${currentUser.uid}/friendlyLeagues`)
+		firebase.database()
+		.ref('/friendlyLeagues')
+		.orderByChild(`participants/${currentUser.uid}`)
+		.equalTo(true)
 		.on('value', snapshot => {
 			dispatch({ type: FRIENDLY_LEAGUES_FETCH_SUCCESS, payload: snapshot.val() });
+		});
+	};
+};
+
+export const friendlyLeagueFetch = (friendlyLeagueId) => {
+	return (dispatch) => {
+		firebase.database().ref(`/friendlyLeagues/${friendlyLeagueId}`)
+		.on('value', snapshot => {
+			dispatch({ type: FRIENDLY_LEAGUE_FETCH_SUCCESS, payload: snapshot.val() });
 		});
 	};
 };

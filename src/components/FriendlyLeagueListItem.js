@@ -4,7 +4,10 @@ import { CardSection } from './common';
 
 class ListItem extends Component {
 onRowPress() {
-	//nav to specific f_league
+	this.props.navigation.navigate('FriendlyLeague', {
+        friendlyLeagueId: this.props.friendlyLeague.uid,
+        friendlyLeagueName: this.props.friendlyLeague.friendlyLeagueName
+    });
 }
 
 	render() {

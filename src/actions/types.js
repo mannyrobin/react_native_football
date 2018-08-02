@@ -10,5 +10,8 @@ export const PASSWORD_RECOVERY = 'password_recovery';
 // ** Friendly Leagues **
 
 export const FRIENDLY_LEAGUE_NAME_CHANGED = 'friendly_league_name_changed';
-export const NEW_FRIENDLY_LEAGUE = 'new_friendly_league';
+export const FRIEND_UID_CHANGED = 'friend_uid_changed';
+export const NEW_FRIENDLY_LEAGUE_SUCCESS = 'new_friendly_league_success';
+export const INVITE_FRIEND_SUCCESS = 'invite_friend_success';
 export const FRIENDLY_LEAGUES_FETCH_SUCCESS = 'friendly_leagues_fetch_success';
+export const FRIENDLY_LEAGUE_FETCH_SUCCESS = 'friendly_league_fetch_success';

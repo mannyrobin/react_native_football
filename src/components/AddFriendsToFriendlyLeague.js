@@ -4,7 +4,7 @@ import { RkTextInput, RkButton } from 'react-native-ui-kitten';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { Card } from './common';
-import { friendUidChanged, inviteFriendToFriendlyLeague } from '../actions';
+import { friendEmailChanged, inviteFriendToFriendlyLeague } from '../actions';
 
 class AddFriendsToFriendlyLeague extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -14,9 +14,9 @@ class AddFriendsToFriendlyLeague extends Component {
       };
 
       onInviteFriendButtonPress() {
-        const { friendUid, navigation } = this.props;
+        const { friendEmail, navigation } = this.props;
         const leagueUid = navigation.getParam('friendlyLeagueId', '0');
-        this.props.inviteFriendToFriendlyLeague(friendUid, leagueUid, navigation);
+        this.props.inviteFriendToFriendlyLeague(friendEmail, leagueUid, navigation);
       }
 
     render() {
@@ -24,9 +24,9 @@ class AddFriendsToFriendlyLeague extends Component {
             <Card>
                 <RkTextInput
                     label={<FontAwesomeIcon style={styles.textInputIcon} name='user-plus' />}
-                    placeholder="הזן את קוד ההזמנה של החבר"
-                    onChangeText={friendUid => this.props.friendUidChanged(friendUid)}
-                    value={this.props.friendUid}
+                    placeholder="הזן כתובת אימייל של חבר"
+                    onChangeText={friendEmail => this.props.friendEmailChanged(friendEmail)}
+                    value={this.props.friendEmail}
                 />
                 <View style={{ height: 60, justifyContent: 'center' }}>
                 <RkButton
@@ -50,10 +50,10 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { friendUid } = state.friendlyLeagues;
+    const { friendEmail } = state.friendlyLeagues;
     
-      return { friendUid };
+      return { friendEmail };
 };
 
 export default connect(mapStateToProps,
-    { friendUidChanged, inviteFriendToFriendlyLeague })(AddFriendsToFriendlyLeague);
+    { friendEmailChanged, inviteFriendToFriendlyLeague })(AddFriendsToFriendlyLeague);

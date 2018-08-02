@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import { 
 	FRIENDLY_LEAGUE_NAME_CHANGED,
-	FRIEND_UID_CHANGED,
+	FRIEND_EMAIL_CHANGED,
 	NEW_FRIENDLY_LEAGUE_SUCCESS,
 	INVITE_FRIEND_SUCCESS,
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
@@ -15,10 +15,10 @@ import {
 	};
 };
 
-export const friendUidChanged = (friendUid) => {
+export const friendEmailChanged = (friendEmail) => {
 	return {
-		type: FRIEND_UID_CHANGED,
-		payload: friendUid
+		type: FRIEND_EMAIL_CHANGED,
+		payload: friendEmail
 	};
 };
 
@@ -39,10 +39,10 @@ export const friendUidChanged = (friendUid) => {
     };
 };
 
-export const inviteFriendToFriendlyLeague = (friendUid, leagueUid, navigation) => {
+export const inviteFriendToFriendlyLeague = (friendEmail, leagueUid, navigation) => {
 	return (dispatch) => {
 		const invite = {
-			uid: friendUid,
+			friendEmail,
 			leagueUid
 		};
 		firebase.database().ref('/invitations')

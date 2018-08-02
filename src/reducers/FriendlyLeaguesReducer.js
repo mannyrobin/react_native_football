@@ -1,6 +1,6 @@
 import { 
     FRIENDLY_LEAGUE_NAME_CHANGED,
-    FRIEND_UID_CHANGED,
+    FRIEND_EMAIL_CHANGED,
     NEW_FRIENDLY_LEAGUE_SUCCESS,
     INVITE_FRIEND_SUCCESS,
     FRIENDLY_LEAGUES_FETCH_SUCCESS,
@@ -9,7 +9,7 @@ import {
 
 const INITIAL_STATE = {
     friendlyLeagueName: '',
-    friendUid: '',
+    friendEmail: '',
     friendlyLeaguesListFetch: {},
     friendlyLeagueFetch: {}
 };
@@ -19,14 +19,14 @@ export default (state = INITIAL_STATE, action) => {
         case FRIENDLY_LEAGUE_NAME_CHANGED: {
             return { ...state, friendlyLeagueName: action.payload };
         }
-        case FRIEND_UID_CHANGED: {
-            return { ...state, friendUid: action.payload };
+        case FRIEND_EMAIL_CHANGED: {
+            return { ...state, friendEmail: action.payload };
         }
         case NEW_FRIENDLY_LEAGUE_SUCCESS: {
             return { ...state, friendlyLeagueName: '' };
         }
         case INVITE_FRIEND_SUCCESS: {
-            return { ...state, friendUid: '' };
+            return { ...state, friendEmail: '' };
         }
         case FRIENDLY_LEAGUES_FETCH_SUCCESS: {
             return { ...state, friendlyLeaguesListFetch: action.payload };

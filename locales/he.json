@@ -6,10 +6,16 @@
     "titles": {
       "login_with_email": "התחבר באמצעות דוא\"ל",
       "forgot_password": "שכחתי סיסמה",
-      "main_league": "ליגה ראשית",
-      "friendly_leagues": "ליגות חברתיות",
-      "my_account": "הפרופיל שלי",
-      "log_out": "התנתק"
+      "drawer": {
+        "main_league": "ליגה ראשית",
+        "friendly_leagues": "ליגות חברתיות",
+        "my_account": "הפרופיל שלי",
+        "log_out": "התנתק"
+      },
+      "friendly_leagues": {
+        "main": "ליגות חברתיות",
+        "new_friendly_league": "ליגה חברתית חדשה"
+      }
     }
   },
   "intro": {
@@ -55,6 +61,18 @@
       "new_friendly_leagues": {
         "name_placeholder": "שם הליגה",
         "button_create": "צור"
+      },
+      "friendly_league": {
+        "pre_title": "ליגת",
+        "leaderboard": "טבלת ניקוד",
+        "points": "נקודות",
+        "settings": {
+          "pre_title": "הגדרות ליגת",
+          "invite_friend_header": "הזמן חבר", 
+          "invite_text_input_placeholder": "הקלד דוא\"ל של חבר",
+          "invite_button": "הזמן",
+          "choose_games_header": "בחר משחקים"
+        }
       }
     }
 }

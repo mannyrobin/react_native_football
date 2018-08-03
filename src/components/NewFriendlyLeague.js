@@ -23,7 +23,7 @@ class NewFriendlyLeague extends Component {
               label={<FontAwesomeIcon style={styles.textInputIcon} name='trophy' />}
               placeholder={locali('friendly_leagues.new_friendly_leagues.name_placeholder')}
               onChangeText={leagueName => this.props.friendlyLeagueNameChanged(leagueName)}
-              value={this.props.friendlyLeagueName}              
+              value={this.props.friendlyLeagueName}
             />
             <CardSection>
                 <RkButton

@@ -6,10 +6,16 @@
     "titles": {
       "login_with_email": "Login With Email",
       "forgot_password": "Forgot Password",
-      "main_league": "Main League",
-      "friendly_leagues": "Friendly Leagues",
-      "my_account": "My Account",
-      "log_out": "Log Out"
+      "drawer": {
+        "main_league": "Main League",
+        "friendly_leagues": "Friendly Leagues",
+        "my_account": "My Account",
+        "log_out": "Log Out"
+      },
+      "friendly_leagues": {
+        "main": "Friendly Leagues",
+        "new_friendly_league": "New Friendly League"
+      }
     }
   },
   "intro": {
@@ -49,12 +55,24 @@
       "button_forgot_password": "Recover Password"
     }
   },
-    "friendly_leagues": 
+    "friendly_leagues":
     {
       "button_create_new": "Create New Friendly League",
       "new_friendly_leagues": {
         "name_placeholder": "League Name",
         "button_create": "Create"
+      },
+      "friendly_league": {
+        "pre_title": "League",
+        "leaderboard": "Leaderboard",
+        "points": "Points",
+        "settings": {
+          "pre_title": "League Settings",
+          "invite_friend_header": "Invite a Friend", 
+          "invite_text_input_placeholder": "Type your friend email address",
+          "invite_button": "Invite Friend",
+          "choose_games_header": "Choose Games"
+        }
       }
     }
 }

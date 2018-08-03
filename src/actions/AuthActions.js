@@ -31,7 +31,6 @@ export const loginUser = ({ email, password, navigation }) => {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(user => loginUserSuccess(dispatch, user, navigation))
 		.catch((error) => {
-			console.log('ERROR ON AUTHACTIONS - loginUser', error);
 			switch (error.code) {
 				case 'auth/user-disabled':
 					loginUserFail(dispatch, locali('login_with_email.login.error_user_disabled'));
@@ -60,7 +59,6 @@ export const signupUser = ({ email, password, navigation }) => {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 		.then(user => loginUserSuccess(dispatch, user, navigation))
 		.catch((error) => {
-			console.log('ERROR ON AUTHACTIONS - signupUser', error);
 			switch (error.code) {
 				case 'auth/email-already-in-use':
 					loginUserFail(dispatch, locali('login_with_email.signup.error_email_already_in_use'));

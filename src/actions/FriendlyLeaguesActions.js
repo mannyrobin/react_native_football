@@ -28,7 +28,12 @@ export const friendEmailChanged = (friendEmail) => {
         const league = {
 			friendlyLeagueName: leagueName,
 			admin: uid,
-			participants: { [uid]: true }
+			participants: { [uid]: true },
+			scoreBoard: [{
+				userUid: uid,
+				points: 0,
+				numberOfForms: 0
+			}]
 		};
         firebase.database().ref('/friendlyLeagues')
 		.push(league)

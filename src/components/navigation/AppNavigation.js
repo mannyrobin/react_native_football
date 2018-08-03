@@ -15,7 +15,7 @@ import Main from '../Main';
 import FriendlyLeagues from '../FriendlyLeagues';
 import NewFriendlyLeague from '../NewFriendlyLeague';
 import FriendlyLeague from '../FriendlyLeague';
-import AddFriendsToFriendlyLeague from '../AddFriendsToFriendlyLeague';
+import FriendlyLeagueSettings from '../FriendlyLeagueSettings';
 import Screen3 from '../Screen3';
 import DrawerContainer from '../DrawerContainer';
 
@@ -33,16 +33,16 @@ const noTransitionConfig = () => ({
 const FriendlyLeaguesStack = createStackNavigator({
   FriendlyLeagues: { screen: FriendlyLeagues,
     navigationOptions: {
-      title: 'ליגות חברתיות'
+      title: locali('navigation.titles.friendly_leagues.main')
     }
   },
   NewFriendlyLeague: { screen: NewFriendlyLeague,
     navigationOptions: {
-      title: 'ליגה חברתית חדשה'
+      title: locali('navigation.titles.friendly_leagues.new_friendly_league')
     }
   },
   FriendlyLeague: { screen: FriendlyLeague },
-    AddFriendsToFriendlyLeague: { screen: AddFriendsToFriendlyLeague }
+  FriendlyLeagueSettings: { screen: FriendlyLeagueSettings }
 }, {
   // Default config for all screens
   initialRouteName: 'FriendlyLeagues',

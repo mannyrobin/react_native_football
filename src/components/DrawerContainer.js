@@ -52,7 +52,7 @@ export default class DrawerContainer extends Component {
               style={[styles.DrawerItemText,
                 { color: activeItemKey === 'Main' ? activeTintColor : inactiveTintColor }]}
             >
-              {locali('navigation.titles.main_league')}
+              {locali('navigation.titles.drawer.main_league')}
             </Text>
           </View>
         </View>
@@ -72,7 +72,7 @@ export default class DrawerContainer extends Component {
                     activeTintColor : inactiveTintColor 
               }]}
             >
-              {locali('navigation.titles.friendly_leagues')}
+              {locali('navigation.titles.drawer.friendly_leagues')}
             </Text>
           </View>
         </View>
@@ -88,7 +88,7 @@ export default class DrawerContainer extends Component {
               style={[styles.DrawerItemText,
                 { color: activeItemKey === 'screen3' ? activeTintColor : inactiveTintColor }]}
             >
-              {locali('navigation.titles.my_account')}
+              {locali('navigation.titles.drawer.my_account')}
             </Text>
           </View>
         </View>
@@ -103,7 +103,7 @@ export default class DrawerContainer extends Component {
               onPress={this.logout}
               style={[styles.DrawerItemText, { color: inactiveTintColor }]}
             >
-              {locali('navigation.titles.log_out')}
+              {locali('navigation.titles.drawer.log_out')}
             </Text>
           </View>
         </View>

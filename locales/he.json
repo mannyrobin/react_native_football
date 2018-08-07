@@ -74,5 +74,10 @@
           "choose_games_header": "בחר משחקים"
         }
       }
+    },
+    "league_invitations":
+    {
+      "no_invitations": "אין הזמנות ממתינות.",
+      "invitationContent": "{{inviter}} מזמין אותך אל {{leagueName}} !"
     }
 }

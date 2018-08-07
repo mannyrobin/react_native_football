@@ -44,11 +44,13 @@ export const friendEmailChanged = (friendEmail) => {
     };
 };
 
-export const inviteFriendToFriendlyLeague = (friendEmail, leagueUid, navigation) => {
+export const inviteFriendToFriendlyLeague = (friendEmail, leagueUid, friendlyLeagueName, navigation) => {
 	return (dispatch) => {
 		const invite = {
 			friendEmail,
-			leagueUid
+			leagueUid,
+			friendlyLeagueName,
+			inviterEmail: firebase.auth().currentUser.email
 		};
 		firebase.database().ref('/invitations')
 		.push(invite)

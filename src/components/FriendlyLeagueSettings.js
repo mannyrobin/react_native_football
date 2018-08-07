@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, I18nManager } from 'react-native';
+import _ from 'lodash';
 import { RkTheme, RkTextInput, RkText, RkButton } from 'react-native-ui-kitten';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -21,9 +22,12 @@ class FriendlyLeagueSettings extends Component {
       };
 
       onInviteFriendButtonPress() {
-        const { friendEmail, navigation } = this.props;
+        const { friendEmail, friendlyLeaguesListFetch, navigation } = this.props;
         const leagueUid = navigation.getParam('friendlyLeagueId', '0');
-        this.props.inviteFriendToFriendlyLeague(friendEmail, leagueUid, navigation);
+        const friendlyLeagues = _.map(friendlyLeaguesListFetch, (val, uid) => ({ ...val, uid }));
+        const { friendlyLeagueName } = friendlyLeagues.find(league => league.uid === leagueUid);
+        this.props
+            .inviteFriendToFriendlyLeague(friendEmail, leagueUid, friendlyLeagueName, navigation);
       }
       
     render() {
@@ -68,11 +72,7 @@ const styles = {
     }
 };
 
-const mapStateToProps = state => {
-    const { friendEmail } = state.friendlyLeagues;
-    
-      return { friendEmail };
-};
+const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFetch } }) => ({ friendEmail, friendlyLeaguesListFetch });
 
 export default connect(mapStateToProps,
     { friendEmailChanged, inviteFriendToFriendlyLeague })(FriendlyLeagueSettings);

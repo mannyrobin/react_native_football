@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Animated, Easing, I18nManager } from 'react-native';
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createDrawerNavigator, NavigationActions } from 'react-navigation';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { locali } from '../../../locales/i18n';
 
@@ -18,6 +18,9 @@ import FriendlyLeague from '../FriendlyLeague';
 import FriendlyLeagueSettings from '../FriendlyLeagueSettings';
 import Screen3 from '../Screen3';
 import DrawerContainer from '../DrawerContainer';
+
+import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
+import LeagueInvitations from '../LeagueInvitations';
 
 // https://github.com/react-community/react-navigation/issues/1254
 const noTransitionConfig = () => ({
@@ -57,7 +60,8 @@ const FriendlyLeaguesStack = createStackNavigator({
 const DrawerStack = createDrawerNavigator({
   Main: { screen: Main },
   FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
-  screen3: { screen: Screen3 }
+  screen3: { screen: Screen3 },
+  LeagueInvitations: { screen: LeagueInvitations }
 }, {
   gesturesEnabled: false,
   contentComponent: DrawerContainer,
@@ -87,7 +91,10 @@ const DrawerNavigation = createStackNavigator({
     title: locali('app.app_name'),
     headerTintColor: 'black',
     gesturesEnabled: false,
-    headerLeft: drawerButton(navigation)
+    headerLeft: drawerButton(navigation),
+    headerRight: (<LeaguesInvitationBadge 
+      onPress={() => navigation.dispatch(NavigationActions.navigate({ routeName: 'LeagueInvitations' })) 
+    } />)
   })
 });
 

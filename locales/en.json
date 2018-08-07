@@ -74,5 +74,10 @@
           "choose_games_header": "Choose Games"
         }
       }
+    },
+    "league_invitations":
+    {
+      "no_invitations": "No pending invitations.",
+      "invitationContent": "{{inviter}} invites you to {{leagueName}} !"
     }
 }

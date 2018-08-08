@@ -6,6 +6,7 @@ import { locali } from '../../locales/i18n';
 export default ({ invitations, onPressAccept, onPressDecline }) =>
     (<FlatList
     data={invitations}
+    keyExtractor={invitation => invitation.uid}
     renderItem={({ item }) => (
     <InvitationListItem 
     invitation={item} onPressAccept={onPressAccept} onPressDecline={onPressDecline} 

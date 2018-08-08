@@ -44,22 +44,26 @@ export const friendEmailChanged = (friendEmail) => {
     };
 };
 
-export const inviteFriendToFriendlyLeague = (friendEmail, leagueUid, friendlyLeagueName, navigation) => {
-	return (dispatch) => {
-		const invite = {
-			friendEmail,
-			leagueUid,
-			friendlyLeagueName,
-			inviterEmail: firebase.auth().currentUser.email
+export const inviteFriendToFriendlyLeague = (
+	friendEmail,
+	leagueUid,
+	friendlyLeagueName,
+	navigation) => {
+		return (dispatch) => {
+			const invite = {
+				friendEmail,
+				leagueUid,
+				friendlyLeagueName,
+				inviterEmail: firebase.auth().currentUser.email
+			};
+			firebase.database().ref('/invitations')
+			.push(invite)
+			.then(() => {
+				dispatch({ type: INVITE_FRIEND_SUCCESS });
+				navigation.pop();
+			});
 		};
-		firebase.database().ref('/invitations')
-		.push(invite)
-		.then(() => {
-			dispatch({ type: INVITE_FRIEND_SUCCESS });
-			navigation.pop();
-		});
 	};
-};
 
 export const friendlyLeaguesFetch = () => {
 	const { currentUser } = firebase.auth();

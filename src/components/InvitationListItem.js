@@ -17,7 +17,7 @@ export default ({ invitation, onPressAccept, onPressDecline }) =>
     (<View flexDirection="row" style={styles.itemContainer}>
         <View flex={3}>
             <Text style={styles.invitationText}> 
-            {locali('league_invitations.invitationContent', {
+            {locali('friendly_leagues.league_invitations.invitationContent', {
                 inviter: invitation.inviterEmail,
                 leagueName: invitation.friendlyLeagueName
             })} 

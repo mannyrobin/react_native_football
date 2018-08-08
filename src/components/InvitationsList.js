@@ -10,5 +10,5 @@ export default ({ invitations, onPressAccept, onPressDecline }) =>
     <InvitationListItem 
     invitation={item} onPressAccept={onPressAccept} onPressDecline={onPressDecline} 
     />)} 
-    ListEmptyComponent={<Text>{locali('league_invitations.no_invitations')}</Text>}
+    ListEmptyComponent={<Text>{locali('friendly_leagues.league_invitations.no_invitations')}</Text>}
     />);

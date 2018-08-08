@@ -22,3 +22,8 @@ export const LEAGUE_INVITATIONS_FETCH_SUCCESS = 'league_invitations_fetch_succes
 export const LEAGUE_INVITATION_ACCEPTED = 'league_invitation_accepted';
 export const LEAGUE_INVITATION_REJECTED = 'league_invitation_rejected';
 
+// ** Forms **
+
+export const MATCHES_LIST_FETCH = 'matches_list_fetch';
+export const SLIDER_VALUE_CHANGED = 'slider_value_changed';
+export const NEW_FORM_UPDATED = 'new_form_updated';

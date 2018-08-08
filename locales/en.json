@@ -9,12 +9,17 @@
       "drawer": {
         "main_league": "Main League",
         "friendly_leagues": "Friendly Leagues",
+        "forms": "Forms",
         "my_account": "My Account",
         "log_out": "Log Out"
       },
       "friendly_leagues": {
         "main": "Friendly Leagues",
         "new_friendly_league": "New Friendly League"
+      },
+      "forms": {
+        "forms": "Forms",
+        "fill_form": "Fill Form"
       }
     }
   },
@@ -55,24 +60,22 @@
       "button_forgot_password": "Recover Password"
     }
   },
-    "friendly_leagues":
-    {
-      "button_create_new": "Create New Friendly League",
-      "new_friendly_leagues": {
-        "name_placeholder": "League Name",
-        "button_create": "Create"
-      },
-      "friendly_league": {
-        "pre_title": "League",
-        "leaderboard": "Leaderboard",
-        "points": "Points",
-        "settings": {
-          "pre_title": "League Settings",
-          "invite_friend_header": "Invite a Friend", 
-          "invite_text_input_placeholder": "Type your friend email address",
-          "invite_button": "Invite Friend",
-          "choose_games_header": "Choose Games"
-        }
+  "friendly_leagues": {
+    "button_create_new": "Create New Friendly League",
+    "new_friendly_leagues": {
+      "name_placeholder": "League Name",
+      "button_create": "Create"
+    },
+    "friendly_league": {
+      "pre_title": "League",
+      "leaderboard": "Leaderboard",
+      "points": "Points",
+      "settings": {
+        "pre_title": "League Settings",
+        "invite_friend_header": "Invite a Friend", 
+        "invite_text_input_placeholder": "Type your friend email address",
+        "invite_button": "Invite Friend",
+        "choose_games_header": "Choose Games"
       }
     },
     "league_invitations":
@@ -80,4 +83,11 @@
       "no_invitations": "No pending invitations.",
       "invitationContent": "{{inviter}} invites you to {{leagueName}} !"
     }
+  },
+  "forms": {
+    "matches": {
+      "vs": "VS",
+      "review_form_button": "Review and Submit Form"
+    }
+  }
 }

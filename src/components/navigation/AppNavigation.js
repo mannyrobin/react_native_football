@@ -1,7 +1,13 @@
 import React from 'react';
 import { Text, Animated, Easing, I18nManager } from 'react-native';
-import { createStackNavigator, createDrawerNavigator, NavigationActions } from 'react-navigation';
+import {
+  createStackNavigator,
+  createDrawerNavigator,
+  NavigationActions,
+  createBottomTabNavigator
+} from 'react-navigation';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
+import FontawesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { locali } from '../../../locales/i18n';
 
 //import Login screens
@@ -12,11 +18,20 @@ import ForgotPassword from '../ForgotPassword';
 
 //import Main screens
 import Main from '../Main';
+
+//import friendlyLeagues screens
 import FriendlyLeagues from '../FriendlyLeagues';
 import NewFriendlyLeague from '../NewFriendlyLeague';
 import FriendlyLeague from '../FriendlyLeague';
 import FriendlyLeagueSettings from '../FriendlyLeagueSettings';
+
 import Screen3 from '../Screen3';
+
+//import Forms screens
+import Forms from '../Forms';
+import NewForm from '../NewForm';
+import ReviewForm from '../ReviewForm';
+
 import DrawerContainer from '../DrawerContainer';
 
 import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
@@ -31,7 +46,7 @@ const noTransitionConfig = () => ({
   }
 });
 
-// friendly leagues stack
+// Friendly leagues stack
 
 const FriendlyLeaguesStack = createStackNavigator({
   FriendlyLeagues: { screen: FriendlyLeagues,
@@ -56,12 +71,87 @@ const FriendlyLeaguesStack = createStackNavigator({
 }
 );
 
+//Fill Form stack
+
+const FillFormStack = createStackNavigator({
+  NewForm: { screen: NewForm,
+    navigationOptions: {
+      headerMode: 'none'
+    }
+  },
+  ReviewForm: { screen: ReviewForm }
+}, {
+  // Default config for all screens
+  initialRouteName: 'NewForm',
+  navigationOptions: {
+    headerStyle: { backgroundColor: '#C1E15E' },
+    headerTintColor: 'black'
+  }
+}
+);
+
+//Forms Tab
+
+const FormsStack = createBottomTabNavigator({
+  Forms: { screen: Forms,
+    navigationOptions: {
+      title: locali('navigation.titles.forms.fill_form')
+    }
+  },
+  FillFormStack: { screen: FillFormStack,
+    navigationOptions: {
+      title: locali('navigation.titles.forms.forms')
+    }
+  }
+}, {
+  // Default config for all screens
+  navigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, tintColor, inactiveTintColor }) => {
+      const { routeName } = navigation.state;
+      let iconName;
+      if (routeName === 'Forms') {
+      iconName = 'wpforms';
+      } else if (routeName === 'FillFormStack') {
+        iconName = 'plus-circle';
+      }
+      // You can return any component that you like here! We usually use an
+      // icon component from react-native-vector-icons
+      return (
+        <FontawesomeIcon
+          name={iconName}
+          size={30}
+          color={focused ? tintColor : inactiveTintColor}
+        />
+      );
+    }
+  }),
+
+  // Default config for all screens
+  initialRouteName: 'Forms',
+  tabBarOptions: {
+    activeTintColor: '#2196f3',
+    inactiveTintColor: '#000',
+    labelStyle: {
+      fontSize: 14,
+      fontWeight: 'bold'
+    },
+    tabStyle: {
+      backgroundColor: '#C1E15E'
+    },
+    style: {
+      height: 65
+    }
+  },
+}
+);
+
 // drawer stack
 const DrawerStack = createDrawerNavigator({
   Main: { screen: Main },
   FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
-  screen3: { screen: Screen3 },
-  LeagueInvitations: { screen: LeagueInvitations }
+  LeagueInvitations: { screen: LeagueInvitations },
+  FormsStack: { screen: FormsStack },
+  screen3: { screen: Screen3 }
 }, {
   gesturesEnabled: false,
   contentComponent: DrawerContainer,
@@ -92,9 +182,12 @@ const DrawerNavigation = createStackNavigator({
     headerTintColor: 'black',
     gesturesEnabled: false,
     headerLeft: drawerButton(navigation),
-    headerRight: (<LeaguesInvitationBadge 
-      onPress={() => navigation.dispatch(NavigationActions.navigate({ routeName: 'LeagueInvitations' })) 
-    } />)
+    headerRight:
+    (<LeaguesInvitationBadge 
+      onPress={() =>
+        navigation.dispatch(NavigationActions.navigate({ routeName: 'LeagueInvitations' })) 
+      }
+    />)
   })
 });
 

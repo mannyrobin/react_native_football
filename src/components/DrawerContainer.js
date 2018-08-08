@@ -77,6 +77,22 @@ export default class DrawerContainer extends Component {
           </View>
         </View>
         <View
+        style={activeItemKey === 'FormsStack' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+        >
+        <View style={styles.DrawerItemIconContainer}>
+            <FontAwesomeIcon style={styles.DrawerItemIcon} name='wpforms' />
+          </View>
+          <View style={styles.DrawerItemTextContainer}>
+            <Text
+              onPress={() => navigation.navigate('FormsStack')}
+              style={[styles.DrawerItemText,
+                { color: activeItemKey === 'FormsStack' ? activeTintColor : inactiveTintColor }]}
+            >
+              {locali('navigation.titles.drawer.forms')}
+            </Text>
+          </View>
+        </View>
+        <View
         style={activeItemKey === 'screen3' ? styles.drawerActiveItem : styles.drawerInActiveItem}
         >
         <View style={styles.DrawerItemIconContainer}>

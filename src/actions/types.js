@@ -27,3 +27,4 @@ export const LEAGUE_INVITATION_REJECTED = 'league_invitation_rejected';
 export const MATCHES_LIST_FETCH = 'matches_list_fetch';
 export const SLIDER_VALUE_CHANGED = 'slider_value_changed';
 export const NEW_FORM_UPDATED = 'new_form_updated';
+export const SUBMIT_FORM_SUCCESS = 'submit_form_success';

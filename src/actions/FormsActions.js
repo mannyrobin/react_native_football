@@ -2,7 +2,8 @@ import firebase from 'firebase';
 import { 
     MATCHES_LIST_FETCH,
     SLIDER_VALUE_CHANGED,
-    NEW_FORM_UPDATED
+    NEW_FORM_UPDATED,
+    SUBMIT_FORM_SUCCESS
  } from './types.js';
 
 export const fetchMatchesList = () => {
@@ -25,9 +26,10 @@ export const sliderValueChanged = (value) => {
 		payload: value
 	};
 };
+
 /* eslint-disable no-param-reassign */
-export const updateNewForm = (newForm, matchUid, bet) => {
-    const val = { matchUid, bet };
+export const updateNewForm = (newForm, matchUid, bet, odd) => {
+    const val = { matchUid, bet, odd };
 
     const isExistsWithDifferentBet = newForm.findIndex((element) =>
     element.matchUid === matchUid && element.bet !== bet);
@@ -47,3 +49,25 @@ export const updateNewForm = (newForm, matchUid, bet) => {
     };
 };
 /* eslint-disable no-param-reassign */
+
+export const submitForm = (newForm, coins, navigation) => {
+    return (dispatch) => {
+        const totalOdd = newForm.map(item => item.odd).reduce((prev, next) => prev * next);
+        const totalCoins = totalOdd * coins;
+        const timestamp = Math.floor(new Date().getTime() / 1000);
+        const val = {
+            coins,
+            timestamp,
+            totalOdd,
+            totalCoins,
+            won: -1,
+            form: newForm
+        };
+        firebase.database().ref(`/forms/${firebase.auth().currentUser.uid}`)
+            .push(val)
+            .then(() => {
+                dispatch({ type: SUBMIT_FORM_SUCCESS });
+                navigation.pop();
+        });
+    };
+};

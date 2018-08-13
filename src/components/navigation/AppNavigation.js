@@ -95,12 +95,12 @@ const FillFormStack = createStackNavigator({
 const FormsStack = createBottomTabNavigator({
   Forms: { screen: Forms,
     navigationOptions: {
-      title: locali('navigation.titles.forms.fill_form')
+      title: locali('navigation.titles.forms.forms')
     }
   },
   FillFormStack: { screen: FillFormStack,
     navigationOptions: {
-      title: locali('navigation.titles.forms.forms')
+      title: locali('navigation.titles.forms.fill_form')
     }
   }
 }, {

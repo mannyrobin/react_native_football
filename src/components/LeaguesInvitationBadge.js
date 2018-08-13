@@ -11,7 +11,7 @@ class LeaguesInvitationBadge extends Component {
     render() {
         return (
             <Badge 
-                iconName="trophy" 
+                iconName="ios-notifications" 
                 badgeCount={this.props.badgeCount} 
                 onPress={() => this.props.onPress()} 
             />

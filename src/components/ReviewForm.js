@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, ImageBackground } from 'react-native';
 import Slider from 'react-native-slider';
+import { connect } from 'react-redux';
+import { RkButton } from 'react-native-ui-kitten';
+import { submitForm } from '../actions';
 
 class ReviewForm extends Component {
     state = { sliderValue: '0' };
@@ -11,10 +14,10 @@ class ReviewForm extends Component {
                 <View style={styles.formContainer}>
                     <ImageBackground
                         source={require('../images/Form.png')}
-                        style={{ height: '100%', paddingTop: 30 }}
+                        style={{ width: '100%', height: '100%', paddingTop: 30 }}
                         resizeMode='cover'
                     >
-                    <Text>test</Text>
+                    <Text>הצגת הטופס</Text>
                     </ImageBackground>
                 </View>
                 <View style={styles.sliderContainer}>
@@ -38,8 +41,16 @@ class ReviewForm extends Component {
                         />
                     </View>
                 </View>
+                <View style={styles.buttonContainer}>
+                    <RkButton 
+                        rkType='xlarge'
+                        onPress={() => this.props.submitForm(this.props.newForm, `${this.state.sliderValue}`, this.props.navigation)}
+                    >
+                        שלח טופס
+                    </RkButton>
+                </View> 
             </View>
-        );
+        );  
     }
 }
 
@@ -50,11 +61,16 @@ const styles = StyleSheet.create({
       padding: 20
     },
     formContainer: {
-        flex: 6
+        flex: 5,
     },
     sliderContainer: {
         flex: 1,
         flexDirection: 'row' 
+    },
+    buttonContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        
     },
     sliderLabel: {
         justifyContent: 'center',
@@ -70,10 +86,10 @@ const styles = StyleSheet.create({
         color: 'red'
     }
   });
-/*
-const mapStateToProps = state => {
 
+  const mapStateToProps = state => {
+    const { newForm } = state.forms;
+
+    return { newForm };
 };
-export default connect(mapStateToProps, { sliderValueChanged })(ReviewForm);
-*/
-export default ReviewForm;
+export default connect(mapStateToProps, { submitForm })(ReviewForm);

@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import IconBadge from 'react-native-icon-badge';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create({
     badge: {
-        fontSize: 30,
-        padding: 5
+        fontSize: 40,
+        paddingHorizontal: 10
     }
 });
 
@@ -14,15 +14,17 @@ const Badge = ({ iconName, badgeCount, onPress }) =>
         <TouchableOpacity onPress={onPress}>
             <IconBadge 
                 MainElement={
-                <FontAwesomeIcon name={iconName} style={styles.badge} />
+                <Ionicons name={iconName} style={[styles.badge, badgeCount > 0 ? { color: '#5ecff4' } : '']} />
                 } 
                 BadgeElement={
                     <Text style={{ color: '#FFFFFF' }}>{badgeCount}</Text>
                 }
                 IconBadgeStyle={{
-                        width: 10,
-                        height: 10,
-                        backgroundColor: '#5ecff4'
+                        width: 20,
+                        height: 20,
+                        backgroundColor: 'transparent',
+                        top: 9,
+                        right: 14,
                     }}
                 Hidden={badgeCount === 0}
             /> 

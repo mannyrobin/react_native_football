@@ -88,6 +88,9 @@
     "matches": {
       "vs": "נגד",
       "review_form_button": "סקור ושלח את הסקר"
+    },
+    "display_form": {
+      "title": "הטפסים שלי"
     }
   }
 }

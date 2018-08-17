@@ -28,3 +28,9 @@ export const MATCHES_LIST_FETCH = 'matches_list_fetch';
 export const SLIDER_VALUE_CHANGED = 'slider_value_changed';
 export const NEW_FORM_UPDATED = 'new_form_updated';
 export const SUBMIT_FORM_SUCCESS = 'submit_form_success';
+export const FETCT_CURRENT_FORMS = 'fetch_current_forms';
+export const OPEN_FORM = 'open_form';
+
+// ** Matches **
+export const FETCT_MATCHES = 'fetch_matches';
+

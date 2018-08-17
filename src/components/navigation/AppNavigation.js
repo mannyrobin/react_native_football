@@ -37,6 +37,8 @@ import DrawerContainer from '../DrawerContainer';
 import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
 import LeagueInvitations from '../LeagueInvitations';
 
+import SingleForm from '../SingleForm';
+
 // https://github.com/react-community/react-navigation/issues/1254
 const noTransitionConfig = () => ({
   transitionSpec: {
@@ -90,10 +92,17 @@ const FillFormStack = createStackNavigator({
 }
 );
 
+//Forms View Stack
+
+const FormsViewStack = createStackNavigator({
+  Forms: { screen: Forms },
+  Form: { screen: SingleForm }
+});
+
 //Forms Tab
 
 const FormsStack = createBottomTabNavigator({
-  Forms: { screen: Forms,
+  FormsViewStack: { screen: FormsViewStack,
     navigationOptions: {
       title: locali('navigation.titles.forms.forms')
     }
@@ -109,7 +118,7 @@ const FormsStack = createBottomTabNavigator({
     tabBarIcon: ({ focused, tintColor, inactiveTintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Forms') {
+      if (routeName === 'FormsViewStack') {
       iconName = 'wpforms';
       } else if (routeName === 'FillFormStack') {
         iconName = 'plus-circle';
@@ -127,7 +136,7 @@ const FormsStack = createBottomTabNavigator({
   }),
 
   // Default config for all screens
-  initialRouteName: 'Forms',
+  initialRouteName: 'FormsViewStack',
   tabBarOptions: {
     activeTintColor: '#2196f3',
     inactiveTintColor: '#000',
@@ -151,7 +160,7 @@ const DrawerStack = createDrawerNavigator({
   FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
   LeagueInvitations: { screen: LeagueInvitations },
   FormsStack: { screen: FormsStack },
-  screen3: { screen: Screen3 }
+  screen3: { screen: Screen3 },
 }, {
   gesturesEnabled: false,
   contentComponent: DrawerContainer,

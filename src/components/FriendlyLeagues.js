@@ -4,13 +4,14 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import { RkButton, RkTheme } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { friendlyLeaguesFetch } from '../actions';
+import { friendlyLeaguesFetch, fetchMatches } from '../actions';
 import { locali } from '../../locales/i18n';
 import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
 class FriendlyLeagues extends Component {
   componentWillMount() {
-		this.props.friendlyLeaguesFetch();
+    this.props.friendlyLeaguesFetch();
+    this.props.fetchMatches();
 	}
 
   render() {
@@ -70,4 +71,4 @@ const mapStateToProps = state => {
   return { friendlyLeagues };
 };
 
-export default connect(mapStateToProps, { friendlyLeaguesFetch })(FriendlyLeagues);
+export default connect(mapStateToProps, { friendlyLeaguesFetch, fetchMatches })(FriendlyLeagues);

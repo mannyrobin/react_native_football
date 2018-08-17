@@ -3,8 +3,11 @@ import {
     MATCHES_LIST_FETCH,
     SLIDER_VALUE_CHANGED,
     NEW_FORM_UPDATED,
-    SUBMIT_FORM_SUCCESS
+    SUBMIT_FORM_SUCCESS,
+    FETCT_CURRENT_FORMS,
+    OPEN_FORM,
  } from './types.js';
+import { arraify } from '../utils';
 
 export const fetchMatchesList = () => {
 	return (dispatch) => {
@@ -48,6 +51,25 @@ export const updateNewForm = (newForm, matchUid, bet, odd) => {
         payload: newForm
     };
 };
+
+export const fetchCurrentForms = () => {
+    const { currentUser } = firebase.auth();
+    return (dispatch) => {
+        firebase.database().ref(`/forms/${currentUser.uid}`)
+        .orderByChild('timestamps')
+        .on('value', snapshot => {
+            dispatch({ type: FETCT_CURRENT_FORMS, payload: arraify(snapshot.val()) });
+        });
+    };
+};
+
+export const openForm = (navigator, formUid) => 
+    dispatch => {
+        navigator.navigate('Form');
+        dispatch({ type: OPEN_FORM, payload: formUid });
+    };
+
+
 /* eslint-disable no-param-reassign */
 
 export const submitForm = (newForm, coins, navigation) => {

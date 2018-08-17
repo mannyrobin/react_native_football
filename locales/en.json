@@ -88,6 +88,9 @@
     "matches": {
       "vs": "VS",
       "review_form_button": "Review and Submit Form"
+    },
+    "display_form": {
+      "title": "My Forms"
     }
   }
 }

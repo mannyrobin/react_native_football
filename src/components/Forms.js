@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, FlatList, TouchableOpacity, View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { fetchCurrentForms, openForm } from '../actions';
+import SingleFormView from './SingleFormView';
+import { locali } from '../../locales/i18n';
 
-export default class Forms extends Component {
-  static navigationOptions = {
-    drawerLabel: 'טפסים',
-    drawerIcon: () => (
-      <FontAwesomeIcon style={styles.drawerItemIcon} name='wpforms' />
-    )
+
+class Forms extends Component {
+
+  componentWillMount() {
+    this.props.fetchCurrentForms();
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>טפסים</Text>
-      </View>
+      <FlatList
+      data={this.props.currentForms}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() => this.props.openForm(this.props.navigation, item.uid)}
+        >
+        <View>
+          <Text>
+            {item.timestamp}
+          </Text>
+        </View>
+        </TouchableOpacity>
+      )
+      
+      //<SingleFormView form={form.item} />
+    }
+      keyExtractor={form => form.uid.toString()} 
+      />
+
     );
   }
 }
@@ -31,3 +50,11 @@ const styles = StyleSheet.create({
     color: '#000'
   }
 });
+
+const mapStateToProps = state => {
+  const { currentForms } = state.forms;
+  
+  return { currentForms };
+};
+
+export default connect(mapStateToProps, { fetchCurrentForms, openForm })(Forms);

@@ -6,7 +6,8 @@ import { locali } from '../../locales/i18n';
 
 const styles = StyleSheet.create({
     invitationText: {
-        fontSize: 15
+        fontSize: 15,
+        textAlign: 'left'
     },
     itemContainer: {
         padding: 5

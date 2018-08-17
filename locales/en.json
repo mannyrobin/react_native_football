@@ -26,7 +26,11 @@
   "intro": {
     "button_next": "Next",
     "button_done": "Done",
-    "button_skip": "Skip"
+    "button_skip": "Skip",
+    "page1": {
+      "title": "Challenge your friends!",
+      "content": "Who among the friends is the Bet Master?\nCompete against your friends in a Friendly League with fun and competetive challenges!"
+    }
   },
   "login":{
     "login_with_facebook_button_title": "Login With Facebook",
@@ -81,7 +85,7 @@
     "league_invitations":
     {
       "no_invitations": "No pending invitations.",
-      "invitationContent": "{{inviter}} invites you to {{leagueName}} !"
+      "invitationContent": "{{inviter}} invites you to {{leagueName}}!"
     }
   },
   "forms": {

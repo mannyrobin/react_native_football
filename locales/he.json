@@ -26,7 +26,11 @@
   "intro": {
     "button_next": "הבא",
     "button_done": "סיום",
-    "button_skip": "דלג"
+    "button_skip": "דלג",
+    "page1": {
+      "title": "אתגר את החבר'ה!",
+      "content": "מי מבין החברים הוא אלוף ההימורים?\nהתחרה מול החברים בליגה חברתית עם אתגרים מהנים ותחרותיים!"
+    }
   },
   "login":{
     "login_with_facebook_button_title": "התחבר עם פייסבוק",
@@ -81,7 +85,7 @@
     "league_invitations":
     {
       "no_invitations": "אין הזמנות ממתינות.",
-      "invitationContent": "{{inviter}} מזמין אותך אל {{leagueName}} !"
+      "invitationContent": "{{inviter}} מזמין אותך אל {{leagueName}}!"
     }
   },
   "forms": {

@@ -1,11 +1,12 @@
 import firebase from 'firebase';
+import { arraify } from '../utils';
 import { 
 	FRIENDLY_LEAGUE_NAME_CHANGED,
 	FRIEND_EMAIL_CHANGED,
 	NEW_FRIENDLY_LEAGUE_SUCCESS,
 	INVITE_FRIEND_SUCCESS,
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
-	FRIENDLY_LEAGUE_FETCH_SUCCESS
+	OPEN_LEAGUE
  } from './types.js';
 
  export const friendlyLeagueNameChanged = (leagueName) => {
@@ -28,12 +29,12 @@ export const friendEmailChanged = (friendEmail) => {
         const league = {
 			friendlyLeagueName: leagueName,
 			admin: uid,
-			participants: { [uid]: true },
-			scoreBoard: [{
-				userUid: uid,
-				points: 0,
-				numberOfForms: 0
-			}]
+			participants: {
+				[uid]: {
+					points: 0,
+					numberOfForms: 0
+				}
+			}
 		};
         firebase.database().ref('/friendlyLeagues')
 		.push(league)
@@ -65,25 +66,25 @@ export const inviteFriendToFriendlyLeague = (
 		};
 	};
 
-export const friendlyLeaguesFetch = () => {
-	const { currentUser } = firebase.auth();
-
-	return (dispatch) => {
+export const friendlyLeaguesFetch = () =>
+	dispatch =>
 		firebase.database()
-		.ref('/friendlyLeagues')
-		.orderByChild(`participants/${currentUser.uid}`)
-		.equalTo(true)
-		.on('value', snapshot => {
-			dispatch({ type: FRIENDLY_LEAGUES_FETCH_SUCCESS, payload: snapshot.val() });
-		});
-	};
-};
+			.ref('/friendlyLeagues')
+			.on('value', snapshot =>
+				dispatch({
+					type: FRIENDLY_LEAGUES_FETCH_SUCCESS,
+					payload: arraify(snapshot.val())
+						.filter(league => league.participants
+							.find(user => user.uid === firebase.auth().currentUser.uid))
+				}));
 
-export const friendlyLeagueFetch = (friendlyLeagueId) => {
-	return (dispatch) => {
-		firebase.database().ref(`/friendlyLeagues/${friendlyLeagueId}`)
-		.on('value', snapshot => {
-			dispatch({ type: FRIENDLY_LEAGUE_FETCH_SUCCESS, payload: snapshot.val() });
+
+export const openFriendlyLeague = (league, navigation) => 
+	dispatch => {
+		navigation.navigate('FriendlyLeague', {
+			friendlyLeagueId: league.uid,
+			friendlyLeagueName: league.friendlyLeagueName
 		});
+		dispatch({ type: OPEN_LEAGUE, payload: league.uid });
 	};
-};
+	

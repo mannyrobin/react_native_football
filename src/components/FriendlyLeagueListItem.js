@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { connect } from 'react-redux';
 import { CardSection } from './common';
+import { openFriendlyLeague } from '../actions';
 
 class ListItem extends Component {
-onRowPress() {
-	this.props.navigation.navigate('FriendlyLeague', {
-        friendlyLeagueId: this.props.friendlyLeague.uid,
-        friendlyLeagueName: this.props.friendlyLeague.friendlyLeagueName
-    });
-}
-
 	render() {
-		const { friendlyLeagueName } = this.props.friendlyLeague;
+		const friendlyLeague = this.props.friendlyLeague;
 
 		return (
-			<TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
+			<TouchableWithoutFeedback 
+			onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}
+			>
 				<View>
 					<CardSection>
 						<Text style={styles.titleStyle}>
-							{friendlyLeagueName}
+							{friendlyLeague.friendlyLeagueName}
 						</Text>
 					</CardSection>
 				</View>
@@ -34,4 +31,4 @@ const styles = {
 	}
 };
 
-export default ListItem;
+export default connect(null, { openFriendlyLeague })(ListItem);

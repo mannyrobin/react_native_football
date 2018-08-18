@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { RkText } from 'react-native-ui-kitten';
 import { LeaderboardContainer } from './common';
-import { friendlyLeagueFetch } from '../actions';
 import { locali } from '../../locales/i18n';
 
 class FriendlyLeague extends Component {
@@ -35,10 +34,6 @@ class FriendlyLeague extends Component {
         };
     };
 
-    componentWillMount() {
-      this.props.friendlyLeagueFetch(this.props.navigation.getParam('friendlyLeagueId', '0'));
-    }
-
   render() {
       return (
         <View>
@@ -63,9 +58,9 @@ class FriendlyLeague extends Component {
             </View>
           </ImageBackground>
           <LeaderboardContainer
-            data={this.props.scoreBoard}
+            data={this.props.league.participants}
             sortBy='points'
-            labelBy='userUid'
+            labelBy='uid'
           />
         </View>
       );
@@ -107,16 +102,10 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => {
-  const {
-    friendlyLeagueName,
-    scoreBoard
-  } = state.friendlyLeagues.friendlyLeagueFetch;
+const mapStateToProps = ({ friendlyLeagues }) => 
+  ({
+    league: friendlyLeagues.friendlyLeaguesListFetch
+              .find(league => league.uid === friendlyLeagues.selectedFriendlyLeagueId),
+  });
 
-  return {
-    friendlyLeagueName,
-    scoreBoard
-  };
-};
-
-export default connect(mapStateToProps, { friendlyLeagueFetch })(FriendlyLeague);
+export default connect(mapStateToProps)(FriendlyLeague);

@@ -1,7 +1,7 @@
 import firebase from 'firebase';
-import _ from 'lodash';
 import { LEAGUE_INVITATIONS_FETCH_SUCCESS, LEAGUE_INVITATION_ACCEPTED, 
         LEAGUE_INVITATION_REJECTED } from './types';
+import { arraify } from '../utils';
 
 export const readLeaguesInvitations = navigate =>
     () => navigate('LeaguesInvitations');
@@ -16,7 +16,7 @@ export const fetchLeaguesInvitations = () =>
             .on('value', invitationsSnapshot =>
                 dispatch({
                     type: LEAGUE_INVITATIONS_FETCH_SUCCESS,
-                    payload: _.map(invitationsSnapshot.val(), (val, uid) => ({ ...val, uid }))
+                    payload: arraify(invitationsSnapshot.val()) || []
                 }));
     };
 
@@ -36,7 +36,10 @@ export const acceptInvitation = (invitationUid, leagueUid) =>
             .then(() => {
                 db.ref('friendlyLeagues').child(leagueUid).child('participants')
                 .child(currentUser.uid)
-                .set(true)
+                .set({
+					points: 0,
+					numberOfForms: 0
+				})
                 .then(() => dispatch({
                     type: LEAGUE_INVITATION_ACCEPTED
                 }));

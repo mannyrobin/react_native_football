@@ -14,7 +14,7 @@ export const FRIEND_EMAIL_CHANGED = 'friend_email_changed';
 export const NEW_FRIENDLY_LEAGUE_SUCCESS = 'new_friendly_league_success';
 export const INVITE_FRIEND_SUCCESS = 'invite_friend_success';
 export const FRIENDLY_LEAGUES_FETCH_SUCCESS = 'friendly_leagues_fetch_success';
-export const FRIENDLY_LEAGUE_FETCH_SUCCESS = 'friendly_league_fetch_success';
+export const OPEN_LEAGUE = 'open_league';
 
 // ** Invitations ** 
 

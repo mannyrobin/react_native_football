@@ -24,7 +24,7 @@ class FriendlyLeagueSettings extends Component {
       onInviteFriendButtonPress() {
         const { friendEmail, friendlyLeaguesListFetch, navigation } = this.props;
         const leagueUid = navigation.getParam('friendlyLeagueId', '0');
-        const friendlyLeagues = _.map(friendlyLeaguesListFetch, (val, uid) => ({ ...val, uid }));
+        const friendlyLeagues = friendlyLeaguesListFetch;
         const { friendlyLeagueName } = friendlyLeagues.find(league => league.uid === leagueUid);
         this.props
             .inviteFriendToFriendlyLeague(friendEmail, leagueUid, friendlyLeagueName, navigation);
@@ -72,7 +72,8 @@ const styles = {
     }
 };
 
-const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFetch } }) => ({ friendEmail, friendlyLeaguesListFetch });
+const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFetch } }) => 
+    ({ friendEmail, friendlyLeaguesListFetch });
 
 export default connect(mapStateToProps,
     { friendEmailChanged, inviteFriendToFriendlyLeague })(FriendlyLeagueSettings);

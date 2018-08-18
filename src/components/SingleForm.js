@@ -18,7 +18,6 @@ const fetchMatch = (matchUid, matches) => {
 };
 
 const mapStateToProps = ({ forms, matches }) => {
-    console.log(matches);
     const form = forms
                 .currentForms.find(element => element.uid === forms.selectedFormId);
 

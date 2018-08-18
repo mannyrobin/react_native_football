@@ -64,9 +64,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  const friendlyLeagues = _.map(state.friendlyLeagues.friendlyLeaguesListFetch, (val, uid) => {
-    return { ...val, uid };
-  });
+  const friendlyLeagues = state.friendlyLeagues.friendlyLeaguesListFetch;
 
   return { friendlyLeagues };
 };

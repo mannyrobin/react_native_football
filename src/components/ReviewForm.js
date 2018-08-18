@@ -1,24 +1,21 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Text, ImageBackground } from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
 import { submitForm } from '../actions';
+import { SingleFormView } from './SingleFormView';
 
 class ReviewForm extends Component {
     state = { sliderValue: '0' };
     
     render() {
         return (
+            
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <ImageBackground
-                        source={require('../images/Form.png')}
-                        style={{ width: '100%', height: '100%', paddingTop: 30 }}
-                        resizeMode='cover'
-                    >
-                    <Text>הצגת הטופס</Text>
-                    </ImageBackground>
+                    <SingleFormView form={this.props.form} />
                 </View>
                 <View style={styles.sliderContainer}>
                     <View style={styles.sliderSection}>
@@ -87,9 +84,23 @@ const styles = StyleSheet.create({
     }
   });
 
-  const mapStateToProps = state => {
-    const { newForm } = state.forms;
-
-    return { newForm };
+  const fetchMatch = (matchUid, matches) => {
+    const allMatches = _.flatMap(matches.matchesLeagues, league => league.matches);
+    
+    return allMatches.find(match => match.uid === matchUid);
 };
+
+  const mapStateToProps = ({ forms, matches }) => {
+    const form = forms.newForm;
+
+    form.bets = form.map(bet => ({
+        ...bet,
+        match: fetchMatch(bet.matchUid, matches)
+    }));
+
+    return {
+        form
+    };
+};
+
 export default connect(mapStateToProps, { submitForm })(ReviewForm);

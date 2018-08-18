@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
@@ -9,6 +9,7 @@ import { locali } from '../../locales/i18n';
 
 class MatchContainer extends Component {
     render() {
+        console.log('newForm', this.props.newForm);
         const {
             hometeamName,
             awayteamName,
@@ -34,7 +35,7 @@ class MatchContainer extends Component {
                 >
                     <View style={styles.timeContainer}>
                         <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
-                            {timestamp}
+                            {new Date(timestamp * 1000).toLocaleString()}
                         </Text>
                     </View>
                     <View style={styles.teamsContainer}>
@@ -117,7 +118,7 @@ class MatchContainer extends Component {
     }
 }
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         height: 150,
@@ -197,7 +198,7 @@ const styles = {
         color: '#fff',
         textAlign: 'center',
 	}
-};
+});
 
 const mapStateToProps = state => {
     const { newForm } = state.forms;

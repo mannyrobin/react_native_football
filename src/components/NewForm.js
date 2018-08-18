@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { fetchMatchesList } from '../actions';
+import { fetchMatches } from '../actions';
 import MatchContainer from './MatchContainer';
 import { Spinner } from './common';
 import { locali } from '../../locales/i18n';
@@ -13,22 +13,22 @@ class NewForm extends Component {
     header: null,
   };
   componentDidMount() {
-    this.props.fetchMatchesList();
+    this.props.fetchMatches();
   }
 
   render() {
-    if (this.props.matchesList.length > 0) {
+    if (this.props.matchesLeagues.length > 0) {
+      console.log('matchesLeagues', this.props.matchesLeagues);
       const formFilled = this.props.newForm.length > 0;
       return (
         <View style={styles.container}>
           <View style={styles.MatchesContainer}>
             <FlatList 
-              data={this.props.matchesList}
-              renderItem={match =>
-                  <MatchContainer
-                    match={match.item}
-                  />
+              data={this.props.matchesLeagues[0].matches}
+              renderItem={({ item }) =>
+                  <MatchContainer match={item} />
               }
+
               keyExtractor={match => match.uid}
             />
           </View>
@@ -73,13 +73,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  const matchesList = _.map(state.forms.matchesList, (val, uid) => {
-    return { ...val, uid };
-  });
-
   const { newForm } = state.forms;
+  const { matchesLeagues } = state.matches;
 
-  return { matchesList, newForm };
+  return { matchesLeagues, newForm };
 };
 
-export default connect(mapStateToProps, { fetchMatchesList })(NewForm);
+export default connect(mapStateToProps, { fetchMatches })(NewForm);

@@ -2,9 +2,11 @@ import firebase from 'firebase';
 import { 
     MATCHES_LIST_FETCH,
     SLIDER_VALUE_CHANGED,
-    NEW_FORM_UPDATED,
+    NEW_FORM_UPDATE_PUSH,
+    NEW_FORM_UPDATE_SLICE,
+    NEW_FORM_UPDATE_CHANGE_BET,
     SUBMIT_FORM_SUCCESS,
-    FETCT_CURRENT_FORMS,
+    FETCH_CURRENT_FORMS,
     OPEN_FORM,
  } from './types.js';
 import { arraify } from '../utils';
@@ -41,15 +43,23 @@ export const updateNewForm = (newForm, matchUid, bet, odd) => {
 
     if (isExistsWithDifferentBet !== -1) {
         //replace bet with pressed bet
-        newForm[isExistsWithDifferentBet].bet = bet;
+        return {
+            type: NEW_FORM_UPDATE_CHANGE_BET,
+            payload: { isExistsWithDifferentBet, bet, odd }
+        };
+        //newForm[isExistsWithDifferentBet].bet = bet;
     } else if (isExists !== -1) {
         //remove from array
-        newForm.splice(isExists, 1);
-    } else newForm.push(val);
-    return {
-        type: NEW_FORM_UPDATED,
-        payload: newForm
-    };
+        return {
+            type: NEW_FORM_UPDATE_SLICE,
+            payload: isExists
+        };
+    } else {
+        return {
+            type: NEW_FORM_UPDATE_PUSH,
+            payload: val
+        };
+    }
 };
 
 export const fetchCurrentForms = () => {
@@ -58,7 +68,7 @@ export const fetchCurrentForms = () => {
         firebase.database().ref(`/forms/${currentUser.uid}`)
         .orderByChild('timestamps')
         .on('value', snapshot => {
-            dispatch({ type: FETCT_CURRENT_FORMS, payload: arraify(snapshot.val()) });
+            dispatch({ type: FETCH_CURRENT_FORMS, payload: arraify(snapshot.val()) });
         });
     };
 };
@@ -83,7 +93,7 @@ export const submitForm = (newForm, coins, navigation) => {
             totalOdd,
             totalCoins,
             won: -1,
-            form: newForm
+            bets: newForm
         };
         firebase.database().ref(`/forms/${firebase.auth().currentUser.uid}`)
             .push(val)

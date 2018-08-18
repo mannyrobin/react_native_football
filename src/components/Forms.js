@@ -28,8 +28,6 @@ class Forms extends Component {
         </View>
         </TouchableOpacity>
       )
-      
-      //<SingleFormView form={form.item} />
     }
       keyExtractor={form => form.uid.toString()} 
       />

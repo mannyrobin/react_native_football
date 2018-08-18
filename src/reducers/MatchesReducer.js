@@ -1,5 +1,5 @@
 import { 
-    FETCT_MATCHES
+    FETCH_MATCHES
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-    case FETCT_MATCHES:
+    case FETCH_MATCHES:
         return { ...state, matchesLeagues: action.payload };
     default:
         return state;    

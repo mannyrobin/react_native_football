@@ -26,11 +26,13 @@ export const LEAGUE_INVITATION_REJECTED = 'league_invitation_rejected';
 
 export const MATCHES_LIST_FETCH = 'matches_list_fetch';
 export const SLIDER_VALUE_CHANGED = 'slider_value_changed';
-export const NEW_FORM_UPDATED = 'new_form_updated';
+export const NEW_FORM_UPDATE_PUSH = 'new_form_update_push';
+export const NEW_FORM_UPDATE_SLICE = 'new_form_update_slice';
+export const NEW_FORM_UPDATE_CHANGE_BET = 'new_form_update_change_bet';
 export const SUBMIT_FORM_SUCCESS = 'submit_form_success';
-export const FETCT_CURRENT_FORMS = 'fetch_current_forms';
+export const FETCH_CURRENT_FORMS = 'fetch_current_forms';
 export const OPEN_FORM = 'open_form';
 
 // ** Matches **
-export const FETCT_MATCHES = 'fetch_matches';
+export const FETCH_MATCHES = 'fetch_matches';
 

@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 import LoginStack from './LoginStack';
 import DrawerStack from './DrawerStack';
 
+
 // https://github.com/react-community/react-navigation/issues/1254
 const noTransitionConfig = () => ({
   transitionSpec: {

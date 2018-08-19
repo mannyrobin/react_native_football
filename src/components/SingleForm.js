@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { SingleFormView } from './SingleFormView';
+import SingleFormView from './SingleFormView';
 
 class SingleForm extends Component {
     render() {

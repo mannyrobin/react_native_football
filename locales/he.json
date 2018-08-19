@@ -15,12 +15,13 @@
       },
       "friendly_leagues": {
         "main": "ליגות חברתיות",
-        "new_friendly_league": "ליגה חברתית חדשה"
-      },
-      "forms": {
-        "forms": "טפסים",
-        "fill_form": "מלא טופס"
+        "new_friendly_league": "ליגה חברתית חדשה",
+        "forms": {
+          "my_forms": "הטפסים שלי",
+          "fill_form": "מלא טופס"
+        }
       }
+
     }
   },
   "intro": {
@@ -94,7 +95,8 @@
       "review_form_button": "סקור ושלח את הסקר"
     },
     "display_form": {
-      "title": "הטפסים שלי"
+      "title": "הטפסים שלי",
+      "possible_win": "סכום לזכייה: "
     }
   }
 }

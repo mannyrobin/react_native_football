@@ -15,11 +15,12 @@
       },
       "friendly_leagues": {
         "main": "Friendly Leagues",
-        "new_friendly_league": "New Friendly League"
-      },
-      "forms": {
-        "forms": "Forms",
-        "fill_form": "Fill Form"
+        "new_friendly_league": "New Friendly League",
+        "forms": {
+          "my_forms": "My Forms",
+          "fill_form": "Fill Form",
+
+        }
       }
     }
   },
@@ -94,7 +95,8 @@
       "review_form_button": "Review and Submit Form"
     },
     "display_form": {
-      "title": "My Forms"
+      "title": "My Forms",
+      "possible_win": "Possible Win: "
     }
   }
 }

@@ -8,7 +8,8 @@ import {
     SUBMIT_FORM_SUCCESS,
     FETCH_CURRENT_FORMS,
     OPEN_FORM,
-
+    FETCT_CURRENT_FORMS,
+    FETCT_MATCH_PER_FORM,
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
     sliderValue: '',
     newForm: [],
     currentForms: [],
+    currentMatchsPerForm: [],
     selectedFormId: ''
 };
 
@@ -58,9 +60,17 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_CURRENT_FORMS: {
             return { ...state, currentMatchsPerForm: [], currentForms: action.payload };
         }
+
         case OPEN_FORM: 
         return { ...state, selectedFormId: action.payload };
 
+        case FETCT_CURRENT_FORMS:
+            return { ...state, currentMatchsPerForm: [], currentForms: action.payload };
+        
+        case FETCT_MATCH_PER_FORM: {
+            return { ...state, currentMatchsPerForm: action.payload };
+        }
+        
         default: {
             return state;
         }

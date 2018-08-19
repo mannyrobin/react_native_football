@@ -16,6 +16,6 @@ export const arraify = obj => {
             obj[key] = arraify(obj[key]);
         }
     }
-
+    
     return obj;
 };

@@ -47,13 +47,13 @@ const FriendlyLeagueTab = createBottomTabNavigator({
     FormsViewStack: {
         screen: FormsViewStack,
         navigationOptions: {
-            title: locali('navigation.titles.forms.forms')
+            title: locali('navigation.titles.friendly_leagues.forms.my_forms')
         }
     },
     FillFormStack: {
         screen: FillFormStack,
         navigationOptions: {
-            title: locali('navigation.titles.forms.fill_form')
+            title: locali('navigation.titles.friendly_leagues.forms.fill_form')
         }
     }
 }, {

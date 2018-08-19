@@ -9,7 +9,6 @@ import { locali } from '../../locales/i18n';
 
 class MatchContainer extends Component {
     render() {
-        console.log('newForm', this.props.newForm);
         const {
             hometeamName,
             awayteamName,

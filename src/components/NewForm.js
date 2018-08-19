@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
@@ -18,7 +17,6 @@ class NewForm extends Component {
 
   render() {
     if (this.props.matchesLeagues.length > 0) {
-      console.log('matchesLeagues', this.props.matchesLeagues);
       const formFilled = this.props.newForm.length > 0;
       return (
         <View style={styles.container}>

@@ -13,7 +13,7 @@ export default class DrawerContainer extends Component {
     const actionToDispatch = StackActions.reset({
       index: 0,
       key: null,  // black magic
-      actions: [NavigationActions.navigate({ routeName: 'loginStack' })]
+      actions: [NavigationActions.navigate({ routeName: 'LoginStack' })]
     });
     this.props.navigation.dispatch(actionToDispatch);
   }
@@ -77,32 +77,16 @@ export default class DrawerContainer extends Component {
           </View>
         </View>
         <View
-        style={activeItemKey === 'FormsStack' ? styles.drawerActiveItem : styles.drawerInActiveItem}
-        >
-        <View style={styles.DrawerItemIconContainer}>
-            <FontAwesomeIcon style={styles.DrawerItemIcon} name='wpforms' />
-          </View>
-          <View style={styles.DrawerItemTextContainer}>
-            <Text
-              onPress={() => navigation.navigate('FormsStack')}
-              style={[styles.DrawerItemText,
-                { color: activeItemKey === 'FormsStack' ? activeTintColor : inactiveTintColor }]}
-            >
-              {locali('navigation.titles.drawer.forms')}
-            </Text>
-          </View>
-        </View>
-        <View
-        style={activeItemKey === 'screen3' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+        style={activeItemKey === 'MyAccount' ? styles.drawerActiveItem : styles.drawerInActiveItem}
         >
         <View style={styles.DrawerItemIconContainer}>
             <FontAwesomeIcon style={styles.DrawerItemIcon} name='user' />
           </View>
           <View style={styles.DrawerItemTextContainer}>
             <Text
-              onPress={() => navigation.navigate('screen3')}
+              onPress={() => navigation.navigate('MyAccount')}
               style={[styles.DrawerItemText,
-                { color: activeItemKey === 'screen3' ? activeTintColor : inactiveTintColor }]}
+                { color: activeItemKey === 'MyAccount' ? activeTintColor : inactiveTintColor }]}
             >
               {locali('navigation.titles.drawer.my_account')}
             </Text>

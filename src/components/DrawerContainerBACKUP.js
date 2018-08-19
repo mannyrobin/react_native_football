@@ -12,7 +12,7 @@ export default class DrawerContainer extends Component {
     const actionToDispatch = StackActions.reset({
       index: 0,
       key: null,  // black magic
-      actions: [NavigationActions.navigate({ routeName: 'loginStack' })]
+      actions: [NavigationActions.navigate({ routeName: 'LoginStack' })]
     });
     this.props.navigation.dispatch(actionToDispatch);
   }
@@ -53,7 +53,7 @@ export default class DrawerContainer extends Component {
         </View>
         <View style={styles.DrawerItemTextContainer}>
           <Text
-            onPress={() => navigation.navigate('screen3')}
+            onPress={() => navigation.navigate('MyAccount')}
             style={styles.DrawerItemText}
           >
             Account

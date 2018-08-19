@@ -81,7 +81,7 @@ export const friendlyLeaguesFetch = () =>
 
 export const openFriendlyLeague = (league, navigation) => 
 	dispatch => {
-		navigation.navigate('FriendlyLeague', {
+		navigation.navigate('FriendlyLeagueTab', {
 			friendlyLeagueId: league.uid,
 			friendlyLeagueName: league.friendlyLeagueName
 		});

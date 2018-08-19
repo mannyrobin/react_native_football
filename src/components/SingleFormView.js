@@ -3,11 +3,11 @@ import { Text, View, StyleSheet } from 'react-native';
 
 
 const SingleFormView = ({ form }) => {
-    const { bets, timestamp, coins, totalCoins, totalOdd, won } = form; 
-
-    return (
-        <View style={styles.container}>
-            <View>
+    const { bets, timestamp, coins, totalCoins, totalOdd, won } = form;
+    if (form.bets) {
+        return (
+            <View style={styles.container}>
+                <View>
                     <Text style={styles.titleStyle}>
                         {timestamp}
                     </Text>
@@ -25,10 +25,12 @@ const SingleFormView = ({ form }) => {
                     </Text>
                     {bets
                         .map(({ match }) =>
-                         (<Text>{ match.awayteamName + ' VS ' + match.hometeamName}</Text>))}
-            </View>           
-        </View>
-    );     
+                            (<Text>{match.awayteamName + ' VS ' + match.hometeamName}</Text>))}
+                </View>
+            </View>
+        );
+    }
+    return null;
 };
 
 const styles = StyleSheet.create({

@@ -102,11 +102,11 @@ const loginUserSuccess = (dispatch, user, navigation) => {
 		payload: user
 	});
 
-	navigation.navigate('drawerStack');
+	navigation.navigate('DrawerStack');
 	const resetAction = StackActions.reset({
 		index: 0,
-		key: 'DrawerStack',
-		actions: [NavigationActions.navigate({ routeName: 'DrawerStack' })],
+		key: 'Drawer',
+		actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
 	});
 	navigation.dispatch(resetAction);
 };

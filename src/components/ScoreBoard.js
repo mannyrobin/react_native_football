@@ -6,7 +6,7 @@ import { RkText } from 'react-native-ui-kitten';
 import { LeaderboardContainer } from './common';
 import { locali } from '../../locales/i18n';
 
-class FriendlyLeague extends Component {
+class ScoreBoard extends Component {
     static navigationOptions = ({ navigation }) => {
       const navigateToAddFriends = () => {
         navigation.navigate('FriendlyLeagueSettings', {
@@ -108,4 +108,4 @@ const mapStateToProps = ({ friendlyLeagues }) =>
               .find(league => league.uid === friendlyLeagues.selectedFriendlyLeagueId),
   });
 
-export default connect(mapStateToProps)(FriendlyLeague);
+export default connect(mapStateToProps)(ScoreBoard);

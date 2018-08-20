@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     friendlyLeagueName: '',
     friendEmail: '',
     friendlyLeaguesListFetch: [],
+    selectedFriendlyLeagueId: ''
 };
 
 export default (state = INITIAL_STATE, action) => {

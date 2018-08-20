@@ -5,7 +5,7 @@ import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
 import { submitForm } from '../actions';
-import { SingleFormView } from './SingleFormView';
+import SingleFormView from './SingleFormView';
 
 class ReviewForm extends Component {
     state = { sliderValue: '0' };
@@ -13,7 +13,7 @@ class ReviewForm extends Component {
     render() {
         let fullForm = {};
         if (this.props.form.bets.length > 0) {
-            console.log('test123');
+            console.log('test1');
         const totalOdd =
             this.props.form.bets.map(item => item.odd).reduce((prev, next) => prev * next);
         const coins = this.state.sliderValue;
@@ -30,8 +30,9 @@ class ReviewForm extends Component {
     }
 
         return (
-
+            
             <View style={styles.container}>
+            
                 <View style={styles.formContainer}>
                     <SingleFormView form={fullForm} />
                 </View>

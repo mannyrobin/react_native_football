@@ -1,32 +1,62 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, Image } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 import { Button, Avatar } from 'react-native-elements';
 import { locali } from '../../locales/i18n';
 
+
 class SingleFormView extends Component {
+
+  iconShape() {
+    let { won } = this.props.form;
+    switch (won) {
+      case true:
+        return { name: 'check', type: 'entypo' };
+      case false:
+        return { name: 'cross', type: 'entypo' };
+      default:
+        return { name: 'timer', type: 'materialIcons' };    
+    }
+  }
+
+  iconColor() {
+    let { won } = this.props.form;
+    switch (won) {
+      case true:
+        return { backgroundColor: 'green' };
+      case false: {
+        return { backgroundColor: 'red' };
+      }
+      default:
+        return '';
+    }
+  }
+
   render() {
     const { bets, timestamp, totalCoins, totalOdd } = this.props.form;
     return ( 
       <View style={{ width: '100%' }}>
+
         <ImageBackground
           source={require('../images/Form.png')}
           style={{ height: '100%' }}
           resizeMode='cover'
           position='absolute'
         >
+        <ScrollView /* contentContainerStyle={{ height: '130%' }} */>
+
           {bets
             .map(({ match }) =>
               <View style={{ flex: 1 }}>
                 <View style={styles.timeContainer}>
                   <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
-                    {timestamp}
+                    {new Date(timestamp * 1000).toLocaleString()}
                   </Text>
                 </View>
                 <View style={styles.teamsContainer}>
                   <View style={styles.teamsSection}>
                     <View style={styles.teamLogoSection}>
                       <Image
-                        style={{ flex: 1, height: undefined, width: undefined }}
+                        style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
                         source={require('../images/Real_Madrid.png')}
                         resizeMode="contain"
                       />
@@ -45,7 +75,7 @@ class SingleFormView extends Component {
                   <View style={styles.teamsSection}>
                     <View style={styles.teamLogoSection}>
                       <Image
-                        style={{ flex: 1, height: undefined, width: undefined }}
+                        style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
                         source={require('../images/Real_Madrid.png')}
                         resizeMode="contain"
                       />
@@ -82,15 +112,20 @@ class SingleFormView extends Component {
             <View style={styles.timeContainer}>
               <Avatar
                 large
-                icon={{ name: 'timer', type: 'MaterialIcons' }}
+                icon={this.iconShape()}
+                overlayContainerStyle={this.iconColor()}
                 rounded
                 activeOpacity={0.7}
               />
             </View>
+           
 
           </View>
+          </ScrollView> 
         </ImageBackground>
+        
       </View>
+     
       
     );
   }

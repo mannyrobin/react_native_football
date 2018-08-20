@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchCurrentForms, openForm } from '../actions';
-
+import FormThumbnail from './FormThumbnail';
 
 class Forms extends Component {
 
@@ -11,19 +11,14 @@ class Forms extends Component {
   }
 
   render() {
-    console.log(this.props.currentForms);
     return (
       <FlatList
-      data={this.props.currentForms}
+      data={this.props.selectedLeagueForms}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() => this.props.openForm(this.props.navigation, item.uid)}
         >
-        <View>
-          <Text>
-            {item.timestamp}
-          </Text>
-        </View>
+        <FormThumbnail form={item} />
         </TouchableOpacity>
       )
     }
@@ -34,10 +29,15 @@ class Forms extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { currentForms } = state.forms;
-  
-  return { currentForms };
+const mapStateToProps = ({ forms, friendlyLeagues }) => {
+  const { currentForms } = forms;
+  const selectedLeagueForms = [];
+  currentForms.forEach(form => {
+    if (form.leagueUid === friendlyLeagues.selectedFriendlyLeagueId) {
+      selectedLeagueForms.push(form);
+    }
+  });
+  return { currentForms, selectedLeagueForms };
 };
 
 export default connect(mapStateToProps, { fetchCurrentForms, openForm })(Forms);

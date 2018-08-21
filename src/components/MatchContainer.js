@@ -80,7 +80,7 @@ class MatchContainer extends Component {
                                 rkType='circle outline'
                                 onPress={() => this.props.updateNewForm(this.props.newForm, uid, '1', hometeamOdd)}
                             >
-                                <Text style={styles.oddButtonLable}>{hometeamOdd}</Text>
+                                <Text style={styles.oddButtonLable}>{hometeamOdd.toFixed(2)}</Text>
                             </RkButton>
                         </View>
                         <View style={[styles.oddsSection, { flex: 2 }]}>
@@ -89,7 +89,7 @@ class MatchContainer extends Component {
                             rkType='circle outline'
                             onPress={() => this.props.updateNewForm(this.props.newForm, uid, 'x', drawOdd)}
                             >
-                                <Text style={styles.oddButtonLable}>{drawOdd}</Text>
+                                <Text style={styles.oddButtonLable}>{drawOdd.toFixed(2)}</Text>
                             </RkButton>
                         </View>
                         <View style={styles.oddsSection}>
@@ -98,7 +98,7 @@ class MatchContainer extends Component {
                             rkType='circle outline'
                             onPress={() => this.props.updateNewForm(this.props.newForm, uid, '2', awayteamOdd)}
                             >
-                                <Text style={styles.oddButtonLable}>{awayteamOdd}</Text>
+                                <Text style={styles.oddButtonLable}>{awayteamOdd.toFixed(2)}</Text>
                             </RkButton>
                         </View>
                     </View>

@@ -18,8 +18,7 @@
         "new_friendly_league": "New Friendly League",
         "forms": {
           "my_forms": "My Forms",
-          "fill_form": "Fill Form",
-
+          "fill_form": "Fill Form"
         }
       }
     }
@@ -100,9 +99,10 @@
       "possible_win": "Possible Win: ",
       "total_odd": "Total Odd:",
       "thumbnail_display": {
-        "press_here": "To open the form click here!",
+        "press_here": "Press to View",
         "bet_amount": "Bet Amount:",
-        "winning_coins": "Winning Coins:"
+        "winning_coins": "Winning Coins:",
+        "date_title": "Sent at "
       }
     }
   }

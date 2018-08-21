@@ -17,22 +17,26 @@ import ScoreBoard from '../ScoreBoard';
 const FormsViewStack = createStackNavigator({
     Forms: { screen: Forms },
     Form: { screen: SingleForm }
-});
+}, {
+    initialRouteName: 'Forms',
+    navigationOptions: {
+        header: null
+    }
+}
+);
 
 const FillFormStack = createStackNavigator({
     NewForm: {
-        screen: NewForm,
-        navigationOptions: {
-            headerMode: 'none'
-        }
+        screen: NewForm
     },
     ReviewForm: { screen: ReviewForm }
 }, {
         // Default config for all screens
         initialRouteName: 'NewForm',
         navigationOptions: {
-            headerStyle: { backgroundColor: '#C1E15E' },
-            headerTintColor: 'black'
+            header: null
+            /* headerStyle: { backgroundColor: '#C1E15E' },
+            headerTintColor: 'black' */
         }
     }
 );

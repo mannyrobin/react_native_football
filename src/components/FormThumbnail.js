@@ -6,44 +6,6 @@ import { locali } from '../../locales/i18n';
 
 class FormThumbnail extends Component {
 
-    iconName() {
-        const { won } = this.props.form;
-        switch (won) {
-          case 1:
-            return 'check';
-          case 0:
-            return 'cross';
-          default:
-            return 'timer';   
-        }
-      }
-    
-      iconType() {
-        const { won } = this.props.form;
-        switch (won) {
-          case 1:
-            return 'entypo';
-          case 0: {
-            return 'entypo';
-          }
-          default:
-            return 'material-community';
-        }
-      }
-
-      iconColor() {
-        const { won } = this.props.form;
-        switch (won) {
-          case 1:
-            return 'green';
-          case 0: {
-            return 'red';
-          }
-          default:
-            return '';
-        }
-      }
-
     render() {
         const { timestamp, totalCoins, won, coins } = this.props.form;
         return (
@@ -51,7 +13,10 @@ class FormThumbnail extends Component {
                 <View style={styles.container}>
                     <View style={styles.dateContainer}>
                         <Text style={styles.title}>
-                        {new Date(timestamp * 1000).toLocaleString()}
+                        {
+                            locali('forms.display_form.thumbnail_display.date_title') +
+                            new Date(timestamp * 1000).toLocaleString()
+                        }
                     </Text>
                     </View>
                     <View style={styles.pressToOpenContainer}>
@@ -92,9 +57,18 @@ class FormThumbnail extends Component {
                         <View style={styles.checkWonContainer}>
                             <Icon
                             size={40}
-                                name={this.iconName()}
-                                type={this.iconType()}
-                                color={this.iconColor()}
+                                name={
+                                    won === 1 ? 'check' :
+                                    won === 0 ? 'cross' :
+                                    'timer'}
+                                type={
+                                    won === 1 ? 'entypo' :
+                                    won === 0 ? 'entypo' :
+                                    'materialIcons'}
+                                color={
+                                    won === 1 ? 'green' :
+                                    won === 0 ? 'red' :
+                                    'grey'}
                             />
                         </View>
                         <View style={styles.betExpectedCoinsContainer}>

@@ -42,6 +42,17 @@ const drawerButton = (navigation) =>
         <EntypoIcon style={styles.DrawerMenuIcon} name='menu' />
     </Text>;
 
+function renderHeaderRight(navigation) {
+    console.log('navStateInDrawerStack', navigation.state);
+    return (<LeaguesInvitationBadge
+        onPress={() =>
+            navigation.dispatch(
+                NavigationActions.navigate({ routeName: 'LeagueInvitations' })
+            )
+        }
+    />
+    );
+}
 
 const DrawerStack = createStackNavigator({
     Drawer: { screen: Drawer }
@@ -53,14 +64,7 @@ const DrawerStack = createStackNavigator({
             headerTintColor: 'black',
             gesturesEnabled: false,
             headerLeft: drawerButton(navigation),
-            headerRight:
-                (<LeaguesInvitationBadge
-                    onPress={() =>
-                        navigation.dispatch(
-                            NavigationActions.navigate({ routeName: 'LeagueInvitations' })
-                        )
-                    }
-                />)
+            headerRight: renderHeaderRight(navigation)
         })
     });
 

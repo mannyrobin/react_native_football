@@ -20,7 +20,6 @@ const AppNavigation = createStackNavigator({
 }, {
   // Default config for all screens
   headerMode: 'none',
-  title: 'Main',
   initialRouteName: 'LoginStack',
   transitionConfig: noTransitionConfig
 });

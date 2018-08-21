@@ -100,9 +100,10 @@
       "possible_win": "סכום לזכייה: ",
       "total_odd": "יחס כולל: ",
       "thumbnail_display": {
-        "press_here": "לפתיחת הטופס לחץ כאן!",
+        "press_here": "לחץ לצפייה!",
         "bet_amount": "סכום ההימור:",
-        "winning_coins": "זכייה משוערת:"
+        "winning_coins": "זכייה משוערת:",
+        "date_title": "נשלח ב- "
       }
     }
   }

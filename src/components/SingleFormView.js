@@ -6,33 +6,8 @@ import { locali } from '../../locales/i18n';
 
 class SingleFormView extends Component {
 
-  iconShape() {
-    let { won } = this.props.form;
-    switch (won) {
-      case 1:
-        return { name: 'check', type: 'entypo' };
-      case 0:
-        return { name: 'cross', type: 'entypo' };
-      default:
-        return { name: 'timer', type: 'materialIcons' };    
-    }
-  }
-
-  iconColor() {
-    let { won } = this.props.form;
-    switch (won) {
-      case 1:
-        return { backgroundColor: 'green' };
-      case 0: {
-        return { backgroundColor: 'red' };
-      }
-      default:
-        return '';
-    }
-  }
-
   render() {
-    const { bets, timestamp, totalCoins, totalOdd } = this.props.form;
+    const { bets, timestamp, totalCoins, totalOdd, won } = this.props.form;
     
     return bets ? ( 
       <View style={{ width: '100%' }}>
@@ -112,13 +87,19 @@ class SingleFormView extends Component {
               />
             
             <View style={styles.timeContainer}>
-              <Avatar
-                large
-                icon={this.iconShape()}
-                overlayContainerStyle={this.iconColor()}
-                rounded
-                activeOpacity={0.7}
-              />
+            <Avatar
+                    large
+                    icon={
+                      won === 1 ? { name: 'check', type: 'entypo' } :
+                        won === 0 ? { name: 'cross', type: 'entypo' } :
+                        { name: 'timer', type: 'materialIcons' }}
+                    overlayContainerStyle={
+                      won === 1 ? { backgroundColor: 'green' } :
+                      won === 0 ? { backgroundColor: 'red' } :
+                      { backgroundColor: 'grey' }}
+                    rounded
+                    activeOpacity={0.7}
+                  />
             </View>
            
 

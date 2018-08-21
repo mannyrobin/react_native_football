@@ -29,8 +29,9 @@ const FriendlyLeaguesStack = createStackNavigator({
         // Default config for all screens
         initialRouteName: 'FriendlyLeagues',
         navigationOptions: {
-            headerStyle: { backgroundColor: '#C1E15E' },
-            headerTintColor: 'black'
+            header: null,
+/*             headerStyle: { backgroundColor: '#C1E15E' },
+            headerTintColor: 'black' */
         }
     }
 );

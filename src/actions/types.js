@@ -32,6 +32,7 @@ export const NEW_FORM_UPDATE_CHANGE_BET = 'new_form_update_change_bet';
 export const SUBMIT_FORM_SUCCESS = 'submit_form_success';
 export const FETCH_CURRENT_FORMS = 'fetch_current_forms';
 export const OPEN_FORM = 'open_form';
+export const SUBMIT_FORM_FAIL = 'submit_form_fail';
 
 // ** Matches **
 export const FETCH_MATCHES = 'fetch_matches';

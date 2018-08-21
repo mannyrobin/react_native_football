@@ -2,23 +2,62 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { CardSection } from './common';
-
+import { locali } from '../../locales/i18n';
 
 class FormThumbnail extends Component {
 
+    iconName() {
+        const { won } = this.props.form;
+        switch (won) {
+          case 1:
+            return 'check';
+          case 0:
+            return 'cross';
+          default:
+            return 'timer';   
+        }
+      }
+    
+      iconType() {
+        const { won } = this.props.form;
+        switch (won) {
+          case 1:
+            return 'entypo';
+          case 0: {
+            return 'entypo';
+          }
+          default:
+            return 'material-community';
+        }
+      }
+
+      iconColor() {
+        const { won } = this.props.form;
+        switch (won) {
+          case 1:
+            return 'green';
+          case 0: {
+            return 'red';
+          }
+          default:
+            return '';
+        }
+      }
+
     render() {
+        const { timestamp, totalCoins, won, coins } = this.props.form;
         return (
             <CardSection>
                 <View style={styles.container}>
                     <View style={styles.dateContainer}>
                         <Text style={styles.title}>
-                            12345
+                        {new Date(timestamp * 1000).toLocaleString()}
                     </Text>
                     </View>
                     <View style={styles.pressToOpenContainer}>
                         <View style={{ marginHorizontal: 5 }}>
                             <Text style={styles.title}>
-                                Press To Open!
+                                {locali('forms.display_form.thumbnail_display.press_here')}
                     </Text>
                         </View>
                         <View style={{ marginHorizontal: 5 }}>
@@ -32,13 +71,13 @@ class FormThumbnail extends Component {
                         <View style={styles.betCoinsContainer}>
                             <View>
                                 <Text style={styles.title}>
-                                    Bet Amount:
+                                    {locali('forms.display_form.thumbnail_display.bet_amount')}
                               </Text>
                             </View>
                             <View style={{ alignSelf: 'center', flexDirection: 'row'/* , borderWidth: 1, borderColor: 'black' */ }}>
                                 <View style={{ marginHorizontal: 5, justifyContent: 'center', alignSelf: 'center' }}>
                                     <Text style={styles.title}>
-                                        150
+                                        {coins}
                                     </Text>
                                 </View>
                                 <View style={{ marginHorizontal: 5, alignSelf: 'center' }}>
@@ -53,20 +92,21 @@ class FormThumbnail extends Component {
                         <View style={styles.checkWonContainer}>
                             <Icon
                             size={40}
-                                name='timer'
-                                type='material-community'
+                                name={this.iconName()}
+                                type={this.iconType()}
+                                color={this.iconColor()}
                             />
                         </View>
                         <View style={styles.betExpectedCoinsContainer}>
                             <View>
                                 <Text style={styles.title}>
-                                    Winning Coins:
+                                {locali('forms.display_form.thumbnail_display.winning_coins')}  
                               </Text>
                             </View>
                             <View style={{ alignSelf: 'center', flexDirection: 'row'/* , borderWidth: 1, borderColor: 'black' */ }}>
                                 <View style={{ marginHorizontal: 5, justifyContent: 'center', alignSelf: 'center' }}>
                                     <Text style={styles.title}>
-                                        600
+                                        {totalCoins}
                                     </Text>
                                 </View>
                                 <View style={{ marginHorizontal: 5, alignSelf: 'center' }}>

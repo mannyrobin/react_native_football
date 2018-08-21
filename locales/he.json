@@ -92,11 +92,18 @@
   "forms": {
     "matches": {
       "vs": "נגד",
-      "review_form_button": "סקור ושלח את הסקר"
+      "review_form_button": "סקור ושלח את הסקר",
+      "error": "לא ניתן להמר על 0 מטבעות!"
     },
     "display_form": {
       "title": "הטפסים שלי",
-      "possible_win": "סכום לזכייה: "
+      "possible_win": "סכום לזכייה: ",
+      "total_odd": "יחס כולל: ",
+      "thumbnail_display": {
+        "press_here": "לפתיחת הטופס לחץ כאן!",
+        "bet_amount": "סכום ההימור:",
+        "winning_coins": "זכייה משוערת:"
+      }
     }
   }
 }

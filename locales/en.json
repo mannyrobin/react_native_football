@@ -92,11 +92,18 @@
   "forms": {
     "matches": {
       "vs": "VS",
-      "review_form_button": "Review and Submit Form"
+      "review_form_button": "Review and Submit Form",
+      "error": "You can not bet on 0 coins!"
     },
     "display_form": {
       "title": "My Forms",
-      "possible_win": "Possible Win: "
+      "possible_win": "Possible Win: ",
+      "total_odd": "Total Odd:",
+      "thumbnail_display": {
+        "press_here": "To open the form click here!",
+        "bet_amount": "Bet Amount:",
+        "winning_coins": "Winning Coins:"
+      }
     }
   }
 }

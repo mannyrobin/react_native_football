@@ -115,7 +115,6 @@ const fetchMatch = (matchUid, matches) => {
 
 const mapStateToProps = ({ forms, matches }) => {
     const form = [];
-
     form.bets = forms.newForm.map(bet => ({
         ...bet,
         match: fetchMatch(bet.matchUid, matches)

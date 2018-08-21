@@ -9,9 +9,9 @@ class SingleFormView extends Component {
   iconShape() {
     let { won } = this.props.form;
     switch (won) {
-      case true:
+      case 1:
         return { name: 'check', type: 'entypo' };
-      case false:
+      case 0:
         return { name: 'cross', type: 'entypo' };
       default:
         return { name: 'timer', type: 'materialIcons' };    
@@ -21,9 +21,9 @@ class SingleFormView extends Component {
   iconColor() {
     let { won } = this.props.form;
     switch (won) {
-      case true:
+      case 1:
         return { backgroundColor: 'green' };
-      case false: {
+      case 0: {
         return { backgroundColor: 'red' };
       }
       default:
@@ -48,7 +48,7 @@ class SingleFormView extends Component {
             .map(({ match }) =>
               <View style={{ flex: 1 }}>
                 <View style={styles.timeContainer}>
-                  <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
+                  <Text style={[styles.titleStyle, { textAlign: 'center' }, { margin: 20 }]}>
                     {new Date(timestamp * 1000).toLocaleString()}
                   </Text>
                 </View>
@@ -92,13 +92,14 @@ class SingleFormView extends Component {
             )}
           <View style={[styles.timeContainer, { flexDirection: 'column', paddingTop: 30 }]}>
             
+
               <Button
                 style={{ flex: 1 }}
                 fontWeight='bold'
                 large
                 backgroundColor='#C1E15E'
                 icon={{ name: 'local-atm' }}
-                title={locali('forms.display_form.possible_win') + totalCoins.toFixed(2)}
+                title={locali('forms.display_form.total_odd') + totalOdd.toFixed(2)}
               />
               <Button
                 style={{ flex: 1 }}
@@ -106,7 +107,7 @@ class SingleFormView extends Component {
                 large
                 backgroundColor='#C1E15E'
                 icon={{ name: 'local-atm' }}
-                title={'Total Odd: ' + totalOdd.toFixed(2)}
+                title={locali('forms.display_form.possible_win') + totalCoins.toFixed(2)}
               />
             
             <View style={styles.timeContainer}>

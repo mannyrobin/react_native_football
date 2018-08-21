@@ -1,3 +1,4 @@
+
 import firebase from 'firebase';
 import { 
     MATCHES_LIST_FETCH,
@@ -8,6 +9,7 @@ import {
     SUBMIT_FORM_SUCCESS,
     FETCH_CURRENT_FORMS,
     OPEN_FORM,
+    SUBMIT_FORM_FAIL
  } from './types.js';
 import { arraify } from '../utils';
 
@@ -95,11 +97,15 @@ export const submitForm = (newForm, coins, navigation) => {
             won: -1,
             bets: newForm
         };
-        firebase.database().ref(`/forms/${firebase.auth().currentUser.uid}`)
-            .push(val)
-            .then(() => {
-                dispatch({ type: SUBMIT_FORM_SUCCESS });
-                navigation.pop();
-        });
+        if (val.coins > 0) {
+            firebase.database().ref(`/forms/${firebase.auth().currentUser.uid}`)
+                .push(val)
+                .then(() => {
+                    dispatch({ type: SUBMIT_FORM_SUCCESS });
+                    navigation.pop();
+                });
+        } else {
+            dispatch({ type: SUBMIT_FORM_FAIL });
+        } 
     };
 };

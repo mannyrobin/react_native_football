@@ -1,4 +1,6 @@
 
+import { Alert } from 'react-native';
+import { locali } from '../../locales/i18n';
 import { 
     MATCHES_LIST_FETCH,
     SLIDER_VALUE_CHANGED,
@@ -8,7 +10,9 @@ import {
     SUBMIT_FORM_SUCCESS,
     FETCH_CURRENT_FORMS,
     OPEN_FORM,
+    SUBMIT_FORM_FAIL
  } from '../actions/types.js';
+
 
 const INITIAL_STATE = {
     matchesList: {},
@@ -57,12 +61,16 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_CURRENT_FORMS: {
             return { ...state, currentForms: action.payload };
         }
-
+        case SUBMIT_FORM_FAIL: {
+            Alert.alert(locali('forms.matches.error'));
+            return { ...state };
+        }
         case OPEN_FORM: 
         return { ...state, selectedFormId: action.payload };
         
         default: {
             return state;
         }
+
     }
 };

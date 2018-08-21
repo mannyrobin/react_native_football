@@ -51,15 +51,15 @@ class ScoreBoard extends Component {
                   style={styles.headerThumbnail}
                   source={require('../images/DefaultThumbnail.png')}
                 />
-                <RkText style={styles.headerPoints}>
-                  80 {locali('friendly_leagues.friendly_league.points')}
+                <RkText style={styles.headerCoins}>
+                  80 {locali('friendly_leagues.friendly_league.coins')}
                 </RkText>
               </View>
             </View>
           </ImageBackground>
           <LeaderboardContainer
             data={this.props.league.participants}
-            sortBy='points'
+            sortBy='coins'
             labelBy='uid'
           />
         </View>
@@ -94,7 +94,7 @@ const styles = {
     width: 60,
     borderRadius: 60 / 2
   },
-  headerPoints: {
+  headerCoins: {
     color: 'white',
     fontSize: 25,
     flex: 1,

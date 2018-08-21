@@ -33,7 +33,8 @@ class SingleFormView extends Component {
 
   render() {
     const { bets, timestamp, totalCoins, totalOdd } = this.props.form;
-    return ( 
+    
+    return bets ? ( 
       <View style={{ width: '100%' }}>
 
         <ImageBackground
@@ -125,102 +126,99 @@ class SingleFormView extends Component {
           </ScrollView> 
         </ImageBackground>
         
-      </View>
-     
-      
-    );
+      </View>) : null;
   }
-}     
-  const styles = StyleSheet.create({
-    timeContainer: {
-      flex: 1,
-      alignSelf: 'center',
-      justifyContent: 'center',
-    },
-    TeamsNames: {
-      fontSize: 18,
-      textAlign: 'center'
-    },
-    container: {
-      flexDirection: 'column',
-      height: 150,
-      borderRadius: 25,
+}
+const styles = StyleSheet.create({
+  timeContainer: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  TeamsNames: {
+    fontSize: 18,
+    textAlign: 'center'
+  },
+  container: {
+    flexDirection: 'column',
+    height: 150,
+    borderRadius: 25,
 
-      //IOS Shadow
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 5 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
+    //IOS Shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
 
-      //Android Shadow
-      elevation: 5,
+    //Android Shadow
+    elevation: 5,
 
-      marginBottom: 15
-    },
-    teamsContainer: {
-      flexDirection: 'row',
-      flex: 3,
-    },
-    teamsSection: {
-      flexDirection: 'column',
-      flex: 5,
-      marginVertical: 5,
-    },
-    teamLogoSection: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    teamLabelSection: {
-      flex: 1,
-      justifyContent: 'center',
-      paddingHorizontal: 5
-    },
-    vsSection: {
-      flex: 2,
-      justifyContent: 'center',
-      alignSelf: 'center'
-    },
-    oddsContainer: {
-      flex: 2,
-      flexDirection: 'row',
-    },
-    oddsSection: {
-      flex: 5,
-      paddingHorizontal: 5,
-      justifyContent: 'center'
-    },
-    oddButton: {
-      paddingHorizontal: 0,
-      marginHorizontal: 0,
-      width: 40,
-      height: 40,
-      backgroundColor: '#B7BABC',
-      alignSelf: 'center',
-    },
-    oddButtonSelected: {
-      paddingHorizontal: 0,
-      marginHorizontal: 0,
-      width: 40,
-      height: 40,
-      backgroundColor: '#FFAF40',
-      alignSelf: 'center',
-    },
-    oddButtonLable: {
-      color: '#E20A17',
-      fontWeight: 'bold'
-    },
-    titleStyle: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: 'black',
-      textAlign: 'center',
-    },
-    titleTeamsStyle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: 'black',
-      textAlign: 'center',
-    }
-  });
+    marginBottom: 15
+  },
+  teamsContainer: {
+    flexDirection: 'row',
+    flex: 3,
+  },
+  teamsSection: {
+    flexDirection: 'column',
+    flex: 5,
+    marginVertical: 5,
+  },
+  teamLogoSection: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  teamLabelSection: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 5
+  },
+  vsSection: {
+    flex: 2,
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+  oddsContainer: {
+    flex: 2,
+    flexDirection: 'row',
+  },
+  oddsSection: {
+    flex: 5,
+    paddingHorizontal: 5,
+    justifyContent: 'center'
+  },
+  oddButton: {
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
+    width: 40,
+    height: 40,
+    backgroundColor: '#B7BABC',
+    alignSelf: 'center',
+  },
+  oddButtonSelected: {
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
+    width: 40,
+    height: 40,
+    backgroundColor: '#FFAF40',
+    alignSelf: 'center',
+  },
+  oddButtonLable: {
+    color: '#E20A17',
+    fontWeight: 'bold'
+  },
+  titleStyle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+  },
+  titleTeamsStyle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+  }
+});
 
 export default SingleFormView;

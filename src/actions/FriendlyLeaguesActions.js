@@ -31,7 +31,7 @@ export const friendEmailChanged = (friendEmail) => {
 			admin: uid,
 			participants: {
 				[uid]: {
-					points: 0,
+					coins: 1000,
 					numberOfForms: 0
 				}
 			}

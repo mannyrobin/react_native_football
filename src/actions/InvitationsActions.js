@@ -37,7 +37,7 @@ export const acceptInvitation = (invitationUid, leagueUid) =>
                 db.ref('friendlyLeagues').child(leagueUid).child('participants')
                 .child(currentUser.uid)
                 .set({
-					points: 0,
+					coins: 1000,
 					numberOfForms: 0
 				})
                 .then(() => dispatch({

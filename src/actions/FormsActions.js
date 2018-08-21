@@ -84,8 +84,9 @@ export const openForm = (navigator, formUid) =>
 
 /* eslint-disable no-param-reassign */
 
-export const submitForm = (newForm, coins, navigation) => {
+export const submitForm = (newForm, coins, leagueUid, navigation) => {
     return (dispatch) => {
+        const { currentUser } = firebase.auth();
         const totalOdd = newForm.map(item => item.odd).reduce((prev, next) => prev * next);
         const totalCoins = totalOdd * coins;
         const timestamp = Math.floor(new Date().getTime() / 1000);
@@ -95,17 +96,29 @@ export const submitForm = (newForm, coins, navigation) => {
             totalOdd,
             totalCoins,
             won: -1,
-            bets: newForm
+            bets: newForm,
+            leagueUid
         };
-        if (val.coins > 0) {
-            firebase.database().ref(`/forms/${firebase.auth().currentUser.uid}`)
+
+       if (val.coins > 0) {
+            firebase.database().ref(`/forms/${currentUser.uid}`)
                 .push(val)
                 .then(() => {
-                    dispatch({ type: SUBMIT_FORM_SUCCESS });
-                    navigation.pop();
+                    firebase.database().ref('friendlyLeagues')
+                        .child(leagueUid)
+                        .child('participants')
+                        .child(currentUser.uid)
+                        .child('coins')
+                        .transaction(currentCoins => {
+                            return (currentCoins || 0) - coins;
+                        })
+                        .then(() => {
+                            dispatch({ type: SUBMIT_FORM_SUCCESS });
+                            navigation.pop();
+                        });
                 });
         } else {
             dispatch({ type: SUBMIT_FORM_FAIL });
-        } 
+        }
     };
 };

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
+import firebase from 'firebase';
 import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
@@ -13,22 +14,20 @@ class ReviewForm extends Component {
     render() {
         let fullForm = {};
         if (this.props.form.bets.length > 0) {
-            console.log('test1');
         const totalOdd =
-            this.props.form.bets.map(item => item.odd).reduce((prev, next) => prev * next);
+                this.props.form.bets.map(item => item.odd).reduce((prev, next) => prev * next);
         const coins = this.state.sliderValue;
         const totalCoins = totalOdd * this.state.sliderValue;
         const timestamp = Math.floor(new Date().getTime() / 1000);
             fullForm = {
-            coins,
-            timestamp,
-            totalOdd,
-            totalCoins,
-            won: -1,
-            bets: this.props.form.bets
-        };
-    }
-
+                coins,
+                timestamp,
+                totalOdd,
+                totalCoins,
+                won: -1,
+                bets: this.props.form.bets
+            };
+        }
         return (
             
             <View style={styles.container}>
@@ -40,7 +39,7 @@ class ReviewForm extends Component {
                     <View style={styles.sliderSection}>
                         <Slider
                             minimumValue={0}
-                            maximumValue={100}
+                            maximumValue={this.props.currentLeagueUser.coins}
                             step={5}
                             onValueChange={value => this.setState({ sliderValue: value })}
                             thumbImage={require('../images/Currency2Small.png')}
@@ -63,6 +62,7 @@ class ReviewForm extends Component {
                         onPress={() => this.props.submitForm(
                             this.props.newForm,
                             `${this.state.sliderValue}`,
+                            this.props.league.uid,
                             this.props.navigation)
                         }
                     >
@@ -113,16 +113,22 @@ const fetchMatch = (matchUid, matches) => {
     return allMatches.find(match => match.uid === matchUid);
 };
 
-const mapStateToProps = ({ forms, matches }) => {
+const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
+    const { currentUser } = firebase.auth();
+    const { newForm } = forms;
+    const league = friendlyLeagues.friendlyLeaguesListFetch.find(leagueItem =>
+        leagueItem.uid === friendlyLeagues.selectedFriendlyLeagueId);
+    const currentLeagueUser = league.participants.find(participant =>
+    participant.uid === currentUser.uid);
     const form = [];
-    form.bets = forms.newForm.map(bet => ({
+
+    form.bets = newForm.map(bet => ({
         ...bet,
         match: fetchMatch(bet.matchUid, matches)
     }));
 
-    const { newForm } = forms;
     return {
-        form, newForm
+        form, newForm, league, currentLeagueUser
     };
 };
 

@@ -74,7 +74,7 @@
     "friendly_league": {
       "pre_title": "League",
       "leaderboard": "Leaderboard",
-      "points": "Points",
+      "coins": "Coins",
       "settings": {
         "pre_title": "League Settings",
         "invite_friend_header": "Invite a Friend", 

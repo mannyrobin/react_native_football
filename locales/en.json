@@ -4,7 +4,8 @@
   },
   "navigation": {
     "titles": {
-      "login_with_email": "Login With Email",
+      "login_with_email": "Login with Email",
+      "sign_up_with_email": "Sign up with Email",
       "forgot_password": "Forgot Password",
       "drawer": {
         "main_league": "Main League",
@@ -57,7 +58,10 @@
       "error_invalid_email": "The email is invalid\nCheck your email address.",
       "error_operation_not_allowed": "Signing up with Email And Password is disabled.",
       "error_email_already_in_use": "This email is already in use.\ntry to Log In with different password or Sign Up with different email",
-      "error_default": "Signup failed.\nPlease try again!"
+      "error_username_exists" : "The username already exists!",
+      "error_default": "Signup failed.\nPlease try again!",
+      "button_sign_up": "Sign Up!",
+      "text_field_username_placeholder": "JohnSnow"
     },
     "forgot_password": {
       "text_field_email_placeholder": "email@gmail.com",

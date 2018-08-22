@@ -1,7 +1,9 @@
 import { 
     EMAIL_CHANGED,
     PASSWORD_CHANGED,
+    USERNAME_CHANGED,
     LOGGING_USER_IN,
+    SIGN_UP_NAVIGATE,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     FORGOT_PASSWORD,
@@ -10,7 +12,8 @@ import {
 
 const INITIAL_STATE = {
 	email: '',
-	password: '',
+    password: '',
+    username: '',
 	user: null,
 	error: '',
 	loading: false
@@ -24,11 +27,17 @@ export default (state = INITIAL_STATE, action) => {
         case PASSWORD_CHANGED: {
             return { ...state, password: action.payload };
         }
+        case USERNAME_CHANGED: {
+            return { ...state, username: action.payload };
+        }
         case LOGGING_USER_IN: {
             return { ...state,
 				loading: true,
                 error: '' 
             };
+        }
+        case SIGN_UP_NAVIGATE: {
+            return { ...state, ...INITIAL_STATE, email: action.payload };
         }
         case LOGIN_USER_SUCCESS: {
             return { ...state, ...INITIAL_STATE, user: action.payload };

@@ -32,11 +32,13 @@ class Forms extends Component {
 const mapStateToProps = ({ forms, friendlyLeagues }) => {
   const { currentForms } = forms;
   const selectedLeagueForms = [];
+  if (currentForms.length > 0) {
   currentForms.forEach(form => {
     if (form.leagueUid === friendlyLeagues.selectedFriendlyLeagueId) {
       selectedLeagueForms.push(form);
     }
   });
+}
   return { currentForms, selectedLeagueForms };
 };
 

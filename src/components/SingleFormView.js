@@ -99,7 +99,7 @@ class SingleFormView extends Component {
                       { backgroundColor: 'grey' }}
                     rounded
                     activeOpacity={0.7}
-                  />
+            />
             </View>
            
 

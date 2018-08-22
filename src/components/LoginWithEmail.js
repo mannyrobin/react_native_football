@@ -5,7 +5,7 @@ import { RkTextInput, RkButton } from 'react-native-ui-kitten';
 import ZocialIcon from 'react-native-vector-icons/Zocial';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { Card, CardSection, Spinner } from './common';
-import { emailChanged, passwordChanged, loginUser, signupUser, forgotPassword } from '../actions';
+import { emailChanged, passwordChanged, loginUser, signUpButton, forgotPassword } from '../actions';
 import { locali } from '../../locales/i18n';
 
 class LoginWithEmail extends Component {
@@ -22,9 +22,9 @@ class LoginWithEmail extends Component {
   }
 
   onSignupButtonPress() {
-    const { email, password, navigation } = this.props;
+    const { email, navigation } = this.props;
 
-    this.props.signupUser({ email, password, navigation });
+    this.props.signUpButton({ email, navigation });
   }
 
   onForgotPasswordButtonPress() {
@@ -177,6 +177,6 @@ export default connect(mapStateToProps, {
   emailChanged,
   passwordChanged,
   loginUser,
-  signupUser,
+  signUpButton,
   forgotPassword
 })(LoginWithEmail);

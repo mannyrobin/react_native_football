@@ -38,7 +38,8 @@ export const acceptInvitation = (invitationUid, leagueUid) =>
                 .child(currentUser.uid)
                 .set({
 					coins: 1000,
-					numberOfForms: 0
+					formsWon: 0,
+					formsLost: 0
 				})
                 .then(() => dispatch({
                     type: LEAGUE_INVITATION_ACCEPTED

@@ -5,6 +5,7 @@
   "navigation": {
     "titles": {
       "login_with_email": "התחבר באמצעות דוא\"ל",
+      "sign_up_with_email": "הרשם באמצעות דוא\"ל",
       "forgot_password": "שכחתי סיסמה",
       "drawer": {
         "main_league": "ליגה ראשית",
@@ -58,7 +59,10 @@
       "error_invalid_email": "האימייל שגוי.\nאנא וודא שהכתובת נכונה.",
       "error_operation_not_allowed": "הרשמה עם אימייל וסיסמה מבוטלת.",
       "error_email_already_in_use": "אימייל זה כבר קיים במערכת\nנסה להתחבר עם סיסמה אחרת או הרשם עם אימייל אחר.",
-      "error_default": "ההרשמה נכשלה.\nאנא נסה שנית!"
+      "error_username_exists" : "שם משתמש זה כבר בשימוש!",
+      "error_default": "ההרשמה נכשלה.\nאנא נסה שנית!",
+      "button_sign_up": "הרשם!",
+      "text_field_username_placeholder": "JohnSnow"
     },
     "forgot_password": {
       "text_field_email_placeholder": "email@gmail.com",

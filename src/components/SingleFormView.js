@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import { RkButton } from 'react-native-ui-kitten';
 import { Button, Avatar } from 'react-native-elements';
 import { locali } from '../../locales/i18n';
-
 
 class SingleFormView extends Component {
 
   render() {
     const { bets, timestamp, totalCoins, totalOdd, won } = this.props.form;
-    
+    console.log(bets);
     return bets ? ( 
       <View style={{ width: '100%' }}>
 
@@ -21,7 +21,7 @@ class SingleFormView extends Component {
         <ScrollView /* contentContainerStyle={{ height: '130%' }} */>
 
           {bets
-            .map(({ match }) =>
+            .map(({ match, bet }) =>
               <View style={{ flex: 1 }}>
                 <View style={styles.timeContainer}>
                   <Text style={[styles.titleStyle, { textAlign: 'center' }, { margin: 20 }]}>
@@ -42,12 +42,21 @@ class SingleFormView extends Component {
                         {match.hometeamName}
                       </Text>
                     </View>
+                    {/*                     <View style={styles.oddsContainer}>
+                      <View style={styles.oddsSection}>
+                        <Text>
+                          1234
+                      </Text>
+                      </View>
+                    </View> */}
+
                   </View>
                   <View style={styles.vsSection}>
                     <Text style={styles.titleStyle}>
                       {locali('forms.matches.vs')}
                     </Text>
                   </View>
+
                   <View style={styles.teamsSection}>
                     <View style={styles.teamLogoSection}>
                       <Image
@@ -61,6 +70,35 @@ class SingleFormView extends Component {
                         {match.awayteamName}
                       </Text>
                     </View>
+                  </View>
+                </View>
+                <View style={styles.oddsContainer}>
+                  <View style={styles.oddForOne}>
+                    <RkButton
+                      style={bet === '1' ? styles.oddButtonSelected : styles.oddButton}
+                      rkType='circle outline'
+                      onPress={() => ''}
+                    >
+                      <Text style={styles.oddButtonLable}>{match.hometeamOdd.toFixed(2)}</Text>
+                    </RkButton>
+                  </View>
+                  <View style={styles.oddForX}>
+                  <RkButton
+                      style={bet === 'x' ? styles.oddButtonSelected : styles.oddButton}
+                      rkType='circle outline'
+                      onPress={() => ''}
+                  >
+                      <Text style={styles.oddButtonLable}>{match.drawOdd.toFixed(2)}</Text>
+                    </RkButton>
+                  </View>
+                  <View style={styles.oddForOne}>
+                  <RkButton
+                      style={bet === '2' ? styles.oddButtonSelected : styles.oddButton}
+                      rkType='circle outline'
+                      onPress={() => ''}
+                  >
+                      <Text style={styles.oddButtonLable}>{match.awayteamOdd.toFixed(2)}</Text>
+                    </RkButton>
                   </View>
                 </View>
               </View>
@@ -105,16 +143,30 @@ class SingleFormView extends Component {
 
           </View>
           </ScrollView> 
-        </ImageBackground>
+          </ImageBackground>
         
       </View>) : null;
   }
 }
 const styles = StyleSheet.create({
+  oddForX: {
+    marginLeft: 6,
+    marginRight: 6,
+    marginTop: 5,
+    flex: 1 
+  },
+  oddForOne: {
+    marginTop: 5,
+    flex: 4 
+
+  },
+
   timeContainer: {
     flex: 1,
     alignSelf: 'center',
     justifyContent: 'center',
+    marginTop: 5
+    
   },
   TeamsNames: {
     fontSize: 18,
@@ -160,13 +212,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   oddsContainer: {
-    flex: 2,
+/*     flex: 0,
     flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'green',
+    justifyContent: 'center', */
+ flexDirection: 'row' 
+    
   },
   oddsSection: {
-    flex: 5,
-    paddingHorizontal: 5,
-    justifyContent: 'center'
+   /*  justifyContent: 'flex-start', */
+         borderWidth: 1,
+        borderColor: 'black',
+        
   },
   oddButton: {
     paddingHorizontal: 0,
@@ -181,11 +239,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     width: 40,
     height: 40,
-    backgroundColor: '#FFAF40',
+    backgroundColor: '#C1E15E',
     alignSelf: 'center',
   },
   oddButtonLable: {
-    color: '#E20A17',
+    color: '#004d26',
     fontWeight: 'bold'
   },
   titleStyle: {
@@ -201,5 +259,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
 
 export default SingleFormView;

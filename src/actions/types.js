@@ -17,6 +17,9 @@ export const NEW_FRIENDLY_LEAGUE_SUCCESS = 'new_friendly_league_success';
 export const INVITE_FRIEND_SUCCESS = 'invite_friend_success';
 export const FRIENDLY_LEAGUES_FETCH_SUCCESS = 'friendly_leagues_fetch_success';
 export const OPEN_LEAGUE = 'open_league';
+export const FETCH_CHAT = 'fetch_chat';
+export const MESSAGE_CHANGED = 'message_changed';
+export const SEND_MESSAGE = 'send_message';
 
 // ** Invitations ** 
 

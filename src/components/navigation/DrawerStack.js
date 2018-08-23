@@ -43,7 +43,6 @@ const drawerButton = (navigation) =>
     </Text>;
 
 function renderHeaderRight(navigation) {
-    console.log('navStateInDrawerStack', navigation.state);
     return (<LeaguesInvitationBadge
         onPress={() =>
             navigation.dispatch(

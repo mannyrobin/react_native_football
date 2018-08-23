@@ -59,7 +59,7 @@ export default (state = INITIAL_STATE, action) => {
         } 
         
         case FETCH_CURRENT_FORMS: {
-            return { ...state, currentForms: action.payload };
+            return { ...state, currentForms: action.payload || [] };
         }
         case SUBMIT_FORM_FAIL: {
             Alert.alert(locali('forms.matches.error'));

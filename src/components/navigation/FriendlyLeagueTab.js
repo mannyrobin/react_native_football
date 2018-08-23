@@ -13,6 +13,7 @@ import SingleForm from '../SingleForm';
 import NewForm from '../NewForm';
 import ReviewForm from '../ReviewForm';
 import ScoreBoard from '../ScoreBoard';
+import Chat from '../Chat';
 
 const FormsViewStack = createStackNavigator({
     Forms: { screen: Forms },
@@ -45,19 +46,25 @@ const FriendlyLeagueTab = createBottomTabNavigator({
     ScoreBoard: {
         screen: ScoreBoard,
         navigationOptions: {
-            title: 'טבלת ניקוד'
+            title: locali('navigation.titles.friendly_leagues.leaderboard')
         }
     },
     FormsViewStack: {
         screen: FormsViewStack,
         navigationOptions: {
-            title: locali('navigation.titles.friendly_leagues.forms.my_forms')
+            title: locali('navigation.titles.friendly_leagues.my_forms')
         }
     },
     FillFormStack: {
         screen: FillFormStack,
         navigationOptions: {
-            title: locali('navigation.titles.friendly_leagues.forms.fill_form')
+            title: locali('navigation.titles.friendly_leagues.fill_form')
+        }
+    },
+    Chat: {
+        screen: Chat,
+        navigationOptions: {
+            title: locali('navigation.titles.friendly_leagues.chat')
         }
     }
 }, {
@@ -72,6 +79,8 @@ const FriendlyLeagueTab = createBottomTabNavigator({
                     iconName = 'plus-circle';
                 } else if (routeName === 'ScoreBoard') {
                     iconName = 'table';
+                } else if (routeName === 'Chat') {
+                    iconName = 'wechat';
                 }
                 // You can return any component that you like here! We usually use an
                 // icon component from react-native-vector-icons

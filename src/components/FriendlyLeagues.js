@@ -23,7 +23,6 @@ class FriendlyLeagues extends Component {
           flex: 1
       }
     });
-    console.log('navStateInFriendlyLeagues', this.props.navigation.state);
     return (
       <View style={styles.container}>
         <View style={{ height: 200 }}>

@@ -6,7 +6,10 @@ import {
 	NEW_FRIENDLY_LEAGUE_SUCCESS,
 	INVITE_FRIEND_SUCCESS,
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
-	OPEN_LEAGUE
+	OPEN_LEAGUE,
+	FETCH_CHAT,
+	MESSAGE_CHANGED,
+	SEND_MESSAGE
 } from './types.js';
 
 export const friendlyLeagueNameChanged = (leagueName) => {
@@ -85,6 +88,7 @@ export const friendlyLeaguesFetch = () =>
 
 export const openFriendlyLeague = (league, navigation) =>
 	dispatch => {
+		fetchChat(league);
 		navigation.navigate('FriendlyLeagueTab', {
 			friendlyLeagueId: league.uid,
 			friendlyLeagueName: league.friendlyLeagueName
@@ -92,3 +96,30 @@ export const openFriendlyLeague = (league, navigation) =>
 		dispatch({ type: OPEN_LEAGUE, payload: league.uid });
 	};
 
+	export const fetchChat = (leagueUid) => {
+		return (dispatch) => {
+			firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
+			.on('value', snapshot => {
+				dispatch({ type: FETCH_CHAT, payload: snapshot.val() });
+			});
+		};
+	};
+
+	export const onMessageChanged = (message) => {
+		return {
+			type: MESSAGE_CHANGED,
+			payload: message
+		};
+	};
+
+/* export const sendMessage = (message, chat, leagueUid) => {
+		const appeandChat = [...message, ...chat];
+		firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
+		.set({ appeandChat });
+
+ 		return {
+			type: SEND_MESSAGE,
+			payload: appeandChat
+		}; 
+};
+ */

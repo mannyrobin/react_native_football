@@ -55,10 +55,6 @@ class FriendlyLeagueSettings extends Component {
                         </RkButton>
                     </View>
                 </Card>
-
-                <Card>
-                    <RkText rkType='customHeader'>{locali('friendly_leagues.friendly_league.settings.choose_games_header')}</RkText>
-                </Card>
             </View>
         );
     }

@@ -11,7 +11,7 @@ firebase.initializeApp({
     authDomain: 'bet-masters.firebaseapp.com',
     databaseURL: 'https://bet-masters.firebaseio.com',
     projectId: 'bet-masters',
-    storageBucket: 'bet-masters.appspot.com',
+    storageBucket: 'gs://bet-masters.appspot.com',
     messagingSenderId: '951196383769'
 });
 

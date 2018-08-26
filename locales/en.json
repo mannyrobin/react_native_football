@@ -24,6 +24,9 @@
       }
     }
   },
+  "tools": {
+    "full_screen_spinner_logging_in": "Logging in..."
+  },
   "intro": {
     "button_next": "Next",
     "button_done": "Done",

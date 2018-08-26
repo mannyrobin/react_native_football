@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { StackActions, NavigationActions } from 'react-navigation';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
+import { connect } from 'react-redux';
+import { logout } from '../actions';
 import { locali } from '../../locales/i18n';
 
-export default class DrawerContainer extends Component {
-
-  logout = () => {
-    // This will reset back to loginStack
-    // https://github.com/react-community/react-navigation/issues/1127
-    const actionToDispatch = StackActions.reset({
-      index: 0,
-      key: null,  // black magic
-      actions: [NavigationActions.navigate({ routeName: 'LoginStack' })]
-    });
-    this.props.navigation.dispatch(actionToDispatch);
-  }
+class DrawerContainer extends Component {
 
   render() {
     const {
@@ -100,7 +90,7 @@ export default class DrawerContainer extends Component {
           </View>
           <View style={styles.DrawerItemTextContainer}>
             <Text
-              onPress={this.logout}
+              onPress={() => this.props.logout(this.props.user, this.props.navigation)}
               style={[styles.DrawerItemText, { color: inactiveTintColor }]}
             >
               {locali('navigation.titles.drawer.log_out')}
@@ -118,6 +108,14 @@ DrawerContainer.defaultProps = {
   inactiveTintColor: 'rgba(0, 0, 0, .87)',
   inactiveBackgroundColor: 'transparent',
 };
+
+const mapStateToProps = state => {
+  const { user } = state.auth;
+
+  return { user };
+};
+
+export default connect(mapStateToProps, { logout })(DrawerContainer);
 
 const styles = StyleSheet.create({
   container: {

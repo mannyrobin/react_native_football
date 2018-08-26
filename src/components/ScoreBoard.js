@@ -15,6 +15,7 @@ class ScoreBoard extends Component {
       });
     };
 
+
     const title = I18nManager.isRTL ?
       locali('friendly_leagues.friendly_league.pre_title') + ' ' +
       navigation.getParam('friendlyLeagueName', '') :
@@ -69,7 +70,8 @@ class ScoreBoard extends Component {
         <LeaderboardContainer
           data={this.props.league.participants}
           sortBy='coins'
-          labelBy='uid'
+          labelBy='displayName'
+          labelStyle={{ justifyContent: 'flex-start', textAlign: 'left' }}
         />
       </View>
     );
@@ -111,10 +113,15 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ friendlyLeagues }) =>
-  ({
-    league: friendlyLeagues.friendlyLeaguesListFetch
-      .find(league => league.uid === friendlyLeagues.selectedFriendlyLeagueId),
-  });
+const mapStateToProps = ({ friendlyLeagues }) => {
+  const league = friendlyLeagues.friendlyLeaguesListFetch
+  .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
+  league.participants = league.participants.map(participant => ({
+    ...participant,
+    displayName: friendlyLeagues.displayNames.find(user =>
+      user.uid === participant.uid).displayName
+  }));
 
+  return { league };
+  };
 export default connect(mapStateToProps)(ScoreBoard);

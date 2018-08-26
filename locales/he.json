@@ -22,8 +22,10 @@
         "leaderboard": "טבלת ניקוד",
         "chat": "צ'אט"
       }
-
     }
+  },
+  "tools": {
+    "full_screen_spinner_logging_in": "מתחבר..."
   },
   "intro": {
     "button_next": "הבא",

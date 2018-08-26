@@ -7,4 +7,4 @@ export * from './Spinner';
 export * from './Confirm';
 export * from './Badge';
 export * from './LeaderboardContainer';
-
+export * from './FullScreenSpinner';

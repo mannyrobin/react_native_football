@@ -7,10 +7,12 @@ import {
 	INVITE_FRIEND_SUCCESS,
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
 	OPEN_LEAGUE,
+	FETCH_USERNAMES_SUCCESS,
 	FETCH_CHAT,
 	MESSAGE_CHANGED,
 	SEND_MESSAGE
 } from './types.js';
+
 
 export const friendlyLeagueNameChanged = (leagueName) => {
 	return {
@@ -94,6 +96,19 @@ export const openFriendlyLeague = (league, navigation) =>
 			friendlyLeagueName: league.friendlyLeagueName
 		});
 		dispatch({ type: OPEN_LEAGUE, payload: league.uid });
+	};
+
+export const fetchUserNames = () =>
+	dispatch => {
+		firebase.database().ref('/usersDb')
+		.on('value', snapshot => {
+			if (snapshot.val()) {
+				dispatch({
+					type: FETCH_USERNAMES_SUCCESS,
+					payload: arraify(snapshot.val())
+				});
+			}
+		});
 	};
 
 	export const fetchChat = (leagueUid) => {

@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import firebase from 'firebase';
+import { GoogleSignin } from 'react-native-google-signin';
+import { LoginManager } from 'react-native-fbsdk';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { locali } from '../../locales/i18n';
 import {
@@ -7,10 +9,12 @@ import {
 	PASSWORD_CHANGED,
 	USERNAME_CHANGED,
 	LOGGING_USER_IN,
+	SOCIAL_LOGGING_USER_IN,
 	SIGN_UP_NAVIGATE,
 	LOGIN_USER_SUCCESS,
 	LOGIN_USER_FAIL,
-	FORGOT_PASSWORD
+	FORGOT_PASSWORD,
+	LOGOUT
 } from './types.js';
 
 export const emailChanged = (email) => {
@@ -39,7 +43,7 @@ export const loginUser = ({ email, password, navigation }) => {
 		dispatch({ type: LOGGING_USER_IN });
 
 		firebase.auth().signInWithEmailAndPassword(email, password)
-			.then(user => loginUserSuccess(dispatch, user, navigation))
+			.then(user => loginUserSuccess(user, navigation, dispatch))
 			.catch((error) => {
 				switch (error.code) {
 					case 'auth/user-disabled':
@@ -73,7 +77,7 @@ export const signupUser = (email, username, password, navigation) => {
 					firebase.auth().createUserWithEmailAndPassword(email, password)
 						.then(user => {
 							createUserInDb(user, username);
-							loginUserSuccess(dispatch, user, navigation);
+							loginUserSuccess(user, navigation, dispatch);
 						}
 						)
 						.catch((error) => {
@@ -136,7 +140,7 @@ export const passwordRecovery = ({ email, navigation }) => {
 	};
 };
 
-const loginUserSuccess = (dispatch, user, navigation) => {
+const loginUserSuccess = (user, navigation, dispatch) => {
 	dispatch({
 		type: LOGIN_USER_SUCCESS,
 		payload: user
@@ -149,6 +153,47 @@ const loginUserSuccess = (dispatch, user, navigation) => {
 		actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
 	});
 	navigation.dispatch(resetAction);
+};
+
+export const socialLoginUserSuccess = (user, navigation) => {
+	return (dispatch) => {
+	dispatch({
+		type: LOGIN_USER_SUCCESS,
+		payload: user
+	});
+
+	const resetAction = StackActions.reset({
+		index: 0,
+		key: null,
+		actions: [NavigationActions.navigate({ routeName: 'DrawerStack' })],
+	});
+	navigation.dispatch(resetAction);
+};
+};
+
+export const socialLoginUserIn = () => {
+	return { type: SOCIAL_LOGGING_USER_IN };
+};
+
+export const logout = (user, navigation) => {
+	return (dispatch) => {
+		GoogleSignin.signOut().then(() => {
+			LoginManager.logOut();
+			dispatch({
+				type: LOGOUT,
+				payload: user
+			});
+			console.log('Logged Out');
+		})
+		.catch('signout failed');
+
+		const resetAction = StackActions.reset({
+			index: 0,
+			key: null,
+			actions: [NavigationActions.navigate({ routeName: 'LoginStack' })],
+		});
+		navigation.dispatch(resetAction);
+	};
 };
 
 const loginUserFail = (dispatch, error) => {

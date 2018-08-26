@@ -3,11 +3,13 @@ export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed';
 export const USERNAME_CHANGED = 'username_changed';
 export const LOGGING_USER_IN = 'logging_user_in';
+export const SOCIAL_LOGGING_USER_IN = 'social_logging_user_in';
 export const SIGN_UP_NAVIGATE = 'sign_up_navigate';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const FORGOT_PASSWORD = 'forgot_password';
 export const PASSWORD_RECOVERY = 'password_recovery';
+export const LOGOUT = 'logout';
 
 // ** Friendly Leagues **
 
@@ -17,6 +19,7 @@ export const NEW_FRIENDLY_LEAGUE_SUCCESS = 'new_friendly_league_success';
 export const INVITE_FRIEND_SUCCESS = 'invite_friend_success';
 export const FRIENDLY_LEAGUES_FETCH_SUCCESS = 'friendly_leagues_fetch_success';
 export const OPEN_LEAGUE = 'open_league';
+export const FETCH_USERNAMES_SUCCESS = 'fetch_usernames_success';
 export const FETCH_CHAT = 'fetch_chat';
 export const MESSAGE_CHANGED = 'message_changed';
 export const SEND_MESSAGE = 'send_message';

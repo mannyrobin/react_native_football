@@ -10,7 +10,11 @@ import ForgotPassword from '../ForgotPassword';
 
 const LoginStack = createStackNavigator({
     Intro: { screen: Intro },
-    Login: { screen: Login },
+    Login: { screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
     LoginWithEmail: {
         screen: LoginWithEmail,
         navigationOptions: { title: locali('navigation.titles.login_with_email') }

@@ -75,6 +75,9 @@ export default class App extends Component {
         renderItem={this._renderItem}
         onDone={() => this.props.navigation.navigate('Login')}
         onSkip={() => this.props.navigation.navigate('Login')}
+        skipLabel={locali('intro.button_skip')}
+        nextLabel={locali('intro.button_next')}
+        doneLabel={locali('intro.button_done')}
         bottomButton
         showSkipButton
       />

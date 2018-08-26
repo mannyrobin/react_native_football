@@ -3,11 +3,13 @@ import {
     PASSWORD_CHANGED,
     USERNAME_CHANGED,
     LOGGING_USER_IN,
+    SOCIAL_LOGGING_USER_IN,
     SIGN_UP_NAVIGATE,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     FORGOT_PASSWORD,
-    PASSWORD_RECOVERY
+    PASSWORD_RECOVERY,
+    LOGOUT
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -16,7 +18,7 @@ const INITIAL_STATE = {
     username: '',
 	user: null,
 	error: '',
-	loading: false
+    loading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,6 +37,12 @@ export default (state = INITIAL_STATE, action) => {
 				loading: true,
                 error: '' 
             };
+        }
+        case SOCIAL_LOGGING_USER_IN: {
+            return { ...state, loading: true, error: '' };
+        }
+        case LOGOUT: {
+            return { ...INITIAL_STATE };
         }
         case SIGN_UP_NAVIGATE: {
             return { ...state, ...INITIAL_STATE, email: action.payload };

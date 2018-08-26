@@ -4,13 +4,9 @@ import { Text, View, StyleSheet } from 'react-native';
 import firebase from 'firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
-import { fetchChat, onMessageChanged, sendMessage } from '../actions';
+import { onMessageChanged, sendMessage } from '../actions';
 
 class Chat extends Component {
-
-    componentWillMount() {
-        this.props.fetchChat(this.props.selectedFriendlyLeagueId);
-    }
 
     onSend(messages) {
         console.log('messages', messages);
@@ -58,7 +54,7 @@ const { chat, selectedFriendlyLeagueId, isTyping } = state.friendlyLeagues;
 return { chat, selectedFriendlyLeagueId, isTyping };
 };
 
-export default connect(mapStateToProps, { fetchChat, onMessageChanged, sendMessage })(Chat);
+export default connect(mapStateToProps, { onMessageChanged, sendMessage })(Chat);
 
 const styles = StyleSheet.create({
     footerContainer: {

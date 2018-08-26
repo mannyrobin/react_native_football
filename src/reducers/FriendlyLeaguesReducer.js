@@ -6,6 +6,7 @@ import {
     FRIENDLY_LEAGUES_FETCH_SUCCESS,
     OPEN_LEAGUE,
     FETCH_USERNAMES_SUCCESS,
+    FETCH_PARTICIPANTS_AVATARS_SUCCESS,
     FETCH_CHAT,
     MESSAGE_CHANGED,
     SEND_MESSAGE
@@ -17,6 +18,7 @@ const INITIAL_STATE = {
     friendlyLeaguesListFetch: [],
     selectedFriendlyLeagueId: '',
     displayNames: [],
+    friendlyLeagueAvatars: [],
     message: '',
     chat: [],
     isTyping: null
@@ -44,6 +46,9 @@ export default (state = INITIAL_STATE, action) => {
         }
         case FETCH_USERNAMES_SUCCESS: {
             return { ...state, displayNames: action.payload };
+        }
+        case FETCH_PARTICIPANTS_AVATARS_SUCCESS: {
+            return { ...state, friendlyLeagueAvatars: action.payload };
         }
         case FETCH_CHAT: {
             console.log('chat fetched', action.payload);

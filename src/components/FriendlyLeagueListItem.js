@@ -1,5 +1,7 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text, TouchableWithoutFeedback, View, Image } from 'react-native';
+import { Text, TouchableOpacity, View, Image } from 'react-native';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import { CardSection } from './common';
@@ -8,9 +10,13 @@ import { openFriendlyLeague } from '../actions';
 class ListItem extends Component {
 	render() {
 		const friendlyLeague = this.props.friendlyLeague;
+		const { currentUser } = firebase.auth();
+		friendlyLeague.participants = _.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
+		const coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
+		const rank = Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
 
 		return (
-			<TouchableWithoutFeedback
+			<TouchableOpacity
 				onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}
 			>
 				<View>
@@ -21,10 +27,12 @@ class ListItem extends Component {
 							</Text>
 						</View>
 						<View style={styles.contentContainer}>
-							<View style={styles.contentSection}>
-								<Text>
-									תמונה
-							</Text>
+							<View style={[styles.contentSection, { alignItems: 'center', justifyContent: 'center' }]}>
+								<Image
+									source={require('../images/DefaultThumbnail.png')}
+									style={{ height: 50, width: 50 }}
+									resizeMode="contain"
+								/>
 							</View>
 
 							<View style={[styles.contentSection, { justifyContent: 'flex-start' }]}>
@@ -37,13 +45,12 @@ class ListItem extends Component {
 									<Avatar
 										size="medium"
 										rounded
-										title="#12"
+										title={'#' + (rank)}
 										activeOpacity={0.7}
 									/>
 								</View>
 							</View>
 							<View style={[styles.contentSection, { flexDirection: 'row' }]}>
-
 								<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
 									<Image
 										source={require('../images/Currency2Small.png')}
@@ -51,15 +58,15 @@ class ListItem extends Component {
 										resizeMode="contain"
 									/>
 									<Text style={[styles.titleStyle, { textAlign: 'left', marginLeft: 5 }]}>
-										3000
-	</Text>
+										{coins}
+									</Text>
 								</View>
 							</View>
 
 						</View>
 					</CardSection>
 				</View>
-			</TouchableWithoutFeedback>
+			</TouchableOpacity>
 		);
 	}
 }

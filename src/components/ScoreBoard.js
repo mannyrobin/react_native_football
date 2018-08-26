@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, ImageBackground, I18nManager } from 'react-native';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { RkText } from 'react-native-ui-kitten';
@@ -36,13 +37,13 @@ class ScoreBoard extends Component {
   };
 
   render() {
-    console.log('aaaa', this.props.league.participants);
     return (
       <View>
         <ImageBackground
           source={require('../images/AppBG.jpg')}
           style={{ width: '100%' }}
         >
+
           <View style={{ paddingVertical: 25, alignItems: 'center' }}>
             <MaterialIconsIcon
               name='settings' color="#000" size={30}
@@ -75,6 +76,7 @@ class ScoreBoard extends Component {
           sortBy='coins'
           labelBy='displayName'
           labelStyle={{ justifyContent: 'flex-start', textAlign: 'left', paddingRight: 10 }}
+          icon='avatarURL'
         />
       </View>
     );
@@ -103,7 +105,6 @@ const styles = {
     paddingRight: 20
   },
   headerThumbnail: {
-    flex: 0.66,
     height: 60,
     width: 60,
     borderRadius: 60 / 2
@@ -117,15 +118,21 @@ const styles = {
 };
 
 const mapStateToProps = ({ friendlyLeagues }) => {
-  console.log(friendlyLeagues.displayNames);
+  console.log('friendlyLeagues.friendlyLeagueAvatars', friendlyLeagues.friendlyLeagueAvatars);
+  console.log('selectedFriendlyLeagueId', friendlyLeagues.selectedFriendlyLeagueId);
   const league = friendlyLeagues.friendlyLeaguesListFetch
-  .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
+    .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
+    console.log('league', league);
   league.participants = league.participants.map(participant => ({
     ...participant,
-    displayName: friendlyLeagues.displayNames.find(user =>
-      user.uid === participant.uid).displayName
+    displayName:
+      friendlyLeagues.displayNames.find(user =>
+      user.uid === participant.uid).displayName,
+    avatarURL: 
+      friendlyLeagues.friendlyLeagueAvatars.find(user =>
+      user.uid === participant.uid).avatarURL
   }));
-
+  console.log('league', league);
   return { league };
   };
 export default connect(mapStateToProps)(ScoreBoard);

@@ -8,6 +8,7 @@ import {
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
 	OPEN_LEAGUE,
 	FETCH_USERNAMES_SUCCESS,
+	FETCH_PARTICIPANTS_AVATARS_SUCCESS,
 	FETCH_CHAT,
 	MESSAGE_CHANGED,
 	SEND_MESSAGE
@@ -88,15 +89,35 @@ export const friendlyLeaguesFetch = () =>
 			});
 
 
+const fetchChats = ({ uid }, dispatch) => 
+	firebase.database().ref(`/friendlyLeagues/${uid}/chat`)
+				.on('value', snapshot => {
+					dispatch({ type: FETCH_CHAT, payload: snapshot.val() });
+				});
+
+const fetchAvatars = (league, dispatch, navigation) => {
+	const avatarPromises = league.participants.map(participant => 
+			firebase.storage().ref(`/users/${participant.uid}`)
+			.child('profile_picture.jpg')
+			.getDownloadURL()
+			.then(avatarURL => ({ uid: participant.uid, avatarURL })));
+
+	Promise.all(avatarPromises)
+	.then(avatars => {
+		dispatch({ type: OPEN_LEAGUE, payload: league.uid });
+		dispatch({ type: FETCH_PARTICIPANTS_AVATARS_SUCCESS, payload: avatars });
+			navigation.navigate('FriendlyLeagueTab', {
+				friendlyLeagueId: league.uid,
+				friendlyLeagueName: league.friendlyLeagueName
+			});
+	});
+};
+
 export const openFriendlyLeague = (league, navigation) =>
 	dispatch => {
-		fetchChat(league);
-		navigation.navigate('FriendlyLeagueTab', {
-			friendlyLeagueId: league.uid,
-			friendlyLeagueName: league.friendlyLeagueName
-		});
-		dispatch({ type: OPEN_LEAGUE, payload: league.uid });
-	};
+		fetchChats(league, dispatch);
+		fetchAvatars(league, dispatch, navigation);
+};
 
 export const fetchUserNames = () =>
 	dispatch => {
@@ -113,8 +134,10 @@ export const fetchUserNames = () =>
 
 	export const fetchChat = (leagueUid) => {
 		return (dispatch) => {
+			console.log('leagueUid', leagueUid);
 			firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
 			.on('value', snapshot => {
+				console.log('snapshot.val()', snapshot.val());
 				dispatch({ type: FETCH_CHAT, payload: snapshot.val() });
 			});
 		};

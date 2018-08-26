@@ -25,7 +25,7 @@ class FriendlyLeagues extends Component {
     });
     return (
       <View style={styles.container}>
-        <View style={{ height: 200 }}>
+        <View style={{ flex: 1 }}>
           <FlatList 
             data={this.props.friendlyLeagues}
             renderItem={friendlyLeague =>

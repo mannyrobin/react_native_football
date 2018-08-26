@@ -36,6 +36,7 @@ class ScoreBoard extends Component {
   };
 
   render() {
+    console.log('aaaa', this.props.league.participants);
     return (
       <View>
         <ImageBackground
@@ -67,11 +68,13 @@ class ScoreBoard extends Component {
             </View>
           </View>
         </ImageBackground>
+        
         <LeaderboardContainer
+
           data={this.props.league.participants}
           sortBy='coins'
           labelBy='displayName'
-          labelStyle={{ justifyContent: 'flex-start', textAlign: 'left' }}
+          labelStyle={{ justifyContent: 'flex-start', textAlign: 'left', paddingRight: 10 }}
         />
       </View>
     );
@@ -114,6 +117,7 @@ const styles = {
 };
 
 const mapStateToProps = ({ friendlyLeagues }) => {
+  console.log(friendlyLeagues.displayNames);
   const league = friendlyLeagues.friendlyLeaguesListFetch
   .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
   league.participants = league.participants.map(participant => ({

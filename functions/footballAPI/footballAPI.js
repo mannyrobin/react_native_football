@@ -2,6 +2,7 @@ const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 const { config: { apiBaseUrl, apiKey, eventsInterval, dateFormat} } = require('./footballAPI.config');
 const moment = require('moment');
+const _ = require('lodash');
 
 admin.initializeApp();
 
@@ -21,18 +22,50 @@ const fetchMatchesFromAPI = () =>
     }
   });
 
-const updateMatchesFromAPI = () =>
-  Promise.all([ fetchMatchesFromAPI(),  admin.database().ref('/matches').once('value') ])
-    .then(results => {
-        [{ data }, matchUpdates] = results;
-        data.forEach(match => matchUpdates[match.league_id] = 
-          Object.assign({}, matchUpdates[match.league_id], { [match.match_id]: match }));
+const fetchLeaguesFromAPI = () => 
+  footballAPI.get('/', {
+    params: {
+      action: 'get_leagues'
+    }
+  });
+
+const updateLeaguesFromAPI = () => 
+  Promise.all([ fetchLeaguesFromAPI(),  admin.database().ref('/matches').once('value')
+                                                .then(leagueUpdatesSnapshot => leagueUpdatesSnapshot.val()) ])
+  .then(results => {
+    [{ data }, leaguesUpdates] = results;
+    leaguesUpdates = leaguesUpdates || {};
+
+    data.forEach(league =>  leaguesUpdates[league.league_id] = _.merge(leaguesUpdates[league.league_id], league));
+
+    return admin.database().ref('/matches').update(leaguesUpdates);
+  });
   
-        return admin.database().ref('/matches').update(matchUpdates);
+
+const formatMatch = ({ match_hometeam_name, match_awayteam_name, match_date }) => 
+  ({ 
+    hometeamName: match_hometeam_name,
+    awayteamName: match_awayteam_name,
+    timestamp: match_date,
+    hometeamOdd: 1,
+    awayteamOdd: 3,
+    drawOdd:0 
+  });
+
+const updateMatchesFromAPI = () =>
+  Promise.all([ fetchMatchesFromAPI(),  admin.database().ref('/matches').once('value')
+                                              .then(matchUpdatesSnapshot => matchUpdatesSnapshot.val()) ])
+    .then(results => {
+      [{ data }, matchUpdates] = results;
+
+      data.forEach(match => matchUpdates[match.league_id] = _.merge(matchUpdates[match.league_id], 
+                                                                    { matches: { [match.match_id]: formatMatch(match) } }));
+
+      return admin.database().ref('/matches').update(matchUpdates);
     });
 
 exports.updateMatchesFromAPI = functions.https.onRequest((request, response) => 
-    updateMatchesFromAPI()
+  updateLeaguesFromAPI()
+    .then(() => updateMatchesFromAPI())
     .catch(err => console.error("Football API matches update failure:\n" + err))
     .then(() => response.sendStatus(200)));
- 

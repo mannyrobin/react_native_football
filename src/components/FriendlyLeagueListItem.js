@@ -82,27 +82,20 @@ const styles = {
 	},
 	contentContainer: {
 		flex: 5,
-
 		flexDirection: 'row',
-
 	},
 	contentSection: {
 		flex: 1,
-
 	},
 	coinsTextContainer: {
 		flex: 3,
 		justifyContent: 'center',
 		marginHorizontal: 3,
-
 	},
 	coinsIconContainer: {
 		flex: 1,
 		justifyContent: 'center',
-
 		alignItems: 'center'
-
-		/* marginHorizontal: 3 */
 	}
 };
 

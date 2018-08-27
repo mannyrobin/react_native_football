@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Image, ImageBackground, I18nManager } from 'react-native';
+import { View, Image, ImageBackground } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
@@ -8,35 +9,12 @@ import { LeaderboardContainer } from './common';
 import { locali } from '../../locales/i18n';
 
 class ScoreBoard extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const navigateToAddFriends = () => {
-      navigation.navigate('FriendlyLeagueSettings', {
-        friendlyLeagueId: navigation.getParam('friendlyLeagueId', '0'),
-        friendlyLeagueName: navigation.getParam('friendlyLeagueName', '')
-      });
-    };
-
-
-    const title = I18nManager.isRTL ?
-      locali('friendly_leagues.friendly_league.pre_title') + ' ' +
-      navigation.getParam('friendlyLeagueName', '') :
-      navigation.getParam('friendlyLeagueName', '') + ' ' +
-      locali('friendly_leagues.friendly_league.pre_title');
-
-    return {
-      title,
-      headerRight: (
-
-        <MaterialIconsIcon
-          name='settings' color="#000" size={30}
-          style={{ paddingLeft: 15 }}
-          onPress={() => navigateToAddFriends()}
-        />
-      )
-    };
-  };
-
   render() {
+    const { currentUser } = firebase.auth();
+    const sortedParticipants = _.orderBy(this.props.league.participants, user => user.coins, 'desc');
+		const coins = _.find(sortedParticipants, user => user.uid === currentUser.uid).coins;
+		const rank = Number(_.findKey(sortedParticipants, user => user.uid === currentUser.uid)) + 1;
+
     return (
       <View>
         <ImageBackground
@@ -44,32 +22,40 @@ class ScoreBoard extends Component {
           style={{ width: '100%' }}
         >
 
-          <View style={{ paddingVertical: 25, alignItems: 'center' }}>
+          <View style={styles.headerContainer}>
             <MaterialIconsIcon
               name='settings' color="#000" size={30}
-              style={{ paddingLeft: 15 }}
-              onPress={() => 
-                this.props.navigation.navigate('FriendlyLeagueSettings', {
-                friendlyLeagueId: this.props.navigation.getParam('friendlyLeagueId', '0'),
-                friendlyLeagueName: this.props.navigation.getParam('friendlyLeagueName', '')
-              })}
+              onPress={() =>
+                this.props.navigation.navigate('FriendlyLeagueSettings')}
             />
             <RkText style={styles.headerText}>
               {locali('friendly_leagues.friendly_league.leaderboard')}
             </RkText>
-            <View style={styles.headerContainer}>
-              <RkText style={styles.headerRank}>#1</RkText>
-              <Image
-                style={styles.headerThumbnail}
-                source={require('../images/DefaultThumbnail.png')}
-              />
-              <RkText style={styles.headerCoins}>
-                80 {locali('friendly_leagues.friendly_league.coins')}
+
+            <View style={styles.headerSection}>
+              <RkText style={styles.headerRank}>
+              {'#' + rank}
               </RkText>
+              <View style={styles.headerThumbnailContainer}>
+                <Image
+                  style={styles.headerThumbnail}
+                  source={require('../images/DefaultThumbnail.png')}
+                />
+              </View>
+              <View style={styles.headerCoinsContainer}>
+                <RkText style={styles.headerCoinsText}>
+                  {coins}
+              </RkText>
+                <Image
+                  source={require('../images/Currency2Small.png')}
+                  style={{ height: 30, width: 30 }}
+                  resizeMode="contain"
+                />
+              </View>
             </View>
           </View>
         </ImageBackground>
-        
+
         <LeaderboardContainer
 
           data={this.props.league.participants}
@@ -84,55 +70,65 @@ class ScoreBoard extends Component {
 }
 
 const styles = {
+  headerContainer: {
+    paddingVertical: 15,
+    alignItems: 'center'
+  },
   headerText: {
-    paddingBottom: 10,
     fontSize: 26,
     textAlign: 'center',
     color: '#fff'
   },
-  headerContainer: {
+  headerSection: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
-    marginTop: 20
+    marginBottom: 5,
+    marginTop: 15
   },
   headerRank: {
+    flex: 1,
     color: 'white',
     fontSize: 25,
+    textAlign: 'center'
+
+  },
+  headerThumbnailContainer: {
     flex: 1,
-    textAlign: 'left',
-    paddingRight: 20
+    alignItems: 'center'
+
   },
   headerThumbnail: {
     height: 60,
     width: 60,
     borderRadius: 60 / 2
   },
-  headerCoins: {
+  headerCoinsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  headerCoinsText: {
     color: 'white',
     fontSize: 25,
-    flex: 1,
-    marginLeft: 40
+    textAlign: 'center',
+    marginRight: 5
   }
 };
 
 const mapStateToProps = ({ friendlyLeagues }) => {
-  console.log('friendlyLeagues.friendlyLeagueAvatars', friendlyLeagues.friendlyLeagueAvatars);
-  console.log('selectedFriendlyLeagueId', friendlyLeagues.selectedFriendlyLeagueId);
   const league = friendlyLeagues.friendlyLeaguesListFetch
     .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
-    console.log('league', league);
   league.participants = league.participants.map(participant => ({
     ...participant,
     displayName:
       friendlyLeagues.displayNames.find(user =>
-      user.uid === participant.uid).displayName,
-    avatarURL: 
+        user.uid === participant.uid).displayName,
+    avatarURL:
       friendlyLeagues.friendlyLeagueAvatars.find(user =>
-      user.uid === participant.uid).avatarURL
+        user.uid === participant.uid).avatarURL
   }));
-  console.log('league', league);
   return { league };
-  };
+};
 export default connect(mapStateToProps)(ScoreBoard);

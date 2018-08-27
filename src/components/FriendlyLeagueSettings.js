@@ -9,21 +9,10 @@ import { locali } from '../../locales/i18n';
 import { friendEmailChanged, inviteFriendToFriendlyLeague } from '../actions';
 
 class FriendlyLeagueSettings extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const title = I18nManager.isRTL ?
-        locali('friendly_leagues.friendly_league.settings.pre_title') + ' ' +
-        navigation.getParam('friendlyLeagueName', '') :
-        navigation.getParam('friendlyLeagueName', '') + ' ' +
-        locali('friendly_leagues.friendly_league.settings.pre_title');
-        
-        return {
-            title
-        };
-      };
 
       onInviteFriendButtonPress() {
-        const { friendEmail, friendlyLeaguesListFetch, navigation } = this.props;
-        const leagueUid = navigation.getParam('friendlyLeagueId', '0');
+        const { friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId, navigation } = this.props;
+        const leagueUid = selectedFriendlyLeagueId;
         const friendlyLeagues = friendlyLeaguesListFetch;
         const { friendlyLeagueName } = friendlyLeagues.find(league => league.uid === leagueUid);
         this.props
@@ -68,8 +57,8 @@ const styles = {
     }
 };
 
-const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFetch } }) => 
-    ({ friendEmail, friendlyLeaguesListFetch });
+const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId } }) => 
+    ({ friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId });
 
 export default connect(mapStateToProps,
     { friendEmailChanged, inviteFriendToFriendlyLeague })(FriendlyLeagueSettings);

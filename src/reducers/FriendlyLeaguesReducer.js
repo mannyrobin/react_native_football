@@ -1,4 +1,4 @@
-import { 
+import {
     FRIENDLY_LEAGUE_NAME_CHANGED,
     FRIEND_EMAIL_CHANGED,
     NEW_FRIENDLY_LEAGUE_SUCCESS,
@@ -9,8 +9,10 @@ import {
     FETCH_PARTICIPANTS_AVATARS_SUCCESS,
     FETCH_CHAT,
     MESSAGE_CHANGED,
-    SEND_MESSAGE
- } from '../actions/types.js';
+    SEND_MESSAGE,
+    ON_TEXT_CHANGE,
+    DATA_AFTER_SEARCH
+} from '../actions/types.js';
 
 const INITIAL_STATE = {
     friendlyLeagueName: '',
@@ -21,7 +23,9 @@ const INITIAL_STATE = {
     friendlyLeagueAvatars: [],
     message: '',
     chat: [],
-    isTyping: null
+    isTyping: null,
+    textToSearch: '',
+    dataToShow: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,7 +43,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, friendEmail: '' };
         }
         case FRIENDLY_LEAGUES_FETCH_SUCCESS: {
-            return { ...state, friendlyLeaguesListFetch: action.payload };
+            return { ...state, friendlyLeaguesListFetch: action.payload, dataToShow: action.payload };
         }
         case OPEN_LEAGUE: {
             return { ...state, selectedFriendlyLeagueId: action.payload };
@@ -61,6 +65,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, chat: action.payload };
             /* return { ...state, chat: [...action.payload, ...state.chat] }; */
         }
+        case ON_TEXT_CHANGE:
+            return { ...state, textToSearch: action.payload };
+        case DATA_AFTER_SEARCH:
+            return { ...state, dataToShow: action.payload };
         default: {
             return state;
         }

@@ -10,5 +10,5 @@ export default combineReducers({
     friendlyLeagues: FriendlyLeaguesReducer,
     invitationsData: LeaguesInvitationReducer,
     forms: FormsReducer,
-    matches: MatchesReducer
+    matches: MatchesReducer,
 });

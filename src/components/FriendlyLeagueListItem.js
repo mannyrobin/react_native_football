@@ -14,7 +14,6 @@ class ListItem extends Component {
 		friendlyLeague.participants = _.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
 		const coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
 		const rank = Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
-
 		return (
 			<TouchableOpacity
 				onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}

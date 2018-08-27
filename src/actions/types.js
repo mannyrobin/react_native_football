@@ -46,3 +46,8 @@ export const SUBMIT_FORM_FAIL = 'submit_form_fail';
 // ** Matches **
 export const FETCH_MATCHES = 'fetch_matches';
 
+// ** Search **
+
+export const SEARCH_TEXT = 'search_text';
+export const DATA_AFTER_SEARCH = 'DATA_AFTER_SEARCH';
+export const ON_TEXT_CHANGE = 'ON_TEXT_CHANGE';

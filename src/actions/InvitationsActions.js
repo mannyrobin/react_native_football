@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { LEAGUE_INVITATIONS_FETCH_SUCCESS, LEAGUE_INVITATION_ACCEPTED, 
         LEAGUE_INVITATION_REJECTED } from './types';
 import { arraify } from '../utils';

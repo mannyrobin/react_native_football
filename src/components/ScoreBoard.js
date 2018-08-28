@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { View, Image, ImageBackground } from 'react-native';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { RkText } from 'react-native-ui-kitten';

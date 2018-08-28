@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { GoogleSignin } from 'react-native-google-signin';
 import { LoginManager } from 'react-native-fbsdk';
 import { StackActions, NavigationActions } from 'react-navigation';

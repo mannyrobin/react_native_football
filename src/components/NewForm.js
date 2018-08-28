@@ -11,12 +11,13 @@ class NewForm extends Component {
   static navigationOptions = {
     header: null,
   };
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchMatches();
   }
 
   render() {
-    if (this.props.matchesLeagues.length > 0) {
+    console.log('this.props.matchesLeagues', this.props.matchesLeagues);
+    if (this.props.matchesLeagues[0].matches.length > 0) {
       const formFilled = this.props.newForm.length > 0;
       return (
         <View style={styles.container}>

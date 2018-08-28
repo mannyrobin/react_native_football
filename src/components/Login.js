@@ -10,7 +10,7 @@ import { RkButton, RkTheme } from 'react-native-ui-kitten';
 import FontAwsomeIcon from 'react-native-vector-icons/FontAwesome';
 import ZocialIcon from 'react-native-vector-icons/Zocial';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { GoogleSignin } from 'react-native-google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import RNFetchBlob from 'rn-fetch-blob';

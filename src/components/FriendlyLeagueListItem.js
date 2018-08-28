@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import { CardSection } from './common';

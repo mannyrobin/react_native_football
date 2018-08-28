@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { RkButton, RkTheme } from 'react-native-ui-kitten';
@@ -24,7 +23,6 @@ class FriendlyLeagues extends Component {
         flex: 1
       }
     });
-    console.log('dataBeforeSearch', this.props.friendlyLeagues);
     return (
       <View style={{ flex: 8 }}>
         <SearchBar

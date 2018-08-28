@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';

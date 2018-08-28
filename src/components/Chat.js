@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { onMessageChanged, sendMessage } from '../actions';

@@ -1,6 +1,6 @@
 import { LoginManager } from 'react-native-fbsdk';
 
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 
 export const HandleFBLogin = () => (
   Facebook.login(['public_profile', 'email'])

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { arraify } from '../utils';
 import {
 	FRIENDLY_LEAGUE_NAME_CHANGED,

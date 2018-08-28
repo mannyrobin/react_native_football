@@ -3,6 +3,13 @@ package com.betmasters;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage; // <-- Add this line
+import io.invertase.firebase.auth.RNFirebaseAuthPackage; // <-- Add this line
+import io.invertase.firebase.storage.RNFirebaseStoragePackage; // <-- Add this line
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage; // <-- Add this line
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // <-- Add this line
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; //<-- Add this line
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -40,6 +47,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
+            new RNFirebaseDatabasePackage(), // <-- Add this line
+            new RNFirebaseStoragePackage(), // <-- Add this line
+            new RNFirebaseFirestorePackage(), // <-- Add this line
+            new RNFirebaseMessagingPackage(), // <-- Add this line
+            new RNFirebaseNotificationsPackage(),
+            new RNFirebaseAuthPackage(),
             new RNFetchBlobPackage(),
             new FBSDKPackage(mCallbackManager),
             new RNGoogleSigninPackage(),

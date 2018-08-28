@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'react-native-firebase';
 import { arraify } from '../utils';
 import { 
     FETCH_MATCHES

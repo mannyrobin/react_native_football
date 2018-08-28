@@ -114,7 +114,7 @@ class Login extends Component {
             )
             .catch(error => console.log(error))
             .then(blob => {
-                return imageRef.put(blob, { contentType: mime });
+                return imageRef.put(blob._ref, { contentType: mime });
             })
             .catch(error => console.log(error));
     }

@@ -47,9 +47,9 @@ const formatMatch = ({ match_hometeam_name, match_awayteam_name, match_date }) =
     hometeamName: match_hometeam_name,
     awayteamName: match_awayteam_name,
     timestamp: match_date,
-    hometeamOdd: 1,
-    awayteamOdd: 3,
-    drawOdd:0 
+    hometeamOdd: 1.2,
+    awayteamOdd: 1.7,
+    drawOdd: 2.4 
   });
 
 const updateMatchesFromAPI = () =>

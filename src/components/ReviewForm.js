@@ -5,7 +5,7 @@ import firebase from 'react-native-firebase';
 import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { submitForm } from '../actions';
+import { submitForm, sliderValueChanged } from '../actions';
 import SingleFormView from './SingleFormView';
 
 class ReviewForm extends Component {
@@ -16,8 +16,8 @@ class ReviewForm extends Component {
         if (this.props.form.bets.length > 0) {
         const totalOdd =
                 this.props.form.bets.map(item => item.odd).reduce((prev, next) => prev * next);
-        const coins = this.state.sliderValue;
-        const totalCoins = totalOdd * this.state.sliderValue;
+        const coins = this.props.sliderValue;
+        const totalCoins = totalOdd * this.props.sliderValue;
         const timestamp = Math.floor(new Date().getTime() / 1000);
             fullForm = {
                 coins,
@@ -41,14 +41,14 @@ class ReviewForm extends Component {
                             minimumValue={0}
                             maximumValue={this.props.currentLeagueUser.coins}
                             step={5}
-                            onValueChange={value => this.setState({ sliderValue: value })}
+                            onValueChange={value => this.props.sliderValueChanged(value)}
                             thumbImage={require('../images/Currency2Small.png')}
                         />
                     </View>
                     <View style={styles.sliderLabel}>
                         <TextInput
                             style={styles.sliderLabelText}
-                            value={`${this.state.sliderValue}`}
+                            value={`${this.props.sliderValue}`}
                         //currently does not working because value is determined by the Slider.
                         //need to find another way to update value both from textInput
                         //and Slider.
@@ -61,10 +61,11 @@ class ReviewForm extends Component {
                         rkType='xlarge'
                         onPress={() => this.props.submitForm(
                             this.props.newForm,
-                            `${this.state.sliderValue}`,
+                            `${this.props.sliderValue}`,
                             this.props.league.uid,
-                            this.props.navigation)
-                        }
+                            this.props.navigation)}
+                            disabled={!this.props.sliderValue > 0}
+                            style={!this.props.sliderValue > 0 ? styles.buttonDisabled : ''}
                     >
                         שלח טופס
                     </RkButton>
@@ -104,7 +105,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 16,
         color: 'red'
-    }
+    },
+    buttonDisabled: {
+        backgroundColor: '#B7BABC'
+      }
 });
 
 const fetchMatch = (matchUid, matches) => {
@@ -115,7 +119,7 @@ const fetchMatch = (matchUid, matches) => {
 
 const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
     const { currentUser } = firebase.auth();
-    const { newForm } = forms;
+    const { newForm, sliderValue } = forms;
     const league = friendlyLeagues.friendlyLeaguesListFetch.find(leagueItem =>
         leagueItem.uid === friendlyLeagues.selectedFriendlyLeagueId);
     const currentLeagueUser = league.participants.find(participant =>
@@ -128,8 +132,8 @@ const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
     }));
 
     return {
-        form, newForm, league, currentLeagueUser
+        form, newForm, league, currentLeagueUser, forms, sliderValue
     };
 };
 
-export default connect(mapStateToProps, { submitForm })(ReviewForm);
+export default connect(mapStateToProps, { submitForm, sliderValueChanged })(ReviewForm);

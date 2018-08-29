@@ -27,7 +27,6 @@ class NewForm extends Component {
               renderItem={({ item }) =>
                   <MatchContainer match={item} />
               }
-
               keyExtractor={match => match.uid}
             />
           </View>

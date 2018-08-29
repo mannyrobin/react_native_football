@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
@@ -30,73 +30,88 @@ class DrawerContainer extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <View
-        style={activeItemKey === 'Main' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('Main')}
         >
-          <View style={styles.DrawerItemIconContainer}>
-            <FontAwesomeIcon style={styles.DrawerItemIcon} name='trophy' />
-          </View>
-          <View style={styles.DrawerItemTextContainer}>
-            <Text
-              onPress={() => navigation.navigate('Main')}
-              style={[styles.DrawerItemText,
+          <View
+            style={activeItemKey === 'Main' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+          >
+
+            <View style={styles.DrawerItemIconContainer}>
+              <FontAwesomeIcon style={styles.DrawerItemIcon} name='trophy' />
+            </View>
+            <View style={styles.DrawerItemTextContainer}>
+              <Text
+                style={[styles.DrawerItemText,
                 { color: activeItemKey === 'Main' ? activeTintColor : inactiveTintColor }]}
-            >
-              {locali('navigation.titles.drawer.main_league')}
-            </Text>
+              >
+                {locali('navigation.titles.drawer.main_league')}
+              </Text>
+            </View>
+
           </View>
-        </View>
-        <View
-        style={activeItemKey === 'FriendlyLeaguesStack' ?
-          styles.drawerActiveItem : styles.drawerInActiveItem}
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('FriendlyLeaguesStack')}
         >
-          <View style={styles.DrawerItemIconContainer}>
-            <FontAwesomeIcon style={styles.DrawerItemIcon} name='trophy' />
+          <View
+            style={activeItemKey === 'FriendlyLeaguesStack' ?
+              styles.drawerActiveItem : styles.drawerInActiveItem}
+          >
+            <View style={styles.DrawerItemIconContainer}>
+              <FontAwesomeIcon style={styles.DrawerItemIcon} name='trophy' />
+            </View>
+            <View style={styles.DrawerItemTextContainer}>
+              <Text
+                style={[
+                  styles.DrawerItemText,
+                  {
+                    color: activeItemKey === 'FriendlyLeaguesStack' ?
+                      activeTintColor : inactiveTintColor
+                  }]}
+              >
+                {locali('navigation.titles.drawer.friendly_leagues')}
+              </Text>
+            </View>
           </View>
-          <View style={styles.DrawerItemTextContainer}>
-            <Text
-              onPress={() => navigation.navigate('FriendlyLeaguesStack')}
-              style={[
-                styles.DrawerItemText,
-                  { color: activeItemKey === 'FriendlyLeaguesStack' ?
-                    activeTintColor : inactiveTintColor 
-              }]}
-            >
-              {locali('navigation.titles.drawer.friendly_leagues')}
-            </Text>
-          </View>
-        </View>
-        <View
-        style={activeItemKey === 'MyAccount' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('MyAccount')}
         >
-        <View style={styles.DrawerItemIconContainer}>
-            <FontAwesomeIcon style={styles.DrawerItemIcon} name='user' />
-          </View>
-          <View style={styles.DrawerItemTextContainer}>
-            <Text
-              onPress={() => navigation.navigate('MyAccount')}
-              style={[styles.DrawerItemText,
+          <View
+            style={activeItemKey === 'MyAccount' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+          >
+            <View style={styles.DrawerItemIconContainer}>
+              <FontAwesomeIcon style={styles.DrawerItemIcon} name='user' />
+            </View>
+            <View style={styles.DrawerItemTextContainer}>
+              <Text
+                style={[styles.DrawerItemText,
                 { color: activeItemKey === 'MyAccount' ? activeTintColor : inactiveTintColor }]}
-            >
-              {locali('navigation.titles.drawer.my_account')}
-            </Text>
+              >
+                {locali('navigation.titles.drawer.my_account')}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View
-        style={styles.drawerInActiveItem}
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => this.props.logout(this.props.user, this.props.navigation)}
         >
-        <View style={styles.DrawerItemIconContainer}>
-          <SimpleLineIconsIcon style={styles.DrawerItemIcon} name='logout' />
+          <View
+            style={styles.drawerInActiveItem}
+          >
+            <View style={styles.DrawerItemIconContainer}>
+              <SimpleLineIconsIcon style={styles.DrawerItemIcon} name='logout' />
+            </View>
+            <View style={styles.DrawerItemTextContainer}>
+              <Text
+                style={[styles.DrawerItemText, { color: inactiveTintColor }]}
+              >
+                {locali('navigation.titles.drawer.log_out')}
+              </Text>
+            </View>
           </View>
-          <View style={styles.DrawerItemTextContainer}>
-            <Text
-              onPress={() => this.props.logout(this.props.user, this.props.navigation)}
-              style={[styles.DrawerItemText, { color: inactiveTintColor }]}
-            >
-              {locali('navigation.titles.drawer.log_out')}
-            </Text>
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
@@ -125,11 +140,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   drawerActiveItem: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
   },
   drawerInActiveItem: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
     opacity: 0.62
   },

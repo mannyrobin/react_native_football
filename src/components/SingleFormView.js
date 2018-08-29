@@ -8,7 +8,6 @@ class SingleFormView extends Component {
 
   render() {
     const { bets, timestamp, totalCoins, totalOdd, won } = this.props.form;
-    console.log(bets);
     return bets ? ( 
       <View style={{ width: '100%' }}>
 
@@ -30,7 +29,11 @@ class SingleFormView extends Component {
                 </View>
                 <View style={styles.teamsContainer}>
                   <View style={styles.teamsSection}>
-                    <View style={styles.teamLogoSection}>
+                    <View
+                      style={styles.teamLogoSection}
+                      renderToHardwareTextureAndroid
+                      shouldRasterizeIOS
+                    >
                       <Image
                         style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
                         source={require('../images/Real_Madrid.png')}
@@ -42,15 +45,8 @@ class SingleFormView extends Component {
                         {match.hometeamName}
                       </Text>
                     </View>
-                    {/*                     <View style={styles.oddsContainer}>
-                      <View style={styles.oddsSection}>
-                        <Text>
-                          1234
-                      </Text>
-                      </View>
-                    </View> */}
-
                   </View>
+
                   <View style={styles.vsSection}>
                     <Text style={styles.titleStyle}>
                       {locali('forms.matches.vs')}

@@ -39,9 +39,9 @@ export const NEW_FORM_UPDATE_PUSH = 'new_form_update_push';
 export const NEW_FORM_UPDATE_SLICE = 'new_form_update_slice';
 export const NEW_FORM_UPDATE_CHANGE_BET = 'new_form_update_change_bet';
 export const SUBMIT_FORM_SUCCESS = 'submit_form_success';
+export const SUBMIT_FORM = 'submit_form';
 export const FETCH_CURRENT_FORMS = 'fetch_current_forms';
 export const OPEN_FORM = 'open_form';
-export const SUBMIT_FORM_FAIL = 'submit_form_fail';
 
 // ** Matches **
 export const FETCH_MATCHES = 'fetch_matches';

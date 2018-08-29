@@ -94,7 +94,7 @@ export const friendlyLeaguesFetch = () =>
 const fetchChats = ({ uid }, dispatch) => 
 	firebase.database().ref(`/friendlyLeagues/${uid}/chat`)
 				.on('value', snapshot => {
-					dispatch({ type: FETCH_CHAT, payload: snapshot.val() });
+					dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
 				});
 
 const fetchAvatars = (league, dispatch, navigation) => {

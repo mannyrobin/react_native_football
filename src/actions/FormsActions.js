@@ -6,10 +6,10 @@ import {
     NEW_FORM_UPDATE_PUSH,
     NEW_FORM_UPDATE_SLICE,
     NEW_FORM_UPDATE_CHANGE_BET,
-    SUBMIT_FORM_SUCCESS,
     FETCH_CURRENT_FORMS,
     OPEN_FORM,
-    SUBMIT_FORM_FAIL
+    SUBMIT_FORM_SUCCESS,
+    SUBMIT_FORM
  } from './types.js';
 import { arraify } from '../utils';
 
@@ -99,8 +99,7 @@ export const submitForm = (newForm, coins, leagueUid, navigation) => {
             bets: newForm,
             leagueUid
         };
-
-       if (val.coins > 0) {
+           dispatch({ type: SUBMIT_FORM });
             firebase.database().ref(`/forms/${currentUser.uid}`)
                 .push(val)
                 .then(() => {
@@ -117,8 +116,5 @@ export const submitForm = (newForm, coins, leagueUid, navigation) => {
                             navigation.pop();
                         });
                 });
-        } else {
-            dispatch({ type: SUBMIT_FORM_FAIL });
-        }
     };
 };

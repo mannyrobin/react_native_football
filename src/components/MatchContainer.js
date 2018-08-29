@@ -17,14 +17,6 @@ class MatchContainer extends Component {
             drawOdd,
             uid
         } = this.props.match;
-        console.log('inside', this.props.match);
-        console.log('hometeamName', hometeamName);
-        console.log('awayteamName', awayteamName);
-        console.log('timestamp', timestamp);
-        console.log('hometeamOdd', hometeamOdd);
-        console.log('awayteamOdd', awayteamOdd);
-        console.log('drawOdd', drawOdd);
-        console.log('all data in');
         let buttonSelected;
         if (this.props.newForm.length > 0) {
             if (this.props.newForm.find((element) => element.matchUid === uid)) {
@@ -35,8 +27,10 @@ class MatchContainer extends Component {
         return (
             <LinearGradient
                 style={styles.container}
-                colors={['#2196F3', '#2230F3', '#0914AF']}
+                colors={['#C1E15E', '#8CB11B']}
                 start={{ x: 0, y: 0.1 }} end={{ x: 0.1, y: 1 }}
+                renderToHardwareTextureAndroid
+                shouldRasterizeIOS
             >
                 <View style={styles.timeContainer}>
                     <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
@@ -177,6 +171,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#B7BABC',
         alignSelf: 'center',
+        borderWidth: 0,
     },
     oddButtonSelected: {
         paddingHorizontal: 0,
@@ -185,9 +180,10 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#FFAF40',
         alignSelf: 'center',
+        borderWidth: 0,
     },
     oddButtonLable: {
-        color: '#E20A17',
+        color: '#2196F3',
         fontWeight: 'bold'
     },
     titleStyle: {

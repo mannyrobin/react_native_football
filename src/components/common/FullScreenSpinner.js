@@ -15,7 +15,11 @@ const { textStyle, containerStyle, spinnerStyle } = styles;
 				<View style={{ position: 'absolute', top: 150, left: 0, right: 0, bottom: 0, alignItems: 'center' }}>
 					<Text style={textStyle}>{children}</Text>
 				</View>
-				<View style={spinnerStyle}>
+				<View
+					style={spinnerStyle}
+					renderToHardwareTextureAndroid
+					shouldRasterizeIOS
+				>
 				<Image
 					source={source}
 					style={style}

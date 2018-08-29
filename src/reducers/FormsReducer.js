@@ -10,13 +10,13 @@ import {
     SUBMIT_FORM_SUCCESS,
     FETCH_CURRENT_FORMS,
     OPEN_FORM,
-    SUBMIT_FORM_FAIL
+    SUBMIT_FORM
  } from '../actions/types.js';
 
 
 const INITIAL_STATE = {
-    matchesList: {},
-    sliderValue: '',
+    matchesList: [],
+    sliderValue: 0,
     newForm: [],
     currentForms: [],
     selectedFormId: ''
@@ -54,16 +54,16 @@ export default (state = INITIAL_STATE, action) => {
             ) };
         }
 
+        case SUBMIT_FORM: {
+            return { ...state, sliderValue: 0 };
+        }
+
         case SUBMIT_FORM_SUCCESS: {
-            return { ...state, newForm: [] };
-        } 
+            return { ...state, sliderValue: 0, newForm: [] };
+        }
         
         case FETCH_CURRENT_FORMS: {
             return { ...state, currentForms: action.payload || [] };
-        }
-        case SUBMIT_FORM_FAIL: {
-            Alert.alert(locali('forms.matches.error'));
-            return { ...state };
         }
         case OPEN_FORM: 
         return { ...state, selectedFormId: action.payload };

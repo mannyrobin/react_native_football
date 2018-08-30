@@ -14,7 +14,7 @@ import firebase from 'react-native-firebase';
 import { GoogleSignin } from 'react-native-google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import RNFetchBlob from 'rn-fetch-blob';
-import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess } from '../actions';
+import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 import { Spinner, FullScreenSpinner } from './common';
 
@@ -171,7 +171,7 @@ class Login extends Component {
 
                     <RkButton
                         rkType="xlarge primary emailLogin"
-                        onPress={() => this.props.navigation.navigate('LoginWithEmail')}
+                        onPress={() => this.props.reduxNav('LoginWithEmail')}
                     >
                         <ZocialIcon name="email" color="white" size={30} />
                         {locali('login.login_with_email_button_title')}
@@ -290,4 +290,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,
-    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess })(Login);
+    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav })(Login);

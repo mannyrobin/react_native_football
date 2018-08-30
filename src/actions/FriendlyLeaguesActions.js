@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import { arraify } from '../utils';
 import {
@@ -14,7 +15,7 @@ import {
 	MESSAGE_CHANGED,
 	SEND_MESSAGE,
 	ON_TEXT_CHANGE,
-    DATA_AFTER_SEARCH
+	DATA_AFTER_SEARCH
 } from './types.js';
 
 export const friendlyLeagueNameChanged = (leagueName) => {
@@ -49,7 +50,7 @@ export const createNewFriendlyLeague = (leagueName, navigation) => {
 			.push(league)
 			.then(() => {
 				dispatch({ type: NEW_FRIENDLY_LEAGUE_SUCCESS });
-				navigation.pop();
+				dispatch(NavigationActions.back());
 			});
 	};
 };
@@ -70,7 +71,7 @@ export const inviteFriendToFriendlyLeague = (
 			.push(invite)
 			.then(() => {
 				dispatch({ type: INVITE_FRIEND_SUCCESS });
-				navigation.pop();
+				dispatch(NavigationActions.back());
 			});
 	};
 };
@@ -91,66 +92,63 @@ export const friendlyLeaguesFetch = () =>
 			});
 
 
-const fetchChats = ({ uid }, dispatch) => 
+const fetchChats = ({ uid }, dispatch) =>
 	firebase.database().ref(`/friendlyLeagues/${uid}/chat`)
-				.on('value', snapshot => {
-					dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
-				});
+		.on('value', snapshot => {
+			dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
+		});
 
 const fetchAvatars = (league, dispatch, navigation) => {
-	const avatarPromises = league.participants.map(participant => 
-			firebase.storage().ref(`/users/${participant.uid}`)
+	const avatarPromises = league.participants.map(participant =>
+		firebase.storage().ref(`/users/${participant.uid}`)
 			.child('profile_picture.jpg')
 			.getDownloadURL()
 			.then(avatarURL => ({ uid: participant.uid, avatarURL })));
 
 	Promise.all(avatarPromises)
-	.then(avatars => {
-		dispatch({ type: OPEN_LEAGUE, payload: league.uid });
-		dispatch({ type: FETCH_PARTICIPANTS_AVATARS_SUCCESS, payload: avatars });
-			navigation.navigate('FriendlyLeagueTab', {
-				friendlyLeagueId: league.uid,
-				friendlyLeagueName: league.friendlyLeagueName
-			});
-	});
+		.then(avatars => {
+			dispatch({ type: OPEN_LEAGUE, payload: league.uid });
+			dispatch({ type: FETCH_PARTICIPANTS_AVATARS_SUCCESS, payload: avatars });
+			dispatch(NavigationActions.navigate({ routeName: 'FriendlyLeagueTab' }));
+		});
 };
 
 export const openFriendlyLeague = (league, navigation) =>
 	dispatch => {
 		fetchChats(league, dispatch);
 		fetchAvatars(league, dispatch, navigation);
-};
+	};
 
 export const fetchUserNames = () =>
 	dispatch => {
 		firebase.database().ref('/usersDb')
-		.on('value', snapshot => {
-			if (snapshot.val()) {
-				dispatch({
-					type: FETCH_USERNAMES_SUCCESS,
-					payload: arraify(snapshot.val())
-				});
-			}
-		});
+			.on('value', snapshot => {
+				if (snapshot.val()) {
+					dispatch({
+						type: FETCH_USERNAMES_SUCCESS,
+						payload: arraify(snapshot.val())
+					});
+				}
+			});
 	};
 
-	export const fetchChat = (leagueUid) => {
-		return (dispatch) => {
-			console.log('leagueUid', leagueUid);
-			firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
+export const fetchChat = (leagueUid) => {
+	return (dispatch) => {
+		console.log('leagueUid', leagueUid);
+		firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
 			.on('value', snapshot => {
 				console.log('snapshot.val()', snapshot.val());
 				dispatch({ type: FETCH_CHAT, payload: snapshot.val() });
 			});
-		};
 	};
+};
 
-	export const onMessageChanged = (message) => {
-		return {
-			type: MESSAGE_CHANGED,
-			payload: message
-		};
+export const onMessageChanged = (message) => {
+	return {
+		type: MESSAGE_CHANGED,
+		payload: message
 	};
+};
 
 /* export const sendMessage = (message, chat, leagueUid) => {
 		const appeandChat = [...message, ...chat];
@@ -165,26 +163,26 @@ export const fetchUserNames = () =>
  */
 
 export const handleSearch = (textToSearch, fullData) => {
-    return (dispatch) => {
+	return (dispatch) => {
 		const formatText = textToSearch.toLowerCase();
 		console.log('textFormat', formatText);
-        const dataToShow = _.filter(fullData, friendlyLeauge => {
-            return contains(friendlyLeauge, formatText);
-        });
-        dispatch({
-            type: DATA_AFTER_SEARCH,
-            payload: dataToShow
-        });
-        dispatch({
-            type: ON_TEXT_CHANGE,
-            payload: formatText
-        });
-    };
+		const dataToShow = _.filter(fullData, friendlyLeauge => {
+			return contains(friendlyLeauge, formatText);
+		});
+		dispatch({
+			type: DATA_AFTER_SEARCH,
+			payload: dataToShow
+		});
+		dispatch({
+			type: ON_TEXT_CHANGE,
+			payload: formatText
+		});
+	};
 };
 
 const contains = (friendlyLeauge, formatText) => {
-    if (friendlyLeauge.friendlyLeagueName.toLowerCase().includes(formatText)) {
-        return true;
-    }
-    return false;
+	if (friendlyLeauge.friendlyLeagueName.toLowerCase().includes(formatText)) {
+		return true;
+	}
+	return false;
 };

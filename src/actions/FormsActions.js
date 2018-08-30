@@ -1,5 +1,5 @@
-
 import firebase from 'react-native-firebase';
+import { NavigationActions } from 'react-navigation';
 import { 
     MATCHES_LIST_FETCH,
     SLIDER_VALUE_CHANGED,
@@ -77,7 +77,7 @@ export const fetchCurrentForms = () => {
 
 export const openForm = (navigator, formUid) => 
     dispatch => {
-        navigator.navigate('Form');
+        dispatch(NavigationActions.navigate({ routeName: 'Form' }));
         dispatch({ type: OPEN_FORM, payload: formUid });
     };
 
@@ -113,7 +113,7 @@ export const submitForm = (newForm, coins, leagueUid, navigation) => {
                         })
                         .then(() => {
                             dispatch({ type: SUBMIT_FORM_SUCCESS });
-                            navigation.pop();
+                            dispatch(NavigationActions.back());
                         });
                 });
     };

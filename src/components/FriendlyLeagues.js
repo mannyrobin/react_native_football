@@ -4,7 +4,7 @@ import { RkButton, RkTheme } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { SearchBar } from 'react-native-elements';
-import { friendlyLeaguesFetch, fetchMatches, searchOnTextChange, handleSearch } from '../actions';
+import { friendlyLeaguesFetch, fetchMatches, searchOnTextChange, handleSearch, reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
@@ -49,7 +49,7 @@ class FriendlyLeagues extends Component {
           <RkButton
             rkType="xlarge fillScreen"
             style={{ justifyContent: 'center' }}
-            onPress={() => this.props.navigation.navigate('NewFriendlyLeague')}
+            onPress={() => this.props.reduxNav('NewFriendlyLeague')}
           >
             <FontAwesomeIcon name='trophy' color="white" size={30} />
             {locali('friendly_leagues.button_create_new')}
@@ -75,9 +75,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const friendlyLeagues = state.friendlyLeagues.friendlyLeaguesListFetch;
   const { textToSearch, dataToShow } = state.friendlyLeagues;
+  const navTest = state.nav;
 
-  return { friendlyLeagues, textToSearch, dataToShow };
+  return { friendlyLeagues, textToSearch, dataToShow, navTest };
 };
 
 export default connect(mapStateToProps, 
-  { handleSearch, friendlyLeaguesFetch, fetchMatches, searchOnTextChange })(FriendlyLeagues);
+  { handleSearch, friendlyLeaguesFetch, fetchMatches, searchOnTextChange, reduxNav })(FriendlyLeagues);

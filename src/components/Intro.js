@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import { reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 
 
@@ -41,7 +43,7 @@ const slides = [
   }
 ];
 
-export default class App extends Component {
+class App extends Component {
   static navigationOptions = {
     header: null,
 };
@@ -73,8 +75,8 @@ export default class App extends Component {
       <AppIntroSlider
         slides={slides}
         renderItem={this._renderItem}
-        onDone={() => this.props.navigation.navigate('Login')}
-        onSkip={() => this.props.navigation.navigate('Login')}
+        onDone={() => this.props.reduxNav('Login')}
+        onSkip={() => this.props.reduxNav('Login')}
         skipLabel={locali('intro.button_skip')}
         nextLabel={locali('intro.button_next')}
         doneLabel={locali('intro.button_done')}
@@ -84,3 +86,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(null, { reduxNav })(App);

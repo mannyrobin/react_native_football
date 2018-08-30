@@ -119,7 +119,7 @@ const createUserInDb = ({ user }, username) => {
 
 export const signUpButton = ({ email, navigation }) => {
 	return (dispatch) => {
-		navigation.navigate('SignUpWithEmail');
+		dispatch(NavigationActions.navigate({ routeName: 'SignUpWithEmail' }));
 		dispatch({ type: SIGN_UP_NAVIGATE, payload: email });
 	};
 };
@@ -127,7 +127,7 @@ export const signUpButton = ({ email, navigation }) => {
 export const forgotPassword = ({ email, navigation }) => {
 	return (dispatch) => {
 		dispatch({ type: FORGOT_PASSWORD, payload: email });
-		navigation.navigate('ForgotPassword');
+		dispatch(NavigationActions.navigate({ routeName: 'ForgotPassword' }));
 	};
 };
 
@@ -136,7 +136,7 @@ export const passwordRecovery = ({ email, navigation }) => {
 		//dispatch({ type: LOGGING_USER_IN });
 		//dispatch({ type: PASSWORD_RECOVERY, payload: email });
 		//TODO - send instructions to recover password on email
-		navigation.pop();
+		dispatch(NavigationActions.back());
 	};
 };
 
@@ -146,7 +146,7 @@ const loginUserSuccess = (user, navigation, dispatch) => {
 		payload: user
 	});
 
-	navigation.navigate('DrawerStack');
+	dispatch(NavigationActions.navigate({ routeName: 'DrawerStack' }));
 	const resetAction = StackActions.reset({
 		index: 0,
 		key: 'Drawer',
@@ -175,7 +175,7 @@ export const socialLoginUserIn = () => {
 	return { type: SOCIAL_LOGGING_USER_IN };
 };
 
-export const logout = (user, navigation) => {
+export const logout = (user) => {
 	return (dispatch) => {
 		GoogleSignin.signOut().then(() => {
 			LoginManager.logOut();
@@ -192,7 +192,7 @@ export const logout = (user, navigation) => {
 			key: null,
 			actions: [NavigationActions.navigate({ routeName: 'LoginStack' })],
 		});
-		navigation.dispatch(resetAction);
+		dispatch(resetAction);
 	};
 };
 

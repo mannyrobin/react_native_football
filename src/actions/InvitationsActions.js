@@ -1,10 +1,11 @@
 import firebase from 'react-native-firebase';
+import { NavigationActions } from 'react-navigation';
 import { LEAGUE_INVITATIONS_FETCH_SUCCESS, LEAGUE_INVITATION_ACCEPTED, 
         LEAGUE_INVITATION_REJECTED } from './types';
 import { arraify } from '../utils';
 
-export const readLeaguesInvitations = navigate =>
-    () => navigate('LeaguesInvitations');
+export const readLeaguesInvitations = () =>
+    dispatch => dispatch(NavigationActions.navigate({ routeName: 'LeaguesInvitations' }));
 
 export const fetchLeaguesInvitations = () =>
     dispatch => {

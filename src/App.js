@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
-import { Provider } from 'react-redux';
+import { Provider, } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
+import logger from 'redux-logger';
 import reducers from './reducers';
-import AppNavigation from './components/navigation/AppNavigation';
+import { AppNavigator, middleware } from './components/navigation/AppNavigation';
 
 firebase.initializeApp({
     apiKey: 'AIzaSyCcakTGid7qSMtgUi91_T0yFjlXAzAAAVI',
@@ -14,6 +15,8 @@ firebase.initializeApp({
     storageBucket: 'gs://bet-masters.appspot.com',
     messagingSenderId: '951196383769'
 });
+
+const store = createStore(reducers, applyMiddleware(ReduxThunk, middleware, logger));
 
 export default class App extends Component {
 
@@ -60,14 +63,12 @@ export default class App extends Component {
                 }
             }
         });
-    }
+    }        
 
     render() {
-        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-
         return (
             <Provider store={store}>
-                <AppNavigation />
+                <AppNavigator />
             </Provider>
         );
     }

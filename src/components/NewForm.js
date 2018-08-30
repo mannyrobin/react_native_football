@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { fetchMatches } from '../actions';
+import { fetchMatches, reduxNav } from '../actions';
 import MatchContainer from './MatchContainer';
 import { Spinner } from './common';
 import { locali } from '../../locales/i18n';
@@ -33,7 +33,7 @@ class NewForm extends Component {
           <View style={styles.ButtonContainer}>
             <RkButton 
               rkType='xlarge'
-              onPress={() => this.props.navigation.navigate('ReviewForm')}
+              onPress={() => this.props.reduxNav('ReviewForm')}
               disabled={!formFilled}
               style={!formFilled ? styles.buttonDisabled : ''}
             >
@@ -77,4 +77,4 @@ const mapStateToProps = state => {
   return { matchesLeagues, newForm };
 };
 
-export default connect(mapStateToProps, { fetchMatches })(NewForm);
+export default connect(mapStateToProps, { fetchMatches, reduxNav })(NewForm);

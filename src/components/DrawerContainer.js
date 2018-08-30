@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
-import { logout } from '../actions';
+import { logout, reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 
 class DrawerContainer extends Component {
@@ -27,11 +27,10 @@ class DrawerContainer extends Component {
       //iconContainerStyle,
       //drawerPosition
     } = this.props;
-    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('Main')}
+          onPress={() => this.props.reduxNav('Main')}
         >
           <View
             style={activeItemKey === 'Main' ? styles.drawerActiveItem : styles.drawerInActiveItem}
@@ -52,7 +51,7 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('FriendlyLeaguesStack')}
+          onPress={() => this.props.reduxNav('FriendlyLeaguesStack')}
         >
           <View
             style={activeItemKey === 'FriendlyLeaguesStack' ?
@@ -76,7 +75,7 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('MyAccount')}
+          onPress={() => this.props.reduxNav('MyAccount')}
         >
           <View
             style={activeItemKey === 'MyAccount' ? styles.drawerActiveItem : styles.drawerInActiveItem}
@@ -95,7 +94,7 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => this.props.logout(this.props.user, this.props.navigation)}
+          onPress={() => this.props.logout(this.props.user)}
         >
           <View
             style={styles.drawerInActiveItem}
@@ -130,7 +129,7 @@ const mapStateToProps = state => {
   return { user };
 };
 
-export default connect(mapStateToProps, { logout })(DrawerContainer);
+export default connect(mapStateToProps, { logout, reduxNav })(DrawerContainer);
 
 const styles = StyleSheet.create({
   container: {

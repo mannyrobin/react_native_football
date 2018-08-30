@@ -7,9 +7,7 @@ import { connect } from 'react-redux';
 import { onMessageChanged, sendMessage } from '../actions';
 
 class Chat extends Component {
-
     onSend(messages) {
-
         const messageContent = _.map(messages, (message) => {
             return { ...message, createdAt: new Date().toString() };
         });

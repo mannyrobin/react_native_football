@@ -2,9 +2,9 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import firebase from 'react-native-firebase';
-import Slider from 'react-native-slider';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
+import { RTLCustomSlider } from './common';
 import { submitForm, sliderValueChanged } from '../actions';
 import SingleFormView from './SingleFormView';
 
@@ -37,12 +37,16 @@ class ReviewForm extends Component {
                 </View>
                 <View style={styles.sliderContainer}>
                     <View style={styles.sliderSection}>
-                        <Slider
+                        <RTLCustomSlider
                             minimumValue={0}
                             maximumValue={this.props.currentLeagueUser.coins}
                             step={5}
                             onValueChange={value => this.props.sliderValueChanged(value)}
                             thumbImage={require('../images/Currency2Small.png')}
+                            thumbStyle={{ width: 40, height: 40, borderWidth: 0 }}
+                            thumbImageStyle={{ flex: 1, height: undefined, width: undefined }}
+                            minimumTrackTintColor='#13a9d6'
+                            thumbTintColor='#0c6692'
                         />
                     </View>
                     <View style={styles.sliderLabel}>

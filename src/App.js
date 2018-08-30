@@ -16,7 +16,7 @@ firebase.initializeApp({
     messagingSenderId: '951196383769'
 });
 
-const store = createStore(reducers, applyMiddleware(ReduxThunk, middleware, logger));
+const store = createStore(reducers, applyMiddleware(ReduxThunk, middleware));
 
 export default class App extends Component {
 

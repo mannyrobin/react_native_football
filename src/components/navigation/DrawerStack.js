@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, Image, I18nManager } from 'react-native';
-
 import {
     createStackNavigator,
     createDrawerNavigator,
@@ -17,6 +16,8 @@ import DrawerContainer from '../DrawerContainer';
 import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
 import LeagueInvitations from '../LeagueInvitations';
 import FriendlyLeaguesStack from './FriendlyLeaguesStack';
+
+import CustomHeader from '../CustomHeader';
 
 const Drawer = createDrawerNavigator({
     Main: { screen: Main },
@@ -59,7 +60,7 @@ const DrawerStack = createStackNavigator({
         headerMode: 'float',
         navigationOptions: ({ navigation }) => ({
             headerStyle: { backgroundColor: '#C1E15E' },
-            headerTitle: customHeaderTitle,
+            headerTitle: <CustomHeader />,
             headerTintColor: 'black',
             gesturesEnabled: false,
             headerLeft: drawerButton(navigation),
@@ -68,24 +69,6 @@ const DrawerStack = createStackNavigator({
     });
 
 export default DrawerStack;
-
-const customHeaderTitle = () => {
-    return (
-        <View style={{ flexDirection: 'row', justifyContent: 'center', flex: 1 }}>
-            <View style={{ justifyContent: 'center', marginRight: 10 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>ליגת test123</Text>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFAF40', borderRadius: 15, paddingVertical: 3, paddingHorizontal: 10 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 18, marginRight: 5 }}>50</Text>
-                <Image
-                    source={require('../../images/Currency2Small.png')}
-                    style={{ height: 35, width: 35 }}
-                    resizeMode="contain"
-                />
-            </View>
-        </View>
-    );
-};
 
 const styles = {
     DrawerMenuIcon: {

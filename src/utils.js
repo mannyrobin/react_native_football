@@ -19,3 +19,8 @@ export const arraify = obj => {
     
     return obj;
 };
+
+export const arraiesToOneArray = matchesToShow => {
+    const allMatches = [].concat.apply([], matchesToShow.map(item => item.matches));
+    return allMatches;
+};

@@ -111,5 +111,21 @@
         "date_title": "נשלח ב- "
       }
     }
+  },
+  "countries": {
+    "countryPicker": "בחר מדינה...",
+    "leaguePicker": "בחר ליגה...",
+    "england": {
+      "countryName" :"󠁢󠁥󠁮󠁧󠁿אנגליה 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "leagues": {
+        "championship": "צ'מפיונשיפ"
+      }
+    }, 
+    "france": {
+      "countryName" :"󠁢󠁥󠁮󠁧󠁿🇫🇷󠁧󠁢󠁥󠁮󠁧󠁿 צרפת",
+      "leagues": {
+        "ligue2": "ליג 2"
+      }
+    } 
   }
 }

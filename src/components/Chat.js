@@ -9,13 +9,11 @@ import { onMessageChanged, sendMessage } from '../actions';
 class Chat extends Component {
 
     onSend(messages) {
-        console.log('messages', messages);
+
         const messageContent = _.map(messages, (message) => {
             return { ...message, createdAt: new Date().toString() };
         });
-        console.log('messageContent', messageContent);
         const appeandChat = [...messageContent, ...this.props.chat];
-        console.log('appeandChat', appeandChat);
         firebase.database().ref(`/friendlyLeagues/${this.props.selectedFriendlyLeagueId}/chat`)
             .set(appeandChat);
     }

@@ -111,5 +111,21 @@
         "date_title": "Sent at "
       }
     }
+  },
+  "countries": {
+    "countryPicker": "Select a country...",
+    "leaguePicker": "Select a league...",
+    "england": {
+      "countryName" :"󠁢󠁥󠁮󠁧󠁿🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",
+      "leagues": {
+        "championship": "Championship"
+      }
+    }, 
+    "france": {
+      "countryName" :"󠁢󠁥󠁮󠁧󠁿🇫🇷󠁧󠁢󠁥󠁮󠁧󠁿 France",
+      "leagues": {
+        "ligue2": "Ligue 2"
+      }
+    } 
   }
 }

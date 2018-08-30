@@ -13,7 +13,6 @@ import {
 	FETCH_PARTICIPANTS_AVATARS_SUCCESS,
 	FETCH_CHAT,
 	MESSAGE_CHANGED,
-	SEND_MESSAGE,
 	ON_TEXT_CHANGE,
 	DATA_AFTER_SEARCH
 } from './types.js';
@@ -186,3 +185,4 @@ const contains = (friendlyLeauge, formatText) => {
 	}
 	return false;
 };
+

@@ -23,6 +23,7 @@ class FriendlyLeagues extends Component {
         flex: 1
       }
     });
+    console.log('text', this.props.friendlyLeagues);
     return (
       <View style={{ flex: 8 }}>
         <SearchBar

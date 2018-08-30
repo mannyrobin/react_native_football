@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Platform, BackHandler } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import { Provider, } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -16,18 +18,31 @@ firebase.initializeApp({
     messagingSenderId: '951196383769'
 });
 
-const store = createStore(reducers, applyMiddleware(ReduxThunk, middleware));
+const store = createStore(reducers, applyMiddleware(ReduxThunk, middleware, logger));
 
 export default class App extends Component {
 
     componentDidMount() {
         this.handleNotifications();
+        this.handleAndroidBackButton();
     }
 
     componentWillUnmount() {
         this.notificationDisplayedListener();
         this.notificationListener();
     }
+
+    onBackButton() {
+            store.dispatch(NavigationActions.back());
+            return true;  // will not exit, just go back
+    }
+
+    handleAndroidBackButton() {
+        if (Platform.OS !== 'android') return;
+
+        BackHandler.addEventListener('hardwareBackPress', this.onBackButton);
+    }
+
 
     handleNotifications() {
         firebase.auth().onAuthStateChanged(user => {
@@ -63,7 +78,7 @@ export default class App extends Component {
                 }
             }
         });
-    }        
+    }
 
     render() {
         return (

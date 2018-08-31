@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
-import { logout, reduxNav } from '../actions';
+import { logout, reduxNav, openAccount } from '../actions';
 import { locali } from '../../locales/i18n';
 
 class DrawerContainer extends Component {
@@ -75,10 +75,10 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => this.props.reduxNav('MyAccount')}
+          onPress={() => this.props.openAccount(this.props.user.user.uid, this.props.myDisplayName)}
         >
           <View
-            style={activeItemKey === 'MyAccount' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+            style={activeItemKey === 'Account' ? styles.drawerActiveItem : styles.drawerInActiveItem}
           >
             <View style={styles.DrawerItemIconContainer}>
               <FontAwesomeIcon style={styles.DrawerItemIcon} name='user' />
@@ -86,7 +86,7 @@ class DrawerContainer extends Component {
             <View style={styles.DrawerItemTextContainer}>
               <Text
                 style={[styles.DrawerItemText,
-                { color: activeItemKey === 'MyAccount' ? activeTintColor : inactiveTintColor }]}
+                { color: activeItemKey === 'Account' ? activeTintColor : inactiveTintColor }]}
               >
                 {locali('navigation.titles.drawer.my_account')}
               </Text>
@@ -123,13 +123,16 @@ DrawerContainer.defaultProps = {
   inactiveBackgroundColor: 'transparent',
 };
 
-const mapStateToProps = state => {
-  const { user } = state.auth;
+const mapStateToProps = ({ auth, friendlyLeagues }) => {
+  const { user } = auth;
+  const { displayNames } = friendlyLeagues;
+  const myDisplayName = displayNames.find(element =>
+    element.uid === user.user.uid).displayName;
 
-  return { user };
+  return { user, myDisplayName };
 };
 
-export default connect(mapStateToProps, { logout, reduxNav })(DrawerContainer);
+export default connect(mapStateToProps, { logout, reduxNav, openAccount })(DrawerContainer);
 
 const styles = StyleSheet.create({
   container: {

@@ -54,10 +54,14 @@ export const DATA_AFTER_SEARCH_TEAM = 'DATA_AFTER_SEARCH_TEAM';
 export const ON_TEXT_CHANGE = 'ON_TEXT_CHANGE';
 export const CLEAN_SEARCH = 'CLEAN_SEARCH';
 
-//** Picker **
+// ** Picker **
 
 export const SELECTED_COUNTRY = 'SELECTED_COUNTRY';
 export const SELECTED_LEAGUE = 'SELECTED_LEAGUE';
 export const UPDATE_MATCHES_AFTER_PICKER = 'UPDATE_MATCHES_AFTER_PICKER';
 export const MATCHES_TO_ONE_ARRAY = 'MATCHES_TO_ONE_ARRAY';
 export const CLEAN_PICKERS = 'CLEAN_PICKERS';
+
+// ** Helpers **
+
+export const OPEN_ACCOUNT_SUCCESS = 'open_account_success';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, I18nManager } from 'react-native';
+import { Text, I18nManager } from 'react-native';
 import {
     createStackNavigator,
     createDrawerNavigator,
@@ -8,10 +8,8 @@ import {
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
-import { locali } from '../../../locales/i18n';
-
 import Main from '../Main';
-import MyAccount from '../MyAccount';
+import Account from '../Account';
 import DrawerContainer from '../DrawerContainer';
 import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
 import LeagueInvitations from '../LeagueInvitations';
@@ -23,7 +21,7 @@ const Drawer = createDrawerNavigator({
     Main: { screen: Main },
     FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
     LeagueInvitations: { screen: LeagueInvitations },
-    MyAccount: { screen: MyAccount },
+    Account: { screen: Account },
 }, {
         gesturesEnabled: false,
         contentComponent: DrawerContainer,

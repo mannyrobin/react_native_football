@@ -6,7 +6,8 @@ import {
     FETCH_MATCHES,
     SELECTED_COUNTRY,
     SELECTED_LEAGUE,
-    UPDATE_MATCHES_AFTER_PICKER
+    UPDATE_MATCHES_AFTER_PICKER,
+    CLEAN_PICKERS
 } from './types.js';
 
 export const fetchMatches = () => {
@@ -70,6 +71,14 @@ const containsCountry = (league, countryChoice) => {
     }
     return false;
 };
+
+export const cleanPickers = () => {
+    return {
+        type: CLEAN_PICKERS,
+        payload: null
+    };
+};
+
 /* 
 const matchesTorender = (matchesLeagues) => {
     const allMatches = [].concat.apply([], matchesLeagues.map(item => item.matches));

@@ -183,7 +183,6 @@ export const logout = (user) => {
 				type: LOGOUT,
 				payload: user
 			});
-			console.log('Logged Out');
 		})
 		.catch('signout failed');
 

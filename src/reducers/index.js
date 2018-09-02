@@ -7,6 +7,7 @@ import FriendlyLeaguesReducer from './FriendlyLeaguesReducer';
 import LeaguesInvitationReducer from './LeaguesInvitationReducer';
 import FormsReducer from './FormsReducer';
 import MatchesReducer from './MatchesReducer';
+import SearchReducer from './SearchReducer';
 
 const navReducer = createNavigationReducer(RootNavigator);
 
@@ -17,4 +18,5 @@ export default combineReducers({
     invitationsData: LeaguesInvitationReducer,
     forms: FormsReducer,
     matches: MatchesReducer,
+    search: SearchReducer
 });

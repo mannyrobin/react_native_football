@@ -1,9 +1,11 @@
-import { Container, Header, Content, Icon, Picker, Form, Thumbnail } from 'native-base';
+import { Picker } from 'native-base';
+import SearchBar from 'react-native-searchbar';
+import { Avatar } from 'react-native-elements';
 import React, { Component } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { fetchMatches, selectedPickerCountry, selectedPickerLeauge, reduxNav } from '../actions';
+import { fetchMatches, selectedPickerCountry, selectedPickerLeauge, reduxNav, handleSearch, cleanSearch, cleanPickers } from '../actions';
 import MatchContainer from './MatchContainer';
 import { Spinner } from './common';
 import { locali } from '../../locales/i18n';
@@ -13,11 +15,13 @@ class NewForm extends Component {
     header: null,
   };
   componentWillMount() {
-    this.props.fetchMatches();
+
+    this.props.cleanSearch();
   }
 
   onValueChangeCountry(value) {
     const { matchesLeagues } = this.props;
+    this.props.cleanSearch();
     this.props.selectedPickerCountry(value, matchesLeagues);
   }
   onValueChangeLeauge(value) {
@@ -53,6 +57,7 @@ class NewForm extends Component {
 
   handleLeaguePicker() {
     const { pickerSelectedCountry, pickerSelectedLeauge } = this.props;
+    console.log('pickerSelectedCountry', pickerSelectedCountry);
     return (
       <Picker
         mode="dropdown"
@@ -70,26 +75,67 @@ class NewForm extends Component {
 
   handlePickers() {
     return (
-      <View style={{ flexDirection: 'row' }}>
-        {this.handleCountryPicker()}
-        {this.handleLeaguePicker()}
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ flexDirection: 'row', flex: 1 }}>
+          {this.handleCountryPicker()}
+          {this.handleLeaguePicker()}
+          <View style={{ marginRight: 3, marginEnd: 5 }}>
+            <Avatar
+              medium
+              rounded
+              overlayContainerStyle={{ backgroundColor: '#C1E15E' }}
+              icon={{ name: 'search', type: 'font-awesome' }}
+              onPress={() => {
+                this.props.cleanSearch();
+                console.log('this.props.textToSearch', this.props.textToSearch);
+                this.props.cleanPickers();
+                this.searchBar.show();
+              }}
+              activeOpacity={0.7}
+            />
+          </View>
+        </View>
       </View>
     );
   }
 
   render() {
-    const { matchesToShow } = this.props;
+    const { matchesToShow, dataToShowTeams, allmatchesToShow, textToSearch, pickerSelectedLeauge, pickerSelectedCountry } = this.props;
+    console.log('matchesToShow', matchesToShow);
+    console.log('dataToShowTeams', dataToShowTeams);
+    console.log('this.props.textToSearch', this.props.textToSearch);
+    console.log('allmatchesToShow', allmatchesToShow);
+    console.log('pickerSelectedLeauge', pickerSelectedLeauge);
     if (matchesToShow.length > 0) {
       const formFilled = this.props.newForm.length > 0;
       return (
         <View style={{ flex: 1 }}>
           {this.handlePickers()}
+          <SearchBar
+            ref={(ref) => this.searchBar = ref}
+            /* onBack={() => this.props.cleanPickers()} */
+            handleChangeText={text => {
+              this.props.handleSearch(text, allmatchesToShow, 'teamNames');
+            }}
+          />
           <View style={styles.container}>
             <View style={styles.MatchesContainer}>
               <FlatList
-                data={matchesToShow}
-                renderItem={({ item }) =>
-                  <MatchContainer match={item} />
+/*                 data={!this.props.textToSearch && (!pickerSelectedCountry || pickerSelectedCountry ==='leaugePlaceholder') ? 
+                  allmatchesToShow : 
+                  !this.props.textToSearch && pickerSelectedCountry !=='leaugePlaceholder' ? matchesToShow :
+                  this.props.textToSearch ? dataToShowTeams : null
+                } */
+                data={
+                textToSearch ? dataToShowTeams : 
+                !pickerSelectedCountry || pickerSelectedCountry ==='countryPlaceholder' ?
+                allmatchesToShow :
+                pickerSelectedCountry && pickerSelectedCountry !=='countryPlaceholder' ?
+                matchesToShow : null
+                }
+                renderItem={({ item }) => {
+                  return <MatchContainer match={item} />;
+                }
                 }
                 keyExtractor={match => match.uid}
               />
@@ -115,31 +161,32 @@ class NewForm extends Component {
   }
 }
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 6,
-      backgroundColor: '#fff',
-      padding: 20
-    },
-    MatchesContainer: {
-      flex: 12,
-      marginBottom: 10
-    },
-    ButtonContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    buttonDisabled: {
-      backgroundColor: '#B7BABC'
-    }
-  });
-  
+const styles = StyleSheet.create({
+  container: {
+    flex: 9,
+    backgroundColor: '#fff',
+    padding: 20
+  },
+  MatchesContainer: {
+    flex: 12,
+    marginBottom: 10
+  },
+  ButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#B7BABC'
+  },
+});
 
-  const mapStateToProps = state => {
-    const { newForm } = state.forms;
-    const { matchesLeagues, pickerSelectedCountry, matchesToShow, pickerSelectedLeauge } = state.matches;
 
-    return { matchesLeagues, newForm, pickerSelectedCountry, matchesToShow, pickerSelectedLeauge };
-  };
+const mapStateToProps = state => {
+  const { newForm } = state.forms;
+  const { matchesLeagues, pickerSelectedCountry, matchesToShow, pickerSelectedLeauge, allmatchesToShow } = state.matches;
+  const { textToSearch, dataToShowTeams } = state.search;
 
-  export default connect(mapStateToProps, { reduxNav, fetchMatches, selectedPickerCountry, selectedPickerLeauge })(NewForm);
+  return { allmatchesToShow, matchesLeagues, newForm, pickerSelectedCountry, matchesToShow, pickerSelectedLeauge, textToSearch, dataToShowTeams };
+};
+
+export default connect(mapStateToProps, { cleanPickers, cleanSearch, handleSearch, reduxNav, fetchMatches, selectedPickerCountry, selectedPickerLeauge })(NewForm);

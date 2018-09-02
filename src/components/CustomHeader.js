@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
+import { SearchBar } from 'react-native-elements';
 
 class CustomHeader extends Component {
     render() {

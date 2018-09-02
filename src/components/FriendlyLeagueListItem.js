@@ -9,11 +9,13 @@ import { openFriendlyLeague } from '../actions';
 
 class ListItem extends Component {
 	render() {
+		console.log('friendlyLeagueBefore', this.props.friendlyLeague);
 		const friendlyLeague = this.props.friendlyLeague;
 		const { currentUser } = firebase.auth();
 		friendlyLeague.participants = _.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
 		const coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
 		const rank = Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
+		console.log('friendlyLeagueAfter', this.props.friendlyLeague);
 		return (
 			<TouchableOpacity
 				onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}
@@ -57,7 +59,7 @@ class ListItem extends Component {
 										resizeMode="contain"
 									/>
 									<Text style={[styles.titleStyle, { textAlign: 'left', marginLeft: 5 }]}>
-										{coins}
+										{!coins ? null : coins}
 									</Text>
 								</View>
 							</View>

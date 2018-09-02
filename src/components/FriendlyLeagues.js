@@ -23,21 +23,23 @@ class FriendlyLeagues extends Component {
         flex: 1
       }
     });
-    console.log('text', this.props.friendlyLeagues);
+    const { dataToShowfriendlyLeague, friendlyLeagues } = this.props;
     return (
       <View style={{ flex: 8 }}>
         <SearchBar
+            inputStyle={{ backgroundColor: 'white' }}
+            containerStyle={{ backgroundColor: '#C1E15E' }}
           round
           lightTheme
           onChangeText={textToSearch => {
-            this.props.handleSearch(textToSearch, this.props.friendlyLeagues);
+            this.props.handleSearch(textToSearch, friendlyLeagues, 'friendlyLeagues');
           }}
           placeholder='Type Here...'
         />
         <View style={styles.container}>
           <View style={{ flex: 1 }}>
             <FlatList
-              data={/* this.props.friendlyLeagues */this.props.dataToShow}
+              data={this.props.textToSearch === '' ? friendlyLeagues : dataToShowfriendlyLeague}
               renderItem={friendlyLeague =>
                 <FriendlyLeagueListItem
                   friendlyLeague={friendlyLeague.item}
@@ -75,10 +77,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   const friendlyLeagues = state.friendlyLeagues.friendlyLeaguesListFetch;
-  const { textToSearch, dataToShow } = state.friendlyLeagues;
+  const { textToSearch, dataToShowfriendlyLeague } = state.search;
   const navTest = state.nav;
 
-  return { friendlyLeagues, textToSearch, dataToShow, navTest };
+  return { friendlyLeagues, textToSearch, dataToShowfriendlyLeague, navTest };
 };
 
 export default connect(mapStateToProps, 

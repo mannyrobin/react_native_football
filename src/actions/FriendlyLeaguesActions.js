@@ -13,8 +13,6 @@ import {
 	FETCH_PARTICIPANTS_AVATARS_SUCCESS,
 	FETCH_CHAT,
 	MESSAGE_CHANGED,
-	ON_TEXT_CHANGE,
-	DATA_AFTER_SEARCH
 } from './types.js';
 
 export const friendlyLeagueNameChanged = (leagueName) => {
@@ -133,7 +131,6 @@ export const fetchUserNames = () =>
 
 export const fetchChat = (leagueUid) => {
 	return (dispatch) => {
-		console.log('leagueUid', leagueUid);
 		firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
 			.on('value', snapshot => {
 				console.log('snapshot.val()', snapshot.val());
@@ -160,29 +157,3 @@ export const onMessageChanged = (message) => {
 		}; 
 };
  */
-
-export const handleSearch = (textToSearch, fullData) => {
-	return (dispatch) => {
-		const formatText = textToSearch.toLowerCase();
-		console.log('textFormat', formatText);
-		const dataToShow = _.filter(fullData, friendlyLeauge => {
-			return contains(friendlyLeauge, formatText);
-		});
-		dispatch({
-			type: DATA_AFTER_SEARCH,
-			payload: dataToShow
-		});
-		dispatch({
-			type: ON_TEXT_CHANGE,
-			payload: formatText
-		});
-	};
-};
-
-const contains = (friendlyLeauge, formatText) => {
-	if (friendlyLeauge.friendlyLeagueName.toLowerCase().includes(formatText)) {
-		return true;
-	}
-	return false;
-};
-

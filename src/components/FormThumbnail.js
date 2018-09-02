@@ -80,7 +80,7 @@ class FormThumbnail extends Component {
                             <View style={{ alignSelf: 'center', flexDirection: 'row'/* , borderWidth: 1, borderColor: 'black' */ }}>
                                 <View style={{ marginHorizontal: 5, justifyContent: 'center', alignSelf: 'center' }}>
                                     <Text style={styles.title}>
-                                        {totalCoins}
+                                        {totalCoins.toFixed(2)}
                                     </Text>
                                 </View>
                                 <View style={{ marginHorizontal: 5, alignSelf: 'center' }}>

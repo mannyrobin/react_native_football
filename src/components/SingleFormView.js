@@ -4,13 +4,13 @@ import { RkButton } from 'react-native-ui-kitten';
 import { Button, Avatar } from 'react-native-elements';
 import { locali } from '../../locales/i18n';
 
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
+import { SECONDARY_COLOR } from '../constants';
 
 class SingleFormView extends Component {
 
   render() {
-    const { bets, timestamp, totalCoins, totalOdd, won } = this.props.form;
-    return bets ? ( 
+    const { bets, date, time, totalCoins, totalOdd, won } = this.props.form;
+    return bets ? (
       <View style={{ width: '100%' }}>
 
         <ImageBackground
@@ -19,91 +19,94 @@ class SingleFormView extends Component {
           resizeMode='cover'
           position='absolute'
         >
-        <ScrollView /* contentContainerStyle={{ height: '130%' }} */>
+          <ScrollView /* contentContainerStyle={{ height: '130%' }} */>
 
-          {bets
-            .map(({ match, bet }) =>
-              <View style={{ flex: 1 }}>
-                <View style={styles.timeContainer}>
-                  <Text style={[styles.titleStyle, { textAlign: 'center' }, { margin: 20 }]}>
-                    {new Date(timestamp * 1000).toLocaleString()}
-                  </Text>
-                </View>
-                <View style={styles.teamsContainer}>
-                  <View style={styles.teamsSection}>
-                    <View
-                      style={styles.teamLogoSection}
-                      renderToHardwareTextureAndroid
-                      shouldRasterizeIOS
-                    >
-                      <Image
-                        style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
-                        source={require('../images/Real_Madrid.png')}
-                        resizeMode="contain"
-                      />
-                    </View>
-                    <View style={styles.teamLabelSection}>
-                      <Text style={styles.titleTeamsStyle}>
-                        {match.hometeamName}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.vsSection}>
-                    <Text style={styles.titleStyle}>
-                      {locali('forms.matches.vs')}
+            {bets
+              .map(({ match, bet }) =>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.timeContainer}>
+                    <Text style={[styles.titleStyle, { textAlign: 'center' }, { margin: 20 }]}>
+                      {
+                        date + ' ' + time
+                        //new Date(timestamp * 1000).toLocaleString()
+                      }
                     </Text>
                   </View>
-
-                  <View style={styles.teamsSection}>
-                    <View style={styles.teamLogoSection}>
-                      <Image
-                        style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
-                        source={require('../images/Real_Madrid.png')}
-                        resizeMode="contain"
-                      />
+                  <View style={styles.teamsContainer}>
+                    <View style={styles.teamsSection}>
+                      <View
+                        style={styles.teamLogoSection}
+                        renderToHardwareTextureAndroid
+                        shouldRasterizeIOS
+                      >
+                        <Image
+                          style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
+                          source={require('../images/Real_Madrid.png')}
+                          resizeMode="contain"
+                        />
+                      </View>
+                      <View style={styles.teamLabelSection}>
+                        <Text style={styles.titleTeamsStyle}>
+                          {match.hometeamName}
+                        </Text>
+                      </View>
                     </View>
-                    <View style={styles.teamLabelSection}>
-                      <Text style={styles.titleTeamsStyle}>
-                        {match.awayteamName}
+
+                    <View style={styles.vsSection}>
+                      <Text style={styles.titleStyle}>
+                        {locali('forms.matches.vs')}
                       </Text>
                     </View>
-                  </View>
-                </View>
-                <View style={styles.oddsContainer}>
-                  <View style={styles.oddForOne}>
-                    <RkButton
-                      style={bet === '1' ? styles.oddButtonSelected : styles.oddButton}
-                      rkType='circle outline'
-                      onPress={() => ''}
-                    >
-                      <Text style={styles.oddButtonLable}>{match.hometeamOdd.toFixed(2)}</Text>
-                    </RkButton>
-                  </View>
-                  <View style={styles.oddForX}>
-                  <RkButton
-                      style={bet === 'x' ? styles.oddButtonSelected : styles.oddButton}
-                      rkType='circle outline'
-                      onPress={() => ''}
-                  >
-                      <Text style={styles.oddButtonLable}>{match.drawOdd.toFixed(2)}</Text>
-                    </RkButton>
-                  </View>
-                  <View style={styles.oddForOne}>
-                  <RkButton
-                      style={bet === '2' ? styles.oddButtonSelected : styles.oddButton}
-                      rkType='circle outline'
-                      onPress={() => ''}
-                  >
-                      <Text style={styles.oddButtonLable}>{match.awayteamOdd.toFixed(2)}</Text>
-                    </RkButton>
-                  </View>
-                </View>
-              </View>
 
-            )}
-          <View style={[styles.timeContainer, { flexDirection: 'column', paddingTop: 30 }]}>
-            
+                    <View style={styles.teamsSection}>
+                      <View style={styles.teamLogoSection}>
+                        <Image
+                          style={{ flex: 1, height: 40, width: 40, alignSelf: 'center' }}
+                          source={require('../images/Real_Madrid.png')}
+                          resizeMode="contain"
+                        />
+                      </View>
+                      <View style={styles.teamLabelSection}>
+                        <Text style={styles.titleTeamsStyle}>
+                          {match.awayteamName}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.oddsContainer}>
+                    <View style={styles.oddForOne}>
+                      <RkButton
+                        style={bet === '1' ? styles.oddButtonSelected : styles.oddButton}
+                        rkType='circle outline'
+                        onPress={() => ''}
+                      >
+                        <Text style={styles.oddButtonLable}>{match.hometeamOdd.toFixed(2)}</Text>
+                      </RkButton>
+                    </View>
+                    <View style={styles.oddForX}>
+                      <RkButton
+                        style={bet === 'x' ? styles.oddButtonSelected : styles.oddButton}
+                        rkType='circle outline'
+                        onPress={() => ''}
+                      >
+                        <Text style={styles.oddButtonLable}>{match.drawOdd.toFixed(2)}</Text>
+                      </RkButton>
+                    </View>
+                    <View style={styles.oddForOne}>
+                      <RkButton
+                        style={bet === '2' ? styles.oddButtonSelected : styles.oddButton}
+                        rkType='circle outline'
+                        onPress={() => ''}
+                      >
+                        <Text style={styles.oddButtonLable}>{match.awayteamOdd.toFixed(2)}</Text>
+                      </RkButton>
+                    </View>
+                  </View>
+                </View>
+
+              )}
+            <View style={[styles.timeContainer, { flexDirection: 'column', paddingTop: 30 }]}>
+
 
               <Button
                 style={{ flex: 1 }}
@@ -121,28 +124,28 @@ class SingleFormView extends Component {
                 icon={{ name: 'local-atm' }}
                 title={locali('forms.display_form.possible_win') + totalCoins.toFixed(2)}
               />
-            
-            <View style={styles.timeContainer}>
-            <Avatar
-                    large
-                    icon={
-                      won === 1 ? { name: 'check', type: 'entypo' } :
-                        won === 0 ? { name: 'cross', type: 'entypo' } :
-                        { name: 'timer', type: 'materialIcons' }}
-                    overlayContainerStyle={
-                      won === 1 ? { backgroundColor: 'green' } :
-                      won === 0 ? { backgroundColor: 'red' } :
-                      { backgroundColor: 'grey' }}
-                    rounded
-                    activeOpacity={0.7}
-            />
-            </View>
-           
 
-          </View>
-          </ScrollView> 
-          </ImageBackground>
-        
+              <View style={styles.timeContainer}>
+                <Avatar
+                  large
+                  icon={
+                    won === 1 ? { name: 'check', type: 'entypo' } :
+                      won === 0 ? { name: 'cross', type: 'entypo' } :
+                        { name: 'timer', type: 'materialIcons' }}
+                  overlayContainerStyle={
+                    won === 1 ? { backgroundColor: 'green' } :
+                      won === 0 ? { backgroundColor: 'red' } :
+                        { backgroundColor: 'grey' }}
+                  rounded
+                  activeOpacity={0.7}
+                />
+              </View>
+
+
+            </View>
+          </ScrollView>
+        </ImageBackground>
+
       </View>) : null;
   }
 }
@@ -151,11 +154,11 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     marginRight: 6,
     marginTop: 5,
-    flex: 1 
+    flex: 1
   },
   oddForOne: {
     marginTop: 5,
-    flex: 4 
+    flex: 4
 
   },
 
@@ -164,7 +167,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     marginTop: 5
-    
+
   },
   TeamsNames: {
     fontSize: 18,
@@ -210,19 +213,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   oddsContainer: {
-/*     flex: 0,
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: 'green',
-    justifyContent: 'center', */
- flexDirection: 'row' 
-    
+    /*     flex: 0,
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderColor: 'green',
+        justifyContent: 'center', */
+    flexDirection: 'row'
+
   },
   oddsSection: {
-   /*  justifyContent: 'flex-start', */
-         borderWidth: 1,
-        borderColor: 'black',
-        
+    /*  justifyContent: 'flex-start', */
+    borderWidth: 1,
+    borderColor: 'black',
+
   },
   oddButton: {
     paddingHorizontal: 0,

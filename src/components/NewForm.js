@@ -1,8 +1,10 @@
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
+import moment from 'moment';
 import { Picker } from 'native-base';
 import SearchBar from 'react-native-searchbar';
 import { Avatar } from 'react-native-elements';
-import React, { Component } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
 import { fetchMatches, selectedPickerCountry, selectedPickerLeauge, reduxNav, handleSearch, cleanSearch, cleanPickers } from '../actions';
@@ -16,18 +18,17 @@ class NewForm extends Component {
     header: null,
   };
   componentWillMount() {
-
     this.props.cleanSearch();
   }
 
   onValueChangeCountry(value) {
-    const { matchesLeagues } = this.props;
+    const { allMatches } = this.props;
     this.props.cleanSearch();
-    this.props.selectedPickerCountry(value, matchesLeagues);
+    this.props.selectedPickerCountry(value, allMatches);
   }
   onValueChangeLeauge(value) {
-    const { matchesLeagues, pickerSelectedCountry } = this.props;
-    this.props.selectedPickerLeauge(value, matchesLeagues, pickerSelectedCountry);
+    const { allMatches, pickerSelectedCountry } = this.props;
+    this.props.selectedPickerLeauge(value, allMatches, pickerSelectedCountry);
   }
 
   pickerItemLeague() {
@@ -101,8 +102,9 @@ class NewForm extends Component {
   }
 
   render() {
-    const { matchesToShow, dataToShowTeams, allmatchesToShow, textToSearch, pickerSelectedLeauge, pickerSelectedCountry } = this.props;
-    if (matchesToShow.length > 0) {
+    //console.log(`this.props.matchesLeaguesFiltered ${this.props.matchesLeaguesFiltered}`);
+    const { pickerMatches, dataToShowTeams, textToSearch, pickerSelectedLeauge, pickerSelectedCountry } = this.props;
+    if (this.props.allMatches.length > 0) {
       const formFilled = this.props.newForm.length > 0;
       return (
         <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
@@ -111,7 +113,7 @@ class NewForm extends Component {
             ref={(ref) => this.searchBar = ref}
             /* onBack={() => this.props.cleanPickers()} */
             handleChangeText={text => {
-              this.props.handleSearch(text, allmatchesToShow, 'teamNames');
+              this.props.handleSearch(text, this.props.allMatches, 'teamNames');
             }}
           />
           <View style={styles.container}>
@@ -120,9 +122,9 @@ class NewForm extends Component {
                 data={
                   textToSearch ? dataToShowTeams :
                     !pickerSelectedCountry || pickerSelectedCountry === 'countryPlaceholder' ?
-                      allmatchesToShow :
+                      this.props.allMatches :
                       pickerSelectedCountry && pickerSelectedCountry !== 'countryPlaceholder' ?
-                        matchesToShow : null
+                        pickerMatches : null
                 }
                 renderItem={({ item }) => {
                   return <MatchContainer match={item} />;
@@ -177,10 +179,19 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   const { newForm } = state.forms;
-  const { matchesLeagues, pickerSelectedCountry, matchesToShow, pickerSelectedLeauge, allmatchesToShow } = state.matches;
+  const { matchesLeagues, pickerSelectedCountry, pickerMatches, pickerSelectedLeauge } = state.matches;
   const { textToSearch, dataToShowTeams } = state.search;
 
-  return { allmatchesToShow, matchesLeagues, newForm, pickerSelectedCountry, matchesToShow, pickerSelectedLeauge, textToSearch, dataToShowTeams };
+  //match.date > moment().format('YYYY-MM-DD')
+  //const matchesLeaguesFiltered = matchesLeagues.map();
+  let allMatches = _.flatMap(matchesLeagues, league => league.matches);
+  allMatches = _.orderBy(allMatches, match => match.countryName, 'asc');
+  allMatches = _.filter(allMatches, match => {
+    return moment(match.date + ' ' + match.time).format('X') > moment().add({ minutes: 30 }).format('X')
+      && moment(match.date + ' ' + match.time).format('X') < moment().add({ week: 2 }).format('X');
+  });
+
+  return { allMatches, matchesLeagues, newForm, pickerSelectedCountry, pickerMatches, pickerSelectedLeauge, textToSearch, dataToShowTeams };
 };
 
 export default connect(mapStateToProps, { cleanPickers, cleanSearch, handleSearch, reduxNav, fetchMatches, selectedPickerCountry, selectedPickerLeauge })(NewForm);

@@ -19,10 +19,10 @@ export const fetchMatches = () => {
     };
 };
 
-export const selectedPickerCountry = (countryChoice, matchesLeagues) => {
+export const selectedPickerCountry = (countryChoice, allData) => {
     return (dispatch) => {
-        const dataAfterFilter = _.filter(matchesLeagues, league => {
-            return containsCountry(league, countryChoice === 'countryPlaceholder' ? true : countryChoice);
+        const dataAfterFilter = _.filter(allData, match => {
+            return containsCountry(match, countryChoice === 'countryPlaceholder' ? true : countryChoice);
         });
         console.log('dataAfterFilter', dataAfterFilter);
         dispatch({
@@ -41,9 +41,11 @@ export const selectedPickerLeauge = (leaugeChoice, allData, countryChoice) => {
         if (leaugeChoice === 'leaugePlaceholder') {
             selectedPickerCountry(countryChoice, allData);
         } else {
-            const dataAfterFilter = _.filter(allData, league => {
-                return containsLeague(league, leaugeChoice);
+            const dataAfterFilter = _.filter(allData, match => {
+                return containsLeague(match, leaugeChoice);
             });
+
+            console.log('dataAfterFilter', dataAfterFilter);
 
             dispatch({
                 type: SELECTED_LEAGUE,
@@ -57,16 +59,16 @@ export const selectedPickerLeauge = (leaugeChoice, allData, countryChoice) => {
     };
 };
 
-const containsLeague = (league, leaugeChoice) => {
-    if (league.league_name === leaugeChoice) {
+const containsLeague = (match, leaugeChoice) => {
+    if (match.leagueName === leaugeChoice) {
         return true;
     }
     return false;
 };
 
-const containsCountry = (league, countryChoice) => {
+const containsCountry = (match, countryChoice) => {
     if (countryChoice === true) return true;
-    if (league.country_name === countryChoice) {
+    if (match.countryName === countryChoice) {
         return true;
     }
     return false;

@@ -1,5 +1,6 @@
 import firebase from 'react-native-firebase';
 import { NavigationActions } from 'react-navigation';
+import moment from 'moment';
 import { 
     MATCHES_LIST_FETCH,
     SLIDER_VALUE_CHANGED,
@@ -89,10 +90,14 @@ export const submitForm = (newForm, coins, leagueUid, navigation) => {
         const { currentUser } = firebase.auth();
         const totalOdd = newForm.map(item => item.odd).reduce((prev, next) => prev * next);
         const totalCoins = totalOdd * coins;
-        const timestamp = Math.floor(new Date().getTime() / 1000);
+        //const timestamp = Math.floor(new Date().getTime() / 1000);
+        const now = moment();
+        const date = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm');
         const val = {
             coins,
-            timestamp,
+            date,
+            time,
             totalOdd,
             totalCoins,
             won: -1,

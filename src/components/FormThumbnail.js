@@ -7,7 +7,7 @@ import { locali } from '../../locales/i18n';
 class FormThumbnail extends Component {
 
     render() {
-        const { timestamp, totalCoins, won, coins } = this.props.form;
+        const { date, time, totalCoins, won, coins } = this.props.form;
         return (
             <AppComponent>
                 <View style={styles.container}>
@@ -15,7 +15,8 @@ class FormThumbnail extends Component {
                         <Text style={styles.title}>
                         {
                             locali('forms.display_form.thumbnail_display.date_title') +
-                            new Date(timestamp * 1000).toLocaleString()
+                            //new Date(timestamp * 1000).toLocaleString()
+                            date + ' ' + time
                         }
                     </Text>
                     </View>

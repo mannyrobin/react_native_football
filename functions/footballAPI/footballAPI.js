@@ -42,14 +42,17 @@ const updateLeaguesFromAPI = () =>
   });
   
 
-const formatMatch = ({ match_hometeam_name, match_awayteam_name, match_date }) => 
+const formatMatch = ({ match_hometeam_name, match_awayteam_name, match_date, match_time, country_name, league_name }) => 
   ({ 
     hometeamName: match_hometeam_name,
     awayteamName: match_awayteam_name,
-    timestamp: match_date,
+    date: match_date,
+    time: match_time,
     hometeamOdd: 1.2,
     awayteamOdd: 1.7,
-    drawOdd: 2.4 
+    drawOdd: 2.4,
+    countryName: country_name,
+    leagueName: league_name
   });
 
 const updateMatchesFromAPI = () =>

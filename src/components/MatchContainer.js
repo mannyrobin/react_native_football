@@ -14,7 +14,8 @@ class MatchContainer extends Component {
         const {
             hometeamName,
             awayteamName,
-            timestamp,
+            date,
+            time,
             hometeamOdd,
             awayteamOdd,
             drawOdd,
@@ -36,7 +37,8 @@ class MatchContainer extends Component {
                 <View style={styles.timeContainer}>
                     <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
                         {
-                            timestamp
+                            date + ' ' + time
+                            //timestamp
                             /* new Date(timestamp * 1000).toLocaleString() */
                         }
                     </Text>

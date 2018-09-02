@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
+import moment from 'moment';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
@@ -19,10 +20,14 @@ class ReviewForm extends Component {
                 this.props.form.bets.map(item => item.odd).reduce((prev, next) => prev * next);
         const coins = this.props.sliderValue;
         const totalCoins = totalOdd * this.props.sliderValue;
-        const timestamp = Math.floor(new Date().getTime() / 1000);
+        //const timestamp = Math.floor(new Date().getTime() / 1000);
+        const now = moment();
+        const date = now.format('YYYY-MM-DD');
+        const time = now.format('HH:mm');
             fullForm = {
                 coins,
-                timestamp,
+                date,
+                time,
                 totalOdd,
                 totalCoins,
                 won: -1,

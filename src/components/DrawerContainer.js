@@ -5,6 +5,7 @@ import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import { logout, reduxNav, openAccount } from '../actions';
 import { locali } from '../../locales/i18n';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
 
 class DrawerContainer extends Component {
 
@@ -117,7 +118,7 @@ class DrawerContainer extends Component {
 }
 
 DrawerContainer.defaultProps = {
-  activeTintColor: '#2196f3',
+  activeTintColor: SECONDARY_COLOR,
   activeBackgroundColor: 'rgba(0, 0, 0, .04)',
   inactiveTintColor: 'rgba(0, 0, 0, .87)',
   inactiveBackgroundColor: 'transparent',
@@ -137,7 +138,7 @@ export default connect(mapStateToProps, { logout, reduxNav, openAccount })(Drawe
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#C1E15E',
+    backgroundColor: PRIMARY_COLOR,
     paddingTop: 30,
     paddingHorizontal: 20
   },

@@ -9,3 +9,4 @@ export * from './Badge';
 export * from './LeaderboardContainer';
 export * from './FullScreenSpinner';
 export * from './RTLCustomSlider';
+export * from './AppComponent';

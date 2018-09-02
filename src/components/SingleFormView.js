@@ -4,6 +4,8 @@ import { RkButton } from 'react-native-ui-kitten';
 import { Button, Avatar } from 'react-native-elements';
 import { locali } from '../../locales/i18n';
 
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
+
 class SingleFormView extends Component {
 
   render() {
@@ -107,7 +109,7 @@ class SingleFormView extends Component {
                 style={{ flex: 1 }}
                 fontWeight='bold'
                 large
-                backgroundColor='#C1E15E'
+                backgroundColor={SECONDARY_COLOR}
                 icon={{ name: 'local-atm' }}
                 title={locali('forms.display_form.total_odd') + totalOdd.toFixed(2)}
               />
@@ -115,7 +117,7 @@ class SingleFormView extends Component {
                 style={{ flex: 1 }}
                 fontWeight='bold'
                 large
-                backgroundColor='#C1E15E'
+                backgroundColor={SECONDARY_COLOR}
                 icon={{ name: 'local-atm' }}
                 title={locali('forms.display_form.possible_win') + totalCoins.toFixed(2)}
               />
@@ -229,13 +231,14 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#B7BABC',
     alignSelf: 'center',
+    borderWidth: 0
   },
   oddButtonSelected: {
     paddingHorizontal: 0,
     marginHorizontal: 0,
     width: 40,
     height: 40,
-    backgroundColor: '#C1E15E',
+    backgroundColor: SECONDARY_COLOR,
     alignSelf: 'center',
   },
   oddButtonLable: {

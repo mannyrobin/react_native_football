@@ -4,8 +4,8 @@ import { Text, TouchableOpacity, View, Image } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
-import { CardSection } from './common';
 import { openFriendlyLeague } from '../actions';
+import { AppComponent } from './common';
 
 class ListItem extends Component {
 	render() {
@@ -20,29 +20,28 @@ class ListItem extends Component {
 			<TouchableOpacity
 				onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}
 			>
-				<View>
-					<CardSection style={{ height: 120 }}>
-						<View style={styles.leaugeNameContainer}>
-							<Text style={styles.titleStyle}>
-								{friendlyLeague.friendlyLeagueName}
-							</Text>
-						</View>
-						<View style={styles.contentContainer}>
-							<View style={[styles.contentSection, { alignItems: 'center', justifyContent: 'center' }]}>
-								<Image
-									source={require('../images/DefaultThumbnail.png')}
-									style={{ height: 50, width: 50 }}
-									resizeMode="contain"
-								/>
+				<AppComponent>
+					<View style={styles.contentContainer}>
+						<View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+							<View style={styles.leaugeNameContainer}>
+								<Text style={styles.titleStyle}>
+									{friendlyLeague.friendlyLeagueName}
+								</Text>
 							</View>
+							<Image
+								source={require('../images/DefaultThumbnail.png')}
+								style={{ height: 70, width: 70 }}
+								resizeMode="contain"
+							/>
+						</View>
 
-							<View style={[styles.contentSection, { justifyContent: 'flex-start' }]}>
-								<View>
-									<Text style={[styles.titleStyle, { fontSize: 15 }]}>
-										דירוג:
+						<View style={{ flex: 1.5, justifyContent: 'center' }}>
+							<View>
+								<Text style={[styles.titleStyle, { fontSize: 15 }]}>
+									דירוג:
 									</Text>
-								</View>
-								<View style={{ alignItems: 'center', paddingVertical: 5 }}>
+							</View>
+							<View style={{ alignItems: 'center', paddingVertical: 5 }}>
 									<Avatar
 										size="medium"
 										rounded
@@ -50,7 +49,6 @@ class ListItem extends Component {
 										activeOpacity={0.7}
 									/>
 								</View>
-							</View>
 							<View style={[styles.contentSection, { flexDirection: 'row' }]}>
 								<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
 									<Image
@@ -63,10 +61,21 @@ class ListItem extends Component {
 									</Text>
 								</View>
 							</View>
-
 						</View>
-					</CardSection>
-				</View>
+						<View style={{ flex: 1.5, flexDirection: 'row' }}>
+							<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
+								<Image
+									source={require('../images/Currency2Small.png')}
+									style={{ height: 30, width: 30 }}
+									resizeMode="contain"
+								/>
+								<Text style={[styles.titleStyle, { textAlign: 'left', marginLeft: 5 }]}>
+									{!coins ? null : coins}
+								</Text>
+							</View>
+						</View>
+					</View>
+				</AppComponent>
 			</TouchableOpacity>
 		);
 	}
@@ -79,15 +88,11 @@ const styles = {
 		fontWeight: 'bold'
 	},
 	leaugeNameContainer: {
-		flex: 3,
 		justifyContent: 'center'
 	},
 	contentContainer: {
 		flex: 5,
 		flexDirection: 'row',
-	},
-	contentSection: {
-		flex: 1,
 	},
 	coinsTextContainer: {
 		flex: 3,
@@ -97,7 +102,7 @@ const styles = {
 	coinsIconContainer: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
 	}
 };
 

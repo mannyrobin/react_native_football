@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { CardSection } from './common';
+import { AppComponent } from './common';
 import { locali } from '../../locales/i18n';
 
 class FormThumbnail extends Component {
@@ -9,7 +9,7 @@ class FormThumbnail extends Component {
     render() {
         const { timestamp, totalCoins, won, coins } = this.props.form;
         return (
-            <CardSection>
+            <AppComponent>
                 <View style={styles.container}>
                     <View style={styles.dateContainer}>
                         <Text style={styles.title}>
@@ -94,7 +94,7 @@ class FormThumbnail extends Component {
                         </View>
                     </View>
                 </View>
-            </CardSection>
+            </AppComponent>
         );
     }
 
@@ -103,26 +103,18 @@ class FormThumbnail extends Component {
 
 const styles = StyleSheet.create({
     container: {
-/*         borderWidth: 1,
-        borderColor: 'black', */
         flex: 1
     },
     dateContainer: {
-/*         borderWidth: 1,
-        borderColor: 'red', */
         alignSelf: 'center',
         marginVertical: 5
     },
     title: {
-/*         borderWidth: 1,
-        borderColor: 'black', */
         textAlign: 'center',
         fontSize: 18
     },
     pressToOpenContainer: {
         flexDirection: 'row',
-/*         borderWidth: 1,
-        borderColor: 'green', */
         justifyContent: 'center',
         marginBottom: 10
     },
@@ -132,19 +124,13 @@ const styles = StyleSheet.create({
     },
     betCoinsContainer: {
         flex: 3,
-/*         borderWidth: 1,
-        borderColor: 'green' */
     },
     checkWonContainer: {
         flex: 1,
-/*         borderWidth: 1,
-        borderColor: 'red', */
         justifyContent: 'center'
     },
     betExpectedCoinsContainer: {
         flex: 3,
-/*         borderWidth: 1,
-        borderColor: 'black', */
     }
 });
 

@@ -15,6 +15,8 @@ import ReviewForm from '../ReviewForm';
 import ScoreBoard from '../ScoreBoard';
 import Chat from '../Chat';
 
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants';
+
 const FormsViewStack = createStackNavigator({
     Forms: { screen: Forms },
     Form: { screen: SingleForm }
@@ -36,8 +38,6 @@ const FillFormStack = createStackNavigator({
         initialRouteName: 'NewForm',
         navigationOptions: {
             header: null
-            /* headerStyle: { backgroundColor: '#C1E15E' },
-            headerTintColor: 'black' */
         }
     }
 );
@@ -97,14 +97,14 @@ const FriendlyLeagueTab = createBottomTabNavigator({
         // Default config for all screens
         initialRouteName: 'ScoreBoard',
         tabBarOptions: {
-            activeTintColor: '#2196f3',
+            activeTintColor: SECONDARY_COLOR,
             inactiveTintColor: '#000',
             labelStyle: {
                 fontSize: 14,
                 fontWeight: 'bold'
             },
             tabStyle: {
-                backgroundColor: '#C1E15E'
+                backgroundColor: PRIMARY_COLOR
             },
             style: {
                 height: 65

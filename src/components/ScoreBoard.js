@@ -7,16 +7,17 @@ import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { RkText } from 'react-native-ui-kitten';
 import { LeaderboardContainer } from './common';
 import { locali } from '../../locales/i18n';
+import { BACKGROUND_COLOR } from '../constants';
 
 class ScoreBoard extends Component {
   render() {
     const { currentUser } = firebase.auth();
     const sortedParticipants = _.orderBy(this.props.league.participants, user => user.coins, 'desc');
-		const coins = _.find(sortedParticipants, user => user.uid === currentUser.uid).coins;
-		const rank = Number(_.findKey(sortedParticipants, user => user.uid === currentUser.uid)) + 1;
+    const coins = _.find(sortedParticipants, user => user.uid === currentUser.uid).coins;
+    const rank = Number(_.findKey(sortedParticipants, user => user.uid === currentUser.uid)) + 1;
 
     return (
-      <View>
+      <View style={styles.container}>
         <ImageBackground
           source={require('../images/AppBG.jpg')}
           style={{ width: '100%' }}
@@ -34,7 +35,7 @@ class ScoreBoard extends Component {
 
             <View style={styles.headerSection}>
               <RkText style={styles.headerRank}>
-              {'#' + rank}
+                {'#' + rank}
               </RkText>
               <View style={styles.headerThumbnailContainer}>
                 <Image
@@ -45,7 +46,7 @@ class ScoreBoard extends Component {
               <View style={styles.headerCoinsContainer}>
                 <RkText style={styles.headerCoinsText}>
                   {coins}
-              </RkText>
+                </RkText>
                 <Image
                   source={require('../images/Currency2Small.png')}
                   style={{ height: 30, width: 30 }}
@@ -55,9 +56,7 @@ class ScoreBoard extends Component {
             </View>
           </View>
         </ImageBackground>
-
         <LeaderboardContainer
-
           data={this.props.league.participants}
           sortBy='coins'
           labelBy='displayName'
@@ -70,6 +69,10 @@ class ScoreBoard extends Component {
 }
 
 const styles = {
+  container: {
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR
+  },
   headerContainer: {
     paddingVertical: 15,
     alignItems: 'center'

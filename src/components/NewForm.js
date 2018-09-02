@@ -9,6 +9,7 @@ import { fetchMatches, selectedPickerCountry, selectedPickerLeauge, reduxNav, ha
 import MatchContainer from './MatchContainer';
 import { Spinner } from './common';
 import { locali } from '../../locales/i18n';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
 
 class NewForm extends Component {
   static navigationOptions = {
@@ -109,7 +110,7 @@ class NewForm extends Component {
     if (matchesToShow.length > 0) {
       const formFilled = this.props.newForm.length > 0;
       return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
           {this.handlePickers()}
           <SearchBar
             ref={(ref) => this.searchBar = ref}
@@ -145,7 +146,7 @@ class NewForm extends Component {
                 rkType='xlarge'
                 onPress={() => this.props.reduxNav('ReviewForm')}
                 disabled={!formFilled}
-                style={!formFilled ? styles.buttonDisabled : ''}
+                style={!formFilled ? styles.buttonDisabled : styles.button}
               >
                 {locali('forms.matches.review_form_button')}
               </RkButton>
@@ -161,24 +162,28 @@ class NewForm extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 9,
-    backgroundColor: '#fff',
-    padding: 20
-  },
-  MatchesContainer: {
-    flex: 12,
-    marginBottom: 10
-  },
-  ButtonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  buttonDisabled: {
-    backgroundColor: '#B7BABC'
-  },
-});
+  const styles = StyleSheet.create({
+    container: {
+      flex: 9,
+      backgroundColor: BACKGROUND_COLOR,
+      padding: 20
+    },
+    MatchesContainer: {
+      flex: 12,
+      marginBottom: 10
+    },
+    ButtonContainer: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    button: {
+      backgroundColor: SECONDARY_COLOR
+    },
+    buttonDisabled: {
+      backgroundColor: '#B7BABC'
+    }
+  });
+  
 
 
 const mapStateToProps = state => {

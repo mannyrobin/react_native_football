@@ -8,11 +8,19 @@ import {
 export const openAccount = (accountId, displayName) => {
     return (dispatch) => {
         firebase.database().ref(`/forms/${accountId}`)
-        .orderByChild('timestamps')
-        .once('value', snapshot => {
-            const val = { forms: arraify(snapshot.val()), displayName };
-            dispatch({ type: OPEN_ACCOUNT_SUCCESS, payload: val });
-            dispatch(NavigationActions.navigate({ routeName: 'Account' }));
-        });
+            .orderByChild('timestamps')
+            .once('value', snapshot => {
+                const avatarPromises = firebase.storage().ref(`/users/${accountId}`)
+                    .child('profile_picture.jpg')
+                    .getDownloadURL()
+                    .then(avatarURL => ({ avatarURL }));
+
+                Promise.all(avatarPromises)
+                    .then(avatar => {
+                        const val = { forms: arraify(snapshot.val()), displayName, avatar };
+                        dispatch({ type: OPEN_ACCOUNT_SUCCESS, payload: val });
+                        dispatch(NavigationActions.navigate({ routeName: 'Account' }));
+                    });
+            });
     };
 };

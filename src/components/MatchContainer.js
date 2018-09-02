@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
 import { updateNewForm } from '../actions';
 import { locali } from '../../locales/i18n';
+import { AppComponent } from './common';
+
+import { SECONDARY_COLOR } from '../constants';
 
 class MatchContainer extends Component {
     render() {
@@ -25,10 +28,8 @@ class MatchContainer extends Component {
             }
         }
         return (
-            <LinearGradient
+            <AppComponent
                 style={styles.container}
-                colors={['#C1E15E', '#8CB11B']}
-                start={{ x: 0, y: 0.1 }} end={{ x: 0.1, y: 1 }}
                 renderToHardwareTextureAndroid
                 shouldRasterizeIOS
             >
@@ -105,7 +106,7 @@ class MatchContainer extends Component {
                         </RkButton>
                     </View>
                 </View>
-            </LinearGradient>
+            </AppComponent>
         );
     }
 }
@@ -114,18 +115,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         height: 150,
-        borderRadius: 25,
-
-        //IOS Shadow
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-
-        //Android Shadow
-        elevation: 5,
-
-        marginBottom: 15
     },
     timeContainer: {
         flex: 1,
@@ -169,7 +158,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 0,
         width: 40,
         height: 40,
-        backgroundColor: '#B7BABC',
+        backgroundColor: SECONDARY_COLOR,
         alignSelf: 'center',
         borderWidth: 0,
     },
@@ -183,13 +172,13 @@ const styles = StyleSheet.create({
         borderWidth: 0,
     },
     oddButtonLable: {
-        color: '#2196F3',
+        color: '#B7BABC',
         fontWeight: 'bold'
     },
     titleStyle: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#fff',
+        color: SECONDARY_COLOR,
         textAlign: 'center',
     }
 });

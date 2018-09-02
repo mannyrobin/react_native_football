@@ -6,7 +6,8 @@ import ZocialIcon from 'react-native-vector-icons/Zocial';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { locali } from '../../locales/i18n';
 import { emailChanged, userNameChanged, passwordChanged, signupUser } from '../actions';
-import { Card, CardSection, Spinner } from './common';
+import { CardSection, Spinner, AppComponent } from './common';
+import { SECONDARY_COLOR, BACKGROUND_COLOR } from '../constants';
 
 class SignUpWithEmail extends Component {
     renderError() {
@@ -31,7 +32,7 @@ class SignUpWithEmail extends Component {
         return (
             <View style={{ height: 60, justifyContent: 'center' }}>
                 <RkButton
-                    style={{ justifyContent: 'center', alignSelf: 'center' }}
+                    style={{ justifyContent: 'center', alignSelf: 'center', backgroundColor: SECONDARY_COLOR }}
                     onPress={() => this.props.signupUser(this.props.email, this.props.username, this.props.password, this.props.navigation)}  
                 >
                     {locali('login_with_email.signup.button_sign_up')}
@@ -41,7 +42,8 @@ class SignUpWithEmail extends Component {
       }
     render() {
         return (
-            <Card>
+          <View style={styles.container}>
+            <AppComponent>
             <RkTextInput
               label={<ZocialIcon style={styles.textInputIcon} name='email' />}
               placeholder={locali('login_with_email.form.text_field_email_placeholder')}
@@ -66,12 +68,17 @@ class SignUpWithEmail extends Component {
             <CardSection>
             {this.renderButtons()}
             </CardSection>
-        </Card>
+        </AppComponent>
+        </View>
         );
     }
 }
 
 const styles = {
+  container: {
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR
+  },
     textInputIcon: {
       fontSize: 20,
       color: '#0000003a',

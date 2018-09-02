@@ -8,6 +8,8 @@ import LoginWithEmail from '../LoginWithEmail';
 import SignUpWithEmail from '../SignUpWithEmail';
 import ForgotPassword from '../ForgotPassword';
 
+import { PRIMARY_COLOR } from '../../constants';
+
 const LoginStack = createStackNavigator({
     Intro: { screen: Intro },
     Login: { screen: Login,
@@ -30,7 +32,7 @@ const LoginStack = createStackNavigator({
 }, {
         headerMode: 'float',
         navigationOptions: {
-            headerStyle: { backgroundColor: '#C1E15E' },
+            headerStyle: { backgroundColor: PRIMARY_COLOR },
             headerTintColor: 'black'
         }
     });

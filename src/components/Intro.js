@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
@@ -10,8 +9,7 @@ import { locali } from '../../locales/i18n';
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   image: {
     width: 320, height: 320, resizeMode: 'contain'
@@ -20,7 +18,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     backgroundColor: 'transparent',
     textAlign: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 13,
   },
   title: {
     fontSize: 22,
@@ -46,28 +44,23 @@ const slides = [
 class App extends Component {
   static navigationOptions = {
     header: null,
-};
+  };
 
   _renderItem = props => (
-    <LinearGradient
-      style={[styles.mainContent, {
-        paddingTop: props.topSpacer,
-        paddingBottom: props.bottomSpacer,
-        width: props.width,
-        height: props.height,
-      }]}
-      colors={props.colors}
-      start={{ x: 0, y: 0.1 }} end={{ x: 0.1, y: 1 }}
-    >
-      <Image
-        style={props.imageStyle}
-        source={props.image}
-      />
-      <View>
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.text}>{props.text}</Text>
-      </View>
-    </LinearGradient>
+      <ImageBackground
+        style={{ flex: 1, width: '100%', height: '100%', alignItems: 'center' }}
+        source={require('../images/SoccerFieldDarker.jpg')}
+        resizeMode='cover'
+      >
+        <Image
+          style={props.imageStyle}
+          source={props.image}
+        />
+        <View>
+          <Text style={styles.title}>{props.title}</Text>
+          <Text style={styles.text}>{props.text}</Text>
+        </View>
+      </ImageBackground>
   );
 
   render() {

@@ -5,6 +5,7 @@ import firebase from 'react-native-firebase';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
 import { onMessageChanged, sendMessage } from '../actions';
+import { SECONDARY_COLOR } from '../constants';
 
 class Chat extends Component {
     onSend(messages) {
@@ -49,6 +50,11 @@ const { name } = props.currentMessage.user;
                 </View>
                 <Bubble 
                 {...props}
+                wrapperStyle={{
+                    right: {
+                      backgroundColor: SECONDARY_COLOR
+                    }
+                  }}
                 />
             </View>
         );

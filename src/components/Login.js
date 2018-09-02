@@ -17,6 +17,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 import { Spinner, FullScreenSpinner } from './common';
+import { PRIMARY_COLOR } from '../constants';
 
 class Login extends Component {
 
@@ -75,6 +76,11 @@ class Login extends Component {
     HandleSocialLoginSuccess(credential) {
         this.props.socialLoginUserIn();
         firebase.auth().signInAndRetrieveDataWithCredential(credential).then(user => {
+            const FCM = firebase.messaging();
+            FCM.getToken().then(token => {
+                firebase.database().ref(`/usersDb/${user.user.uid}`).update({ notificationToken: token });
+            });
+
             this.uploadProfilePic(user);
             if (user.additionalUserInfo.isNewUser) {
                 firebase.database().ref(`/usersDb/${user.user.uid}`)
@@ -190,7 +196,7 @@ class Login extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    backgroundColor="#C1E15E"
+                    backgroundColor={PRIMARY_COLOR}
                     barStyle="light-content"
                 />
                 <ImageBackground

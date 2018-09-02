@@ -30,8 +30,6 @@ const FriendlyLeaguesStack = createStackNavigator({
         initialRouteName: 'FriendlyLeagues',
         navigationOptions: {
             header: null,
-/*             headerStyle: { backgroundColor: '#C1E15E' },
-            headerTintColor: 'black' */
         }
     }
 );

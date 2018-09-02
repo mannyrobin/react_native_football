@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { RkTextInput, RkButton } from 'react-native-ui-kitten';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Card, CardSection } from './common';
+import { AppComponent } from './common';
 import { friendlyLeagueNameChanged, createNewFriendlyLeague } from '../actions';
 import { locali } from '../../locales/i18n';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
 
 class NewFriendlyLeague extends Component {
 
@@ -18,31 +19,39 @@ class NewFriendlyLeague extends Component {
 
   render() {
     return (
-        <Card>
-            <RkTextInput
-              label={<FontAwesomeIcon style={styles.textInputIcon} name='trophy' />}
-              placeholder={locali('friendly_leagues.new_friendly_leagues.name_placeholder')}
-              onChangeText={leagueName => this.props.friendlyLeagueNameChanged(leagueName)}
-              value={this.props.friendlyLeagueName}
-            />
-            <CardSection>
-                <RkButton
-                    style={{ justifyContent: 'center', alignSelf: 'center' }}
-                    onPress={this.onNewFriendlyLeagueButtonPress.bind(this)}  
-                >
-                    {locali('friendly_leagues.new_friendly_leagues.button_create')}
-                </RkButton>
-            </CardSection>
-        </Card>
+      <View style={styles.container}>
+        <AppComponent>
+          <RkTextInput
+            label={<FontAwesomeIcon style={styles.textInputIcon} name='trophy' />}
+            placeholder={locali('friendly_leagues.new_friendly_leagues.name_placeholder')}
+            onChangeText={leagueName => this.props.friendlyLeagueNameChanged(leagueName)}
+            value={this.props.friendlyLeagueName}
+          />
+          <RkButton
+            style={this.props.friendlyLeagueName === '' ? styles.buttonDisabled : styles.button}
+            disabled={this.props.friendlyLeagueName === ''}
+            onPress={this.onNewFriendlyLeagueButtonPress.bind(this)}
+          >
+            {locali('friendly_leagues.new_friendly_leagues.button_create')}
+          </RkButton>
+        </AppComponent>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR,
+  },
+  button: {
+    alignSelf: 'center',
+    backgroundColor: SECONDARY_COLOR
+  },
+  buttonDisabled: {
+    alignSelf: 'center',
+    backgroundColor: '#B7BABC'
   },
   drawerItemIcon: {
     fontSize: 25,
@@ -50,7 +59,7 @@ const styles = StyleSheet.create({
   },
   textInputIcon: {
     fontSize: 20,
-    color: '#0000003a',
+    color: SECONDARY_COLOR,
     marginLeft: 15
   }
 });

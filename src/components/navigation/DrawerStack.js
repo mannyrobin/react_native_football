@@ -17,6 +17,8 @@ import FriendlyLeaguesStack from './FriendlyLeaguesStack';
 
 import CustomHeader from '../CustomHeader';
 
+import { PRIMARY_COLOR } from '../../constants';
+
 const Drawer = createDrawerNavigator({
     Main: { screen: Main },
     FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
@@ -26,7 +28,7 @@ const Drawer = createDrawerNavigator({
         gesturesEnabled: false,
         contentComponent: DrawerContainer,
         drawerPosition: I18nManager.isRTL ? 'right' : 'left',
-        drawerBackgroundColor: '#C1E15E'
+        drawerBackgroundColor: PRIMARY_COLOR
     });
 
 const drawerButton = (navigation) =>
@@ -57,7 +59,7 @@ const DrawerStack = createStackNavigator({
 }, {
         headerMode: 'float',
         navigationOptions: ({ navigation }) => ({
-            headerStyle: { backgroundColor: '#C1E15E' },
+            headerStyle: { backgroundColor: PRIMARY_COLOR },
             headerTitle: <CustomHeader />,
             headerTintColor: 'black',
             gesturesEnabled: false,

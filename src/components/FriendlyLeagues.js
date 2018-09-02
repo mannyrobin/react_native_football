@@ -8,6 +8,8 @@ import { friendlyLeaguesFetch, fetchMatches, searchOnTextChange, handleSearch, r
 import { locali } from '../../locales/i18n';
 import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
+
 class FriendlyLeagues extends Component {
   componentWillMount() {
     this.props.friendlyLeaguesFetch();
@@ -51,7 +53,7 @@ class FriendlyLeagues extends Component {
 
           <RkButton
             rkType="xlarge fillScreen"
-            style={{ justifyContent: 'center' }}
+            style={{ justifyContent: 'center', backgroundColor: SECONDARY_COLOR }}
             onPress={() => this.props.reduxNav('NewFriendlyLeague')}
           >
             <FontAwesomeIcon name='trophy' color="white" size={30} />
@@ -66,7 +68,7 @@ class FriendlyLeagues extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: BACKGROUND_COLOR,
     padding: 20
   },
   drawerItemIcon: {

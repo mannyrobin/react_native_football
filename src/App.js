@@ -51,12 +51,6 @@ export default class App extends Component {
                 if (enabled) {
                     console.log('has permissions');
 
-                    const FCM = firebase.messaging();
-
-                    FCM.getToken().then(token => {
-                        firebase.database().ref(`/usersDb/${user.uid}`).update({ notificationToken: token });
-                    });
-
                     this.notificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification) => {
                         // Process your notification as required
                         // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.

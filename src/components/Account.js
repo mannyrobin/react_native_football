@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FormThumbnail from './FormThumbnail';
+import { BACKGROUND_COLOR } from '../constants';
 
 class Account extends Component {
   static navigationOptions = {
@@ -13,6 +15,15 @@ class Account extends Component {
 
   render() {
     const selectedAccountData = this.props.selectedAccountData;
+    const formsWon = selectedAccountData.forms.reduce((accumulator, form) => {
+      if (form.won === 1) return accumulator++;
+    });
+    const formsLost = selectedAccountData.forms.reduce((accumulator, form) => {
+      if (form.won === 0) return accumulator++;
+    });
+    const formsPending = selectedAccountData.forms.reduce((accumulator, form) => {
+      if (form.won === -1) return accumulator++;
+    });
     console.log(`selectedAccountData ${selectedAccountData}`);
     return (
       <View style={styles.container}>
@@ -31,9 +42,24 @@ class Account extends Component {
             <Text style={styles.titleText}>{selectedAccountData.displayName}</Text>
           </View>
           <View style={[styles.headerSection, { height: 70 }]}>
-            <Text style={styles.titleText}>Total Forms Won | Total Forms Lost</Text>
+            <Text style={styles.titleText}>{`טפסים נכונים: ${formsWon} | טפסים שגויים: ${formsLost} | טפסים בתהליך: ${formsPending}`}</Text>
           </View>
         </ImageBackground>
+        <View style={styles.formThumbnailsContainer}>
+          <Text style={styles.formsTitleText}>טפסים קודמים</Text>
+          <FlatList
+            data={selectedAccountData.forms}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => this.props.openForm(this.props.navigation, item.uid)}
+              >
+                <FormThumbnail form={item} />
+              </TouchableOpacity>
+            )
+            }
+            keyExtractor={form => form.uid.toString()}
+          />
+        </View>
       </View>
     );
   }
@@ -42,7 +68,7 @@ class Account extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: BACKGROUND_COLOR,
     alignItems: 'center',
   },
   headerContainer: {
@@ -65,6 +91,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#fff'
+  },
+  formThumbnailsContainer: {
+    flex: 1,
+    width: '100%'
+  },
+  formsTitleText: {
+    fontSize: 26,
+    textAlign: 'center'
   },
   drawerItemIcon: {
     fontSize: 25

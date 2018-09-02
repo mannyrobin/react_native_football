@@ -7,6 +7,7 @@ import { RkButton } from 'react-native-ui-kitten';
 import { RTLCustomSlider } from './common';
 import { submitForm, sliderValueChanged } from '../actions';
 import SingleFormView from './SingleFormView';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
 
 class ReviewForm extends Component {
     state = { sliderValue: '0' };
@@ -69,7 +70,7 @@ class ReviewForm extends Component {
                             this.props.league.uid,
                             this.props.navigation)}
                             disabled={!this.props.sliderValue > 0}
-                            style={!this.props.sliderValue > 0 ? styles.buttonDisabled : ''}
+                            style={!this.props.sliderValue > 0 ? styles.buttonDisabled : styles.button}
                     >
                         שלח טופס
                     </RkButton>
@@ -82,7 +83,7 @@ class ReviewForm extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: BACKGROUND_COLOR,
         padding: 20
     },
     formContainer: {
@@ -109,6 +110,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 16,
         color: 'red'
+    },
+    button: {
+        backgroundColor: SECONDARY_COLOR
     },
     buttonDisabled: {
         backgroundColor: '#B7BABC'

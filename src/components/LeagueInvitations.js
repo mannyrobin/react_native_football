@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchLeaguesInvitations, acceptInvitation, declineInvitation } from '../actions';
 import InvitationsList from './InvitationsList';
+import { BACKGROUND_COLOR } from '../constants';
 
 class LeagueInvitations extends Component {
     componentDidMount() {
@@ -10,11 +12,14 @@ class LeagueInvitations extends Component {
 
     render() {
         return (
+            <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
             <InvitationsList 
                 invitations={this.props.invitations} 
                 onPressAccept={this.props.acceptInvitation} 
                 onPressDecline={this.props.declineInvitation} 
-            />);
+            />
+            </View>
+            );
     }
 }
 

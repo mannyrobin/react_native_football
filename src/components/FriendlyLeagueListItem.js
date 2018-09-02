@@ -39,17 +39,17 @@ class ListItem extends Component {
 							<View>
 								<Text style={[styles.titleStyle, { fontSize: 15 }]}>
 									דירוג:
-									</Text>
+								</Text>
 							</View>
 							<View style={{ alignItems: 'center', paddingVertical: 5 }}>
-									<Avatar
-										size="medium"
-										rounded
-										title={'#' + (rank)}
-										activeOpacity={0.7}
-									/>
-								</View>
-							<View style={[styles.contentSection, { flexDirection: 'row' }]}>
+								<Avatar
+									size="medium"
+									rounded
+									title={'#' + (rank)}
+									activeOpacity={0.7}
+								/>
+							</View>
+{/* 							<View style={[styles.contentSection, { flexDirection: 'row' }]}>
 								<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
 									<Image
 										source={require('../images/Currency2Small.png')}
@@ -60,7 +60,7 @@ class ListItem extends Component {
 										{!coins ? null : coins}
 									</Text>
 								</View>
-							</View>
+							</View> */}
 						</View>
 						<View style={{ flex: 1.5, flexDirection: 'row' }}>
 							<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>

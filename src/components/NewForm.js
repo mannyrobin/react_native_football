@@ -102,11 +102,6 @@ class NewForm extends Component {
 
   render() {
     const { matchesToShow, dataToShowTeams, allmatchesToShow, textToSearch, pickerSelectedLeauge, pickerSelectedCountry } = this.props;
-    console.log('matchesToShow', matchesToShow);
-    console.log('dataToShowTeams', dataToShowTeams);
-    console.log('this.props.textToSearch', this.props.textToSearch);
-    console.log('allmatchesToShow', allmatchesToShow);
-    console.log('pickerSelectedLeauge', pickerSelectedLeauge);
     if (matchesToShow.length > 0) {
       const formFilled = this.props.newForm.length > 0;
       return (
@@ -122,17 +117,12 @@ class NewForm extends Component {
           <View style={styles.container}>
             <View style={styles.MatchesContainer}>
               <FlatList
-/*                 data={!this.props.textToSearch && (!pickerSelectedCountry || pickerSelectedCountry ==='leaugePlaceholder') ? 
-                  allmatchesToShow : 
-                  !this.props.textToSearch && pickerSelectedCountry !=='leaugePlaceholder' ? matchesToShow :
-                  this.props.textToSearch ? dataToShowTeams : null
-                } */
                 data={
-                textToSearch ? dataToShowTeams : 
-                !pickerSelectedCountry || pickerSelectedCountry ==='countryPlaceholder' ?
-                allmatchesToShow :
-                pickerSelectedCountry && pickerSelectedCountry !=='countryPlaceholder' ?
-                matchesToShow : null
+                  textToSearch ? dataToShowTeams :
+                    !pickerSelectedCountry || pickerSelectedCountry === 'countryPlaceholder' ?
+                      allmatchesToShow :
+                      pickerSelectedCountry && pickerSelectedCountry !== 'countryPlaceholder' ?
+                        matchesToShow : null
                 }
                 renderItem={({ item }) => {
                   return <MatchContainer match={item} />;
@@ -162,28 +152,27 @@ class NewForm extends Component {
   }
 }
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 9,
-      backgroundColor: BACKGROUND_COLOR,
-      padding: 20
-    },
-    MatchesContainer: {
-      flex: 12,
-      marginBottom: 10
-    },
-    ButtonContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    button: {
-      backgroundColor: SECONDARY_COLOR
-    },
-    buttonDisabled: {
-      backgroundColor: '#B7BABC'
-    }
-  });
-  
+const styles = StyleSheet.create({
+  container: {
+    flex: 9,
+    backgroundColor: BACKGROUND_COLOR,
+    padding: 20
+  },
+  MatchesContainer: {
+    flex: 12,
+    marginBottom: 10
+  },
+  ButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: SECONDARY_COLOR
+  },
+  buttonDisabled: {
+    backgroundColor: '#B7BABC'
+  }
+});
 
 
 const mapStateToProps = state => {

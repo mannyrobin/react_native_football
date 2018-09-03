@@ -3,13 +3,15 @@ import { View } from 'react-native';
 import Leaderboard from 'react-native-leaderboard';
 import { Spinner } from './';
 
-const LeaderboardContainer = ({ data, ...rest }) => {
+const LeaderboardContainer = ({ data, style, ...rest }) => {
 	if (data) {
 		return (
+			<View style={style}>
 			<Leaderboard
 				data={data}
 				{...rest}
 			/>
+			</View>
 		);
 	}
 	return (

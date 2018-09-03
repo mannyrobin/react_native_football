@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 9,
     backgroundColor: BACKGROUND_COLOR,
-    padding: 20
+    paddingVertical: 2
   },
   MatchesContainer: {
     flex: 12,

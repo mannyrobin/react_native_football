@@ -25,6 +25,7 @@ const Drawer = createDrawerNavigator({
     LeagueInvitations: { screen: LeagueInvitations },
     Account: { screen: Account },
 }, {
+        initialRouteName: 'FriendlyLeaguesStack',
         gesturesEnabled: false,
         contentComponent: DrawerContainer,
         drawerPosition: I18nManager.isRTL ? 'right' : 'left',
@@ -60,7 +61,7 @@ const DrawerStack = createStackNavigator({
         headerMode: 'float',
         navigationOptions: ({ navigation }) => ({
             headerStyle: { backgroundColor: PRIMARY_COLOR },
-            headerTitle: <CustomHeader />,
+            headerTitle: <CustomHeader navigation={navigation} />,
             headerTintColor: 'black',
             gesturesEnabled: false,
             headerLeft: drawerButton(navigation),

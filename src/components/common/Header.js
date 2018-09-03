@@ -1,24 +1,23 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants';
 
-const Header = (props) => {
-
+const Header = ({ children, style }) => {
 	const { textStyle, viewStyle } = styles;
 
 	return (
-		<View style={viewStyle}>
-			<Text style={textStyle}>{props.headerText}</Text>
+		<View style={[viewStyle, style]}>
+			<Text style={textStyle}>{children}</Text>
 		</View>
 	);
 };
 
 const styles = {
 	viewStyle: {
-		backgroundColor: '#F8F8F8',
+		backgroundColor: SECONDARY_COLOR,
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: 60,
-		paddingTop: 15,
+		height: 40,
 
 		//IOS Shadow
 		shadowColor: '#000',
@@ -27,11 +26,14 @@ const styles = {
 
 		//Android Shadow
 		elevation: 2,
-		position: 'relative'
 
 	},
 	textStyle: {
-		fontSize: 20
+		fontSize: 20,
+		fontWeight: 'bold',
+		textShadowOffset: { width: 2, height: 2 },
+		textShadowRadius: 5,
+		color: '#FFF'
 	}
 };
 

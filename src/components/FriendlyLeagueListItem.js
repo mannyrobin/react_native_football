@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import { openFriendlyLeague } from '../actions';
 import { AppComponent } from './common';
+import { COMPONENT_COLOR } from '../constants';
 
 class ListItem extends Component {
 	render() {
@@ -49,18 +50,6 @@ class ListItem extends Component {
 									activeOpacity={0.7}
 								/>
 							</View>
-{/* 							<View style={[styles.contentSection, { flexDirection: 'row' }]}>
-								<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
-									<Image
-										source={require('../images/Currency2Small.png')}
-										style={{ height: 30, width: 30 }}
-										resizeMode="contain"
-									/>
-									<Text style={[styles.titleStyle, { textAlign: 'left', marginLeft: 5 }]}>
-										{!coins ? null : coins}
-									</Text>
-								</View>
-							</View> */}
 						</View>
 						<View style={{ flex: 1.5, flexDirection: 'row' }}>
 							<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
@@ -85,7 +74,10 @@ const styles = {
 	titleStyle: {
 		fontSize: 22,
 		textAlign: 'center',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		color: COMPONENT_COLOR,
+		textShadowOffset: { width: 2, height: 2 },
+		textShadowRadius: 5,
 	},
 	leaugeNameContainer: {
 		justifyContent: 'center'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageBackground } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
@@ -7,7 +7,7 @@ import { updateNewForm } from '../actions';
 import { locali } from '../../locales/i18n';
 import { AppComponent } from './common';
 
-import { SECONDARY_COLOR } from '../constants';
+import { SECONDARY_COLOR, COMPONENT_COLOR } from '../constants';
 
 class MatchContainer extends Component {
     render() {
@@ -34,80 +34,83 @@ class MatchContainer extends Component {
                 renderToHardwareTextureAndroid
                 shouldRasterizeIOS
             >
-                <View style={styles.timeContainer}>
-                    <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
-                        {
-                            date + ' ' + time
-                            //timestamp
-                            /* new Date(timestamp * 1000).toLocaleString() */
-                        }
-                    </Text>
-                </View>
-                <View style={styles.teamsContainer}>
-                    <View style={styles.teamsSection}>
-                        <View style={styles.teamLogoSection}>
-                            <Image
-                                style={{ flex: 1, height: undefined, width: undefined }}
-                                source={require('../images/Real_Madrid.png')}
-                                resizeMode="contain"
-                            />
+                <ImageBackground
+                    source={require('../images/AppBG3.jpg')}
+                    style={{ flex: 1, width: undefined, height: undefined }}
+                    resizeMode='cover'
+                >
+                    <View style={styles.teamsContainer}>
+                        <View style={styles.teamsSection}>
+                            <View style={styles.teamLogoSection}>
+                                <Image
+                                    style={{ flex: 1, height: undefined, width: undefined }}
+                                    source={require('../images/Real_Madrid.png')}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                            <View style={styles.teamLabelSection}>
+                                <Text style={styles.titleStyle}>
+                                    {hometeamName}
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.teamLabelSection}>
-                            <Text style={styles.titleStyle}>
-                                {hometeamName}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.vsSection}>
-                        <Text style={styles.titleStyle}>
-                            {locali('forms.matches.vs')}
-                        </Text>
-                    </View>
-                    <View style={styles.teamsSection}>
-                        <View style={styles.teamLogoSection}>
-                            <Image
-                                style={{ flex: 1, height: undefined, width: undefined }}
-                                source={require('../images/Real_Madrid.png')}
-                                resizeMode="contain"
-                            />
-                        </View>
-                        <View style={styles.teamLabelSection}>
-                            <Text style={styles.titleStyle}>
-                                {awayteamName}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.oddsContainer}>
-                    <View style={styles.oddsSection}>
+                        <View style={styles.middleSection}>
+                            <View style={styles.timeContainer}>
+                                <Text style={[styles.titleStyle, { textAlign: 'center' }]}>
+                                    {
+                                        date + ' ' + time
+                                        //timestamp
+                                        /* new Date(timestamp * 1000).toLocaleString() */
+                                    }
+                                </Text>
+                            </View>
+                            <View style={styles.oddsContainer}>
+                                <View style={styles.oddsSection}>
 
-                        <RkButton
-                            style={buttonSelected === '1' ? styles.oddButtonSelected : styles.oddButton}
-                            rkType='circle outline'
-                            onPress={() => this.props.updateNewForm(this.props.newForm, uid, '1', hometeamOdd)}
-                        >
-                            <Text style={styles.oddButtonLable}>{hometeamOdd.toFixed(2)}</Text>
-                        </RkButton>
+                                    <RkButton
+                                        style={buttonSelected === '1' ? styles.oddButtonSelected : styles.oddButton}
+                                        rkType='circle outline'
+                                        onPress={() => this.props.updateNewForm(this.props.newForm, uid, '1', hometeamOdd)}
+                                    >
+                                        <Text style={styles.oddButtonLable}>{hometeamOdd.toFixed(2)}</Text>
+                                    </RkButton>
+                                </View>
+                                <View style={[styles.oddsSection, { flex: 2 }]}>
+                                    <RkButton
+                                        style={buttonSelected === 'x' ? styles.oddButtonSelected : styles.oddButton}
+                                        rkType='circle outline'
+                                        onPress={() => this.props.updateNewForm(this.props.newForm, uid, 'x', drawOdd)}
+                                    >
+                                        <Text style={styles.oddButtonLable}>{drawOdd.toFixed(2)}</Text>
+                                    </RkButton>
+                                </View>
+                                <View style={styles.oddsSection}>
+                                    <RkButton
+                                        style={buttonSelected === '2' ? styles.oddButtonSelected : styles.oddButton}
+                                        rkType='circle outline'
+                                        onPress={() => this.props.updateNewForm(this.props.newForm, uid, '2', awayteamOdd)}
+                                    >
+                                        <Text style={styles.oddButtonLable}>{awayteamOdd.toFixed(2)}</Text>
+                                    </RkButton>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.teamsSection}>
+                            <View style={styles.teamLogoSection}>
+                                <Image
+                                    style={{ flex: 1, height: undefined, width: undefined }}
+                                    source={require('../images/Real_Madrid.png')}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                            <View style={styles.teamLabelSection}>
+                                <Text style={styles.titleStyle}>
+                                    {awayteamName}
+                                </Text>
+                            </View>
+                        </View>
                     </View>
-                    <View style={[styles.oddsSection, { flex: 2 }]}>
-                        <RkButton
-                            style={buttonSelected === 'x' ? styles.oddButtonSelected : styles.oddButton}
-                            rkType='circle outline'
-                            onPress={() => this.props.updateNewForm(this.props.newForm, uid, 'x', drawOdd)}
-                        >
-                            <Text style={styles.oddButtonLable}>{drawOdd.toFixed(2)}</Text>
-                        </RkButton>
-                    </View>
-                    <View style={styles.oddsSection}>
-                        <RkButton
-                            style={buttonSelected === '2' ? styles.oddButtonSelected : styles.oddButton}
-                            rkType='circle outline'
-                            onPress={() => this.props.updateNewForm(this.props.newForm, uid, '2', awayteamOdd)}
-                        >
-                            <Text style={styles.oddButtonLable}>{awayteamOdd.toFixed(2)}</Text>
-                        </RkButton>
-                    </View>
-                </View>
+                </ImageBackground>
             </AppComponent>
         );
     }
@@ -116,7 +119,11 @@ class MatchContainer extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        height: 150,
+        height: 100,
+        marginHorizontal: 0,
+        padding: 0,
+        borderRadius: 0,
+        marginBottom: 1,
     },
     timeContainer: {
         flex: 1,
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
     },
     teamsSection: {
         flexDirection: 'column',
-        flex: 5,
+        flex: 3,
         marginVertical: 5,
     },
     teamLogoSection: {
@@ -139,12 +146,13 @@ const styles = StyleSheet.create({
     teamLabelSection: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        color: COMPONENT_COLOR
     },
-    vsSection: {
-        flex: 2,
+    middleSection: {
+        flex: 5,
         justifyContent: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     oddsContainer: {
         flex: 2,
@@ -174,14 +182,16 @@ const styles = StyleSheet.create({
         borderWidth: 0,
     },
     oddButtonLable: {
-        color: '#B7BABC',
-        fontWeight: 'bold'
+        color: COMPONENT_COLOR,
+        fontWeight: 'bold',
     },
     titleStyle: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
-        color: SECONDARY_COLOR,
+        color: COMPONENT_COLOR,
         textAlign: 'center',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 5,
     }
 });
 

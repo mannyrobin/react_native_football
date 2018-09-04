@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 import { RkButton } from 'react-native-ui-kitten';
-import { Button, Avatar } from 'react-native-elements';
 import { locali } from '../../locales/i18n';
 
 import { SECONDARY_COLOR, COMPONENT_COLOR } from '../constants';
@@ -93,48 +92,62 @@ class SingleFormView extends Component {
 
                   )}
               </View>
-              <View style={styles.formDescription}>
-
-
-                <Button
-                  style={{ flex: 1 }}
-                  fontWeight='bold'
-                  large
-                  backgroundColor={SECONDARY_COLOR}
-                  icon={{ name: 'local-atm' }}
-                  title={locali('forms.display_form.total_odd') + totalOdd.toFixed(2)}
-                />
-                <Button
-                  style={{ flex: 1 }}
-                  fontWeight='bold'
-                  large
-                  backgroundColor={SECONDARY_COLOR}
-                  icon={{ name: 'local-atm' }}
-                  title={'סכום הימור: ' + coins}
-                />
-                <Button
-                  style={{ flex: 1 }}
-                  fontWeight='bold'
-                  large
-                  backgroundColor={SECONDARY_COLOR}
-                  icon={{ name: 'local-atm' }}
-                  title={locali('forms.display_form.possible_win') + totalCoins.toFixed(2)}
-                />
-              </View>
-              <View style={styles.formWon}>
-                <Avatar
-                  large
-                  icon={
-                    won === 1 ? { name: 'check', type: 'entypo' } :
-                      won === 0 ? { name: 'cross', type: 'entypo' } :
-                        { name: 'timer', type: 'materialIcons' }}
-                  overlayContainerStyle={
-                    won === 1 ? { backgroundColor: 'green' } :
-                      won === 0 ? { backgroundColor: 'red' } :
-                        { backgroundColor: 'grey' }}
-                  rounded
-                  activeOpacity={0.7}
-                />
+              <View style={styles.formDescriptionContainer}>
+                <View style={[styles.formDescriptionSection, { flex: 1 }]}>
+                  <View style={{ flex: 1 }} >
+                    <Text style={[styles.titleStyle, { fontSize: 20 }]}>
+                      {locali('forms.display_form.total_odd')}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }} >
+                    <Text style={[styles.titleStyle, { fontSize: 20 }]}>
+                      התקדמות
+                  </Text>
+                  </View>
+                  <View style={{ flex: 1 }} >
+                    <Text style={[styles.titleStyle, { fontSize: 20 }]}>
+                      סכום הימור
+                  </Text>
+                  </View>
+                </View>
+                <View style={[styles.formDescriptionSection, { flex: 4 }]}>
+                  <View style={{ flex: 1 }} >
+                    <RkButton
+                      style={styles.formDescriptionButton}
+                      rkType='circle outline'
+                    >
+                      <Text style={styles.formDescriptionButtonLabel}>{totalOdd.toFixed(2)}</Text>
+                    </RkButton>
+                  </View>
+                  <View style={{ flex: 1 }} >
+                    <RkButton
+                      style={styles.formDescriptionButton}
+                      rkType='circle outline'
+                    >
+                      <Text style={styles.formDescriptionButtonLabel}>{'XX%'}</Text>
+                    </RkButton>
+                  </View>
+                  <View style={{ flex: 1 }} >
+                    <RkButton
+                      style={styles.formDescriptionButton}
+                      rkType='circle outline'
+                    >
+                      <Text style={styles.formDescriptionButtonLabel}>{coins}</Text>
+                    </RkButton>
+                  </View>
+                </View>
+                <View style={[styles.formDescriptionSection, { flex: 1 }]}>
+                  <Text style={[styles.titleStyle, { fontSize: 20 }]}>סכום זכייה</Text>
+                </View>
+                <View style={[styles.formDescriptionSection, { flex: 6 }]}>
+                  <RkButton
+                    style={
+                      [styles.formDescriptionButton, { width: 150, height: 150 }]}
+                    rkType='circle outline'
+                  >
+                    <Text style={[styles.formDescriptionButtonLabel, { fontSize: 26 }]}>{totalCoins.toFixed(2)}</Text>
+                  </RkButton>
+                </View>
               </View>
             </ImageBackground>
 
@@ -213,11 +226,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
   },
-  formDescription: {
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'center'
-  },
   formWon: {
     flex: 1,
     justifyContent: 'center',
@@ -226,7 +234,29 @@ const styles = StyleSheet.create({
   matchesContainer: {
     flex: 1,
     justifyContent: 'center'
-  }
+  },
+  formDescriptionContainer: {
+    height: 350,
+  },
+  formDescriptionSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formDescriptionButton: {
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
+    width: 100,
+    height: 100,
+    backgroundColor: SECONDARY_COLOR,
+    alignSelf: 'center',
+    borderWidth: 0,
+  },
+  formDescriptionButtonLabel: {
+    color: COMPONENT_COLOR,
+    fontWeight: 'bold',
+    fontSize: 20
+  },
 });
 
 

@@ -127,8 +127,11 @@ DrawerContainer.defaultProps = {
 const mapStateToProps = ({ auth, friendlyLeagues }) => {
   const { user } = auth;
   const { displayNames } = friendlyLeagues;
-  const myDisplayName = displayNames.find(element =>
-    element.uid === user.user.uid).displayName;
+
+  const myDisplayName = displayNames.length > 0 ?
+    displayNames.find(element =>
+      element.uid === user.user.uid).displayName
+    : '';
 
   return { user, myDisplayName };
 };

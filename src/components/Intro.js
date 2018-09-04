@@ -35,7 +35,7 @@ const slides = [
     key: 'page1',
     title: locali('intro.page1.title'),
     text: locali('intro.page1.content'),
-    image: require('../images/IntroPage1.png'),
+    image: require('../images/AppLogoNoBG.png'),
     imageStyle: styles.image,
     colors: ['#63E2FF', '#B066FE'],
   }
@@ -48,7 +48,7 @@ class App extends Component {
 
   _renderItem = props => (
       <ImageBackground
-        style={{ flex: 1, width: '100%', height: '100%', alignItems: 'center' }}
+        style={{ width: '100%', height: '100%', alignItems: 'center' }}
         source={require('../images/SoccerFieldDarker.jpg')}
         resizeMode='cover'
       >

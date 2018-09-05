@@ -8,15 +8,25 @@ import { openFriendlyLeague } from '../actions';
 import { AppComponent } from './common';
 import { COMPONENT_COLOR } from '../constants';
 
+const defaultPhoto = '../images/DefaultThumbnail.png';
+
 class ListItem extends Component {
+	loadAvatar() {
+		let avatar;
+		const { leagues, friendlyLeaguesAvatars } = this.props;
+		const league = leagues.find(element => element.uid === this.props.friendlyLeague.uid);
+		if (friendlyLeaguesAvatars.length > 0) {
+		avatar = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
+		}
+		if (avatar) return { uri: (league.leaguePhoto) };
+		return require(defaultPhoto);
+}
 	render() {
-		console.log('friendlyLeagueBefore', this.props.friendlyLeague);
 		const friendlyLeague = this.props.friendlyLeague;
 		const { currentUser } = firebase.auth();
 		friendlyLeague.participants = _.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
 		const coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
 		const rank = Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
-		console.log('friendlyLeagueAfter', this.props.friendlyLeague);
 		return (
 			<TouchableOpacity
 				onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}
@@ -30,7 +40,8 @@ class ListItem extends Component {
 								</Text>
 							</View>
 							<Image
-								source={require('../images/DefaultThumbnail.png')}
+							/* 	source={league.leaguePhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)} */
+							source={this.loadAvatar()}
 								style={{ height: 70, width: 70 }}
 								resizeMode="contain"
 							/>
@@ -98,4 +109,12 @@ const styles = {
 	}
 };
 
-export default connect(null, { openFriendlyLeague })(ListItem);
+
+const mapStateToProps = ({ friendlyLeagues }) => {
+	const { friendlyLeaguesAvatars } = friendlyLeagues;
+	const leagues = friendlyLeagues.friendlyLeaguesListFetch;
+
+	return { leagues, friendlyLeaguesAvatars };
+};
+
+export default connect(mapStateToProps, { openFriendlyLeague })(ListItem);

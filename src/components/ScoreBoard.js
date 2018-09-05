@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { View, Image, ImageBackground } from 'react-native';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
+import PhotoUpload from 'react-native-photo-upload';
 import { LeaderboardContainer, Header } from './common';
 import { BACKGROUND_COLOR } from '../constants';
+import { uploadLeagueAvatar } from '../actions';
 
+const defaultPhoto = '../images/DefaultThumbnail.png';
 class ScoreBoard extends Component {
   render() {
+    const { league } = this.props;
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -15,17 +19,26 @@ class ScoreBoard extends Component {
         >
 
           <View style={styles.headerContainer}>
-{/*             <MaterialIconsIcon
+            {/*             <MaterialIconsIcon
               name='settings' color="#000" size={30}
               onPress={() =>
                 this.props.navigation.navigate('FriendlyLeagueSettings')}
             /> */}
             <View style={styles.headerSection}>
               <View style={styles.headerThumbnailContainer}>
-                <Image
-                  style={styles.headerThumbnail}
-                  source={require('../images/DefaultThumbnail.png')}
-                />
+                <PhotoUpload
+                  onPhotoSelect={avatar => {
+                    if (avatar) {
+                      this.props.uploadLeagueAvatar(avatar, league.uid);
+                    }
+                  }}
+                >
+                  <Image
+                    style={styles.headerThumbnail}
+                    source={league.leaguePhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)}
+                    resizeMode='contain'
+                  />
+                </PhotoUpload>
               </View>
             </View>
           </View>
@@ -108,6 +121,7 @@ const styles = {
 };
 
 const mapStateToProps = ({ friendlyLeagues }) => {
+  const { friendlyLeaguesAvatars } = friendlyLeagues;
   const league = friendlyLeagues.friendlyLeaguesListFetch
     .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
   league.participants = league.participants.map(participant => ({
@@ -119,6 +133,9 @@ const mapStateToProps = ({ friendlyLeagues }) => {
       friendlyLeagues.friendlyLeagueAvatars.find(user =>
         user.uid === participant.uid).avatarURL
   }));
+  if (friendlyLeaguesAvatars.length > 0) {
+  league.leaguePhoto = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
+  }
   return { league };
 };
-export default connect(mapStateToProps)(ScoreBoard);
+export default connect(mapStateToProps, { uploadLeagueAvatar })(ScoreBoard);

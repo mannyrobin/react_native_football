@@ -24,6 +24,8 @@ export const FETCH_PARTICIPANTS_AVATARS_SUCCESS = 'fetch_participants_avatars_su
 export const FETCH_CHAT = 'fetch_chat';
 export const MESSAGE_CHANGED = 'message_changed';
 export const SEND_MESSAGE = 'send_message';
+export const UPLOAD_FRIENDLY_LEAGUE_PHOTO = 'UPLOAD_FRIENDLY_LEAGUE_PHOTO';
+export const FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS = 'FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS';
 
 // ** Invitations ** 
 

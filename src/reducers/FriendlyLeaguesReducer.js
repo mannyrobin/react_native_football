@@ -10,6 +10,8 @@ import {
     FETCH_CHAT,
     MESSAGE_CHANGED,
     SEND_MESSAGE,
+    UPLOAD_FRIENDLY_LEAGUE_PHOTO,
+    FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS
 } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -22,6 +24,8 @@ const INITIAL_STATE = {
     message: '',
     chat: [],
     isTyping: null,
+    friendlyLeaguePhoto: null,
+    friendlyLeaguesAvatars: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -61,8 +65,15 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, chat: action.payload };
             /* return { ...state, chat: [...action.payload, ...state.chat] }; */
         }
+        case UPLOAD_FRIENDLY_LEAGUE_PHOTO: {
+            return { ...state, friendlyLeaguePhoto: action.payload };
+        }
+        case FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS: {
+            return { ...state, friendlyLeaguesAvatars: action.payload };
+        }
         default: {
             return state;
         }
     }
 };
+

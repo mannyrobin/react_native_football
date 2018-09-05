@@ -168,6 +168,9 @@ dependencies {
     implementation project(':rn-fetch-blob')
 
     implementation project(':react-native-firebase')
+    implementation project(':react-native-image-picker')
+    implementation project(path: ':react-native-image-resizer')
+     implementation project(':react-native-fs')
 
     // Firebase dependencies
     implementation "com.google.firebase:firebase-core:16.0.1"

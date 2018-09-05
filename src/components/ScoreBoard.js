@@ -32,11 +32,12 @@ class ScoreBoard extends Component {
                       this.props.uploadLeagueAvatar(avatar, league.uid);
                     }
                   }}
+                  format='PNG'
                 >
                   <Image
                     style={styles.headerThumbnail}
                     source={league.leaguePhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)}
-                    resizeMode='contain'
+                    resizeMode='cover'
                   />
                 </PhotoUpload>
               </View>

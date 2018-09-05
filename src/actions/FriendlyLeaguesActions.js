@@ -166,9 +166,9 @@ export const onMessageChanged = (message) => {
 export const uploadLeagueAvatar = (avatar, uid) => {
 	return (dispatch) => {
 	const Blob = RNFetchBlob.polyfill.Blob;
-	const mime = 'image/jpg';
+	const mime = 'image/png';
 	const imageRef = firebase.storage().ref(`/friendlyLeagues/${uid}`)
-		.child('friendly_league_profile_photo.jpeg');
+		.child('friendly_league_profile_photo.png');
 		return Blob.build(avatar, { type: `${mime};BASE64` })
 		.then(blob => {
 			const filePath = imageRef.put(blob._ref, { contentType: mime });
@@ -187,7 +187,7 @@ export const fetchLeaguesAvatars = (friendlyLeagues) => {
 		console.log('friendlyLeagues', friendlyLeagues);
 	const avatarPromises = friendlyLeagues.map(league =>
 		firebase.storage().ref(`/friendlyLeagues/${league.uid}`)
-			.child('friendly_league_profile_photo.jpeg')
+			.child('friendly_league_profile_photo.png')
 			.getDownloadURL()
 			.then(avatarURL => ({ uid: league.uid, avatarURL })));
 

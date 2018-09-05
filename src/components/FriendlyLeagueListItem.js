@@ -42,8 +42,8 @@ class ListItem extends Component {
 							<Image
 							/* 	source={league.leaguePhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)} */
 							source={this.loadAvatar()}
-								style={{ height: 70, width: 70 }}
-								resizeMode="contain"
+								style={{ height: 70, width: 70, borderRadius: 70 / 2, borderWidth: 3, borderColor: '#FFF' }}
+								resizeMode="cover"
 							/>
 						</View>
 

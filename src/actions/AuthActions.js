@@ -114,7 +114,7 @@ const checkUserNameExistance = (snapshot, username) => {
 
 const createUserInDb = ({ user }, username) => {
 		firebase.database().ref(`/usersDb/${user.uid}`)
-			.set({ username, email: user.email });
+			.set({ username });
 };
 
 export const signUpButton = ({ email, navigation }) => {

@@ -11,7 +11,8 @@ import {
     MESSAGE_CHANGED,
     SEND_MESSAGE,
     UPLOAD_FRIENDLY_LEAGUE_PHOTO,
-    FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS
+    FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS,
+    INVITE_FRIEND_FAILED
 } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -41,6 +42,9 @@ export default (state = INITIAL_STATE, action) => {
         }
         case INVITE_FRIEND_SUCCESS: {
             return { ...state, friendEmail: '' };
+        }
+        case INVITE_FRIEND_FAILED: {
+            return { ...state };
         }
         case FRIENDLY_LEAGUES_FETCH_SUCCESS: {
             return { ...state, friendlyLeaguesListFetch: action.payload };

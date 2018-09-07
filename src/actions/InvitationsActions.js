@@ -23,14 +23,14 @@ export const fetchLeaguesInvitations = () =>
 
 const removeInvitation = (invitationUid, db) =>
     db.ref('/invitations')
-        .orderByKey()
-        .equalTo(invitationUid)
-        .ref.remove();
+        .child(invitationUid)
+        .remove();
 
 
 export const acceptInvitation = (invitationUid, leagueUid) => 
     dispatch => {
         const { currentUser } = firebase.auth();
+        const { email } = firebase.auth().currentUser;
         const db = firebase.database();
         
         removeInvitation(invitationUid, db)
@@ -40,7 +40,8 @@ export const acceptInvitation = (invitationUid, leagueUid) =>
                 .set({
 					coins: 1000,
 					formsWon: 0,
-					formsLost: 0
+                    formsLost: 0,
+                    email
 				})
                 .then(() => dispatch({
                     type: LEAGUE_INVITATION_ACCEPTED

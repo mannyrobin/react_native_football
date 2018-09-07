@@ -19,11 +19,11 @@ class ScoreBoard extends Component {
         >
 
           <View style={styles.headerContainer}>
-            {/*             <MaterialIconsIcon
+            <MaterialIconsIcon
               name='settings' color="#000" size={30}
               onPress={() =>
                 this.props.navigation.navigate('FriendlyLeagueSettings')}
-            /> */}
+            />
             <View style={styles.headerSection}>
               <View style={styles.headerThumbnailContainer}>
                 <PhotoUpload
@@ -134,7 +134,7 @@ const mapStateToProps = ({ friendlyLeagues }) => {
         user.uid === participant.uid).avatarURL
   }));
   if (friendlyLeaguesAvatars.length > 0) {
-  league.leaguePhoto = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
+    league.leaguePhoto = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
   }
   return { league };
 };

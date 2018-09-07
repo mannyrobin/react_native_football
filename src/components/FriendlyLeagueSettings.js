@@ -14,9 +14,10 @@ class FriendlyLeagueSettings extends Component {
         const { friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId, navigation } = this.props;
         const leagueUid = selectedFriendlyLeagueId;
         const friendlyLeagues = friendlyLeaguesListFetch;
-        const { friendlyLeagueName } = friendlyLeagues.find(league => league.uid === leagueUid);
+        console.log('friendlyLeaguesssss', friendlyLeagues);
+        const { friendlyLeagueName, participants } = friendlyLeagues.find(league => league.uid === leagueUid);
         this.props
-            .inviteFriendToFriendlyLeague(friendEmail, leagueUid, friendlyLeagueName, navigation);
+            .inviteFriendToFriendlyLeague(friendEmail, leagueUid, friendlyLeagueName, participants, navigation);
       }
       
     render() {

@@ -84,7 +84,7 @@ class Login extends Component {
             this.uploadProfilePic(user);
             if (user.additionalUserInfo.isNewUser) {
                 firebase.database().ref(`/usersDb/${user.user.uid}`)
-                    .set({ displayName: user.user.displayName });
+                    .set({ displayName: user.user.displayName, email: user.user.email });
                 this.props.socialLoginUserSuccess(user, this.props.navigation);
             } else {
                 this.props.socialLoginUserSuccess(user, this.props.navigation);

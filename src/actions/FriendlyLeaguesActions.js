@@ -1,13 +1,17 @@
 import _ from 'lodash';
+import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import { arraify } from '../utils';
+import { locali } from '../../locales/i18n';
 import RNFetchBlob from 'rn-fetch-blob';
+
 import {
 	FRIENDLY_LEAGUE_NAME_CHANGED,
 	FRIEND_EMAIL_CHANGED,
 	NEW_FRIENDLY_LEAGUE_SUCCESS,
 	INVITE_FRIEND_SUCCESS,
+	INVITE_FRIEND_FAILED,
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
 	OPEN_LEAGUE,
 	FETCH_USERNAMES_SUCCESS,
@@ -34,7 +38,7 @@ export const friendEmailChanged = (friendEmail) => {
 
 export const createNewFriendlyLeague = (leagueName, navigation) => {
 	return (dispatch) => {
-		const { uid } = firebase.auth().currentUser;
+		const { uid, email } = firebase.auth().currentUser;
 		const league = {
 			friendlyLeagueName: leagueName,
 			admin: uid,
@@ -42,7 +46,8 @@ export const createNewFriendlyLeague = (leagueName, navigation) => {
 				[uid]: {
 					coins: 1000,
 					formsWon: 0,
-					formsLost: 0
+					formsLost: 0,
+					email
 				}
 			}
 		};
@@ -59,6 +64,7 @@ export const inviteFriendToFriendlyLeague = (
 	friendEmail,
 	leagueUid,
 	friendlyLeagueName,
+	participants,
 	navigation) => {
 	return (dispatch) => {
 		const invite = {
@@ -67,12 +73,19 @@ export const inviteFriendToFriendlyLeague = (
 			friendlyLeagueName,
 			inviterEmail: firebase.auth().currentUser.email
 		};
-		firebase.database().ref('/invitations')
+		if (participants.find(participant => participant.email === friendEmail)) {
+			dispatch({ type: INVITE_FRIEND_FAILED });
+			invite.inviterEmail === friendEmail ? 
+			Alert.alert(locali('friendly_leagues.friendly_league.settings.invite_same_user'))
+			: Alert.alert(locali('friendly_leagues.friendly_league.settings.invite_exist_user'));
+		} else {
+			firebase.database().ref('/invitations')
 			.push(invite)
 			.then(() => {
 				dispatch({ type: INVITE_FRIEND_SUCCESS });
 				dispatch(NavigationActions.back());
 			});
+		}
 	};
 };
 

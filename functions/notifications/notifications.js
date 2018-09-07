@@ -4,11 +4,9 @@ const functions = require('firebase-functions');
 exports.sendInviteNotification = functions.database
   .ref('/invitations/{inviteUid}')
   .onCreate((snapshot, context) => {
-    //const inviteUid = context.params.inviteUid;
     const friendEmail = snapshot.val().friendEmail;
     const friendlyLeagueName = snapshot.val().friendlyLeagueName;
     const inviterEmail = snapshot.val().inviterEmail;
-    //const leagueUid = snapshot.val().leagueUid;
 
     const payload = {
       notification: {

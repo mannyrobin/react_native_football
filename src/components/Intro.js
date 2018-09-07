@@ -68,8 +68,8 @@ class App extends Component {
       <AppIntroSlider
         slides={slides}
         renderItem={this._renderItem}
-        onDone={() => this.props.reduxNav('Login')}
-        onSkip={() => this.props.reduxNav('Login')}
+        onDone={() => this.props.reduxNav('AppLoading')}
+        onSkip={() => this.props.reduxNav('AppLoading')}
         skipLabel={locali('intro.button_skip')}
         nextLabel={locali('intro.button_next')}
         doneLabel={locali('intro.button_done')}

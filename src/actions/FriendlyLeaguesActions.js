@@ -132,18 +132,27 @@ export const openFriendlyLeague = (league, navigation) =>
 		fetchAvatars(league, dispatch, navigation);
 	};
 
-export const fetchUserNames = () =>
-	dispatch => {
-		firebase.database().ref('/usersDb')
-			.on('value', snapshot => {
-				if (snapshot.val()) {
-					dispatch({
-						type: FETCH_USERNAMES_SUCCESS,
-						payload: arraify(snapshot.val())
-					});
-				}
-			});
+export const fetchUserNames = () => {
+	return (dispatch) => {
+		return new Promise((resolve, reject) => {
+			firebase.database().ref('/usersDb')
+				.on('value', snapshot => {
+					if (snapshot.val()) {
+						const val = arraify(snapshot.val()).map(user => {
+							return { displayName: user.displayName, uid: user.uid };
+						});
+						dispatch({
+							type: FETCH_USERNAMES_SUCCESS,
+							payload: val
+						});
+						resolve('success');
+					} else {
+						reject('error fetching displayNames');
+					}
+				});
+		});
 	};
+};
 
 export const fetchChat = (leagueUid) => {
 	return (dispatch) => {
@@ -165,37 +174,37 @@ export const onMessageChanged = (message) => {
 
 export const uploadLeagueAvatar = (avatar, uid) => {
 	return (dispatch) => {
-	const Blob = RNFetchBlob.polyfill.Blob;
-	const mime = 'image/png';
-	const imageRef = firebase.storage().ref(`/friendlyLeagues/${uid}`)
-		.child('friendly_league_profile_photo.png');
+		const Blob = RNFetchBlob.polyfill.Blob;
+		const mime = 'image/png';
+		const imageRef = firebase.storage().ref(`/friendlyLeagues/${uid}`)
+			.child('friendly_league_profile_photo.png');
 		return Blob.build(avatar, { type: `${mime};BASE64` })
-		.then(blob => {
-			const filePath = imageRef.put(blob._ref, { contentType: mime });
-			dispatch({
-				type: UPLOAD_FRIENDLY_LEAGUE_PHOTO,
-				payload: filePath
-			});
-		}
-	)
-		.catch(error => console.log('errorrrrr', error));
+			.then(blob => {
+				const filePath = imageRef.put(blob._ref, { contentType: mime });
+				dispatch({
+					type: UPLOAD_FRIENDLY_LEAGUE_PHOTO,
+					payload: filePath
+				});
+			}
+			)
+			.catch(error => console.log('errorrrrr', error));
 	};
 };
 
 export const fetchLeaguesAvatars = (friendlyLeagues) => {
 	return dispatch => {
 		console.log('friendlyLeagues', friendlyLeagues);
-	const avatarPromises = friendlyLeagues.map(league =>
-		firebase.storage().ref(`/friendlyLeagues/${league.uid}`)
-			.child('friendly_league_profile_photo.png')
-			.getDownloadURL()
-			.then(avatarURL => ({ uid: league.uid, avatarURL })));
+		const avatarPromises = friendlyLeagues.map(league =>
+			firebase.storage().ref(`/friendlyLeagues/${league.uid}`)
+				.child('friendly_league_profile_photo.png')
+				.getDownloadURL()
+				.then(avatarURL => ({ uid: league.uid, avatarURL })));
 
-	Promise.all(avatarPromises)
-		.then(avatars => {
-			console.log('avatars', avatars);
-			dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
-		});
+		Promise.all(avatarPromises)
+			.then(avatars => {
+				console.log('avatars', avatars);
+				dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
+			});
 	};
 };
 

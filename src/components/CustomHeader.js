@@ -42,7 +42,7 @@ const mapStateToProps = ({ friendlyLeagues }) => {
         customHeaderTitle = league.friendlyLeagueName;
         const currentLeagueUser = league.participants.find(participant =>
             participant.uid === currentUser.uid);
-        coins = currentLeagueUser.coins;
+         currentLeagueUser ? coins = currentLeagueUser.coins : coins = '';
     } else {
         customHeaderTitle = 'בט מאסטרס';
         coins = '';

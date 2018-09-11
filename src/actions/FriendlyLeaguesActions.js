@@ -112,11 +112,13 @@ const fetchChats = ({ uid }, dispatch) =>
 		});
 
 const fetchAvatars = (league, dispatch, navigation) => {
+	const defaultPhoto = 'https://vignette.wikia.nocookie.net/joke-battles/images/4/49/UserIcon.png/revision/latest?cb=20161202233401';
 	const avatarPromises = league.participants.map(participant =>
 		firebase.storage().ref(`/users/${participant.uid}`)
 			.child('profile_picture.jpg')
 			.getDownloadURL()
-			.then(avatarURL => ({ uid: participant.uid, avatarURL })));
+			.then(avatarURL => ({ uid: participant.uid, avatarURL }))
+			.catch(() => ({ uid: participant.uid, avatarURL: defaultPhoto })));
 
 	Promise.all(avatarPromises)
 		.then(avatars => {
@@ -194,6 +196,7 @@ export const uploadLeagueAvatar = (avatar, uid) => {
 export const fetchLeaguesAvatars = (friendlyLeagues) => {
 	return dispatch => {
 		console.log('friendlyLeagues', friendlyLeagues);
+		if (friendlyLeagues.length > 0) {
 		const avatarPromises = friendlyLeagues.map(league =>
 			firebase.storage().ref(`/friendlyLeagues/${league.uid}`)
 				.child('friendly_league_profile_photo.png')
@@ -205,6 +208,7 @@ export const fetchLeaguesAvatars = (friendlyLeagues) => {
 				console.log('avatars', avatars);
 				dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
 			});
+		}
 	};
 };
 

@@ -10,6 +10,7 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
 export const FORGOT_PASSWORD = 'forgot_password';
 export const PASSWORD_RECOVERY = 'password_recovery';
 export const LOGOUT = 'logout';
+export const RE_PASSWORD_CHANGED = 'RE_PASSWORD_CHANGED';
 
 // ** Friendly Leagues **
 
@@ -27,6 +28,7 @@ export const MESSAGE_CHANGED = 'message_changed';
 export const SEND_MESSAGE = 'send_message';
 export const UPLOAD_FRIENDLY_LEAGUE_PHOTO = 'UPLOAD_FRIENDLY_LEAGUE_PHOTO';
 export const FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS = 'FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS';
+export const UPDATE_USERNAMES_DB = 'UPDATE_USERNAMES_DB';
 
 // ** Invitations ** 
 

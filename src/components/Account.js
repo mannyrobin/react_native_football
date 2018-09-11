@@ -15,15 +15,20 @@ class Account extends Component {
 
   render() {
     const selectedAccountData = this.props.selectedAccountData;
-    const formsWon = selectedAccountData.forms.reduce((accumulator, form) => {
+    let formsWon = 0;
+    let formsLost = 0;
+    let formsPending = 0;
+    if (selectedAccountData.length > 0) {
+    formsWon = selectedAccountData.forms.reduce((accumulator, form) => {
       if (form.won === 1) return accumulator++;
     });
-    const formsLost = selectedAccountData.forms.reduce((accumulator, form) => {
+    formsLost = selectedAccountData.forms.reduce((accumulator, form) => {
       if (form.won === 0) return accumulator++;
     });
-    const formsPending = selectedAccountData.forms.reduce((accumulator, form) => {
+    formsPending = selectedAccountData.forms.reduce((accumulator, form) => {
       if (form.won === -1) return accumulator++;
     });
+  }
     console.log(`selectedAccountData ${selectedAccountData}`);
     return (
       <View style={styles.container}>

@@ -137,6 +137,7 @@ const mapStateToProps = ({ friendlyLeagues }) => {
   if (friendlyLeaguesAvatars.length > 0) {
     league.leaguePhoto = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
   }
+  console.log('leauge12345', league);
   return { league };
 };
 export default connect(mapStateToProps, { uploadLeagueAvatar })(ScoreBoard);

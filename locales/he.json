@@ -45,6 +45,7 @@
     "form": {
       "text_field_email_placeholder": "email@gmail.com",
       "text_field_password_placeholder": "הקלד סיסמה",
+      "text_field_rePassword_placeholder": "הקלד סיסמה בשנית",
       "button_login": "התחבר",
       "button_signup": "הרשם",
       "button_forgot_password": "שכחת סיסמה?"

@@ -12,7 +12,8 @@ import {
     SEND_MESSAGE,
     UPLOAD_FRIENDLY_LEAGUE_PHOTO,
     FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS,
-    INVITE_FRIEND_FAILED
+    INVITE_FRIEND_FAILED,
+    UPDATE_USERNAMES_DB
 } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -74,6 +75,9 @@ export default (state = INITIAL_STATE, action) => {
         }
         case FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS: {
             return { ...state, friendlyLeaguesAvatars: action.payload };
+        }
+        case UPDATE_USERNAMES_DB : {
+            return { ...state, displayNames: action.payload };
         }
         default: {
             return state;

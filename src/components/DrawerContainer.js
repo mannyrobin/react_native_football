@@ -76,7 +76,7 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => this.props.openAccount(this.props.user.user.uid, this.props.myDisplayName)}
+          onPress={() => this.props.openAccount(this.props.user.uid, this.props.myDisplayName)}
         >
           <View
             style={activeItemKey === 'Account' ? styles.drawerActiveItem : styles.drawerInActiveItem}
@@ -127,11 +127,16 @@ DrawerContainer.defaultProps = {
 const mapStateToProps = ({ auth, friendlyLeagues }) => {
   const { user } = auth;
   const { displayNames } = friendlyLeagues;
-
-  const myDisplayName = displayNames.length > 0 ?
+  console.log('userrrr11r', user.uid);
+  console.log('displayNamesdisplayNames', displayNames);
+  let myDisplayName = displayNames.length > 0 ?
     displayNames.find(element =>
-      element.uid === user.user.uid).displayName
+      element.uid === user.uid)
     : '';
+    console.log('myDisplayName1', myDisplayName);
+    if (myDisplayName) myDisplayName = myDisplayName.displayName;
+    else myDisplayName = '';
+    console.log('myDisplayName2', myDisplayName);
 
   return { user, myDisplayName };
 };

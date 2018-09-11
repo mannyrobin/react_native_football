@@ -157,7 +157,6 @@ const uploadProfilePic = ({ user }) => {
 
         window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
         window.Blob = Blob;
-
         const url = user.photoURL + '?width=600';
         const mime = 'image/jpg';
         const { currentUser } = firebase.auth();

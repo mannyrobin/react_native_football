@@ -9,12 +9,14 @@ import {
     LOGIN_USER_FAIL,
     FORGOT_PASSWORD,
     PASSWORD_RECOVERY,
-    LOGOUT
+    LOGOUT,
+    RE_PASSWORD_CHANGED
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
 	email: '',
     password: '',
+    rePassword: '',
     username: '',
 	user: null,
 	error: '',
@@ -54,8 +56,12 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state,
                 error: action.payload,
                 password: '',
+                rePassword: '',
                 loading: false
         };
+        case RE_PASSWORD_CHANGED: {
+            return { ...state, rePassword: action.payload };
+        }
         case FORGOT_PASSWORD:
             return { ...state, ...INITIAL_STATE, email: action.payload };
         case PASSWORD_RECOVERY:

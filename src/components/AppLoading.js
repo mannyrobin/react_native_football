@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
     Image,
     ImageBackground,
     StatusBar,
@@ -13,17 +12,26 @@ import { GoogleSignin } from 'react-native-google-signin';
 import { AccessToken } from 'react-native-fbsdk';
 import RNFetchBlob from 'rn-fetch-blob';
 import Login from './Login';
-import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, } from '../actions';
+import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches } from '../actions';
 import { PRIMARY_COLOR, COMPONENT_COLOR } from '../constants';
 import { FullScreenSpinner } from './common';
 
 class AppLoading extends Component {
 
     componentDidMount() {
+        this.getAuthorizationData();
+        this.fetchApplicationData();
+    }
+
+    getAuthorizationData() {
         this.configureGoogleSignIn();
         this.getCurrentGUser();
         this.getCurrentFBUser();
-        //this.props.initApp();
+    }
+
+    fetchApplicationData() {
+        this.props.fetchFriendlyLeagues();
+        this.props.fetchMatches();
     }
 
     getCurrentGUser() {
@@ -204,4 +212,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,
-    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav })(AppLoading);
+    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches })(AppLoading);

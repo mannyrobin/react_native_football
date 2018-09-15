@@ -89,7 +89,7 @@ export const inviteFriendToFriendlyLeague = (
 	};
 };
 
-export const friendlyLeaguesFetch = () =>
+export const fetchFriendlyLeagues = () =>
 	dispatch =>
 		firebase.database()
 			.ref('/friendlyLeagues')

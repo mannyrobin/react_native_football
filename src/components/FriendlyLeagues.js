@@ -4,18 +4,13 @@ import { RkButton, RkTheme } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { SearchBar } from 'react-native-elements';
-import { friendlyLeaguesFetch, fetchMatches, searchOnTextChange, handleSearch, reduxNav, fetchLeaguesAvatars } from '../actions';
+import { searchOnTextChange, handleSearch, reduxNav, fetchLeaguesAvatars } from '../actions';
 import { locali } from '../../locales/i18n';
 import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
 import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
 
 class FriendlyLeagues extends Component {
-  componentDidMount() {
-    this.props.friendlyLeaguesFetch();
-    this.props.fetchMatches();
-  }
-
   render() {
     RkTheme.setType('RkButton', 'fillScreen', {
       container: {
@@ -86,5 +81,5 @@ const mapStateToProps = state => {
   return { friendlyLeagues, textToSearch, dataToShowfriendlyLeague, navTest };
 };
 
-export default connect(mapStateToProps, 
-  { handleSearch, friendlyLeaguesFetch, fetchMatches, searchOnTextChange, reduxNav, fetchLeaguesAvatars })(FriendlyLeagues);
+export default connect(mapStateToProps,
+ { handleSearch, searchOnTextChange, reduxNav, fetchLeaguesAvatars })(FriendlyLeagues);

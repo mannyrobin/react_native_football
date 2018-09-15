@@ -7,7 +7,7 @@ import SearchBar from 'react-native-searchbar';
 import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { fetchMatches, selectedPickerCountry, selectedPickerLeauge, reduxNav, handleSearch, cleanSearch, cleanPickers } from '../actions';
+import { selectedPickerCountry, selectedPickerLeauge, reduxNav, handleSearch, cleanSearch, cleanPickers } from '../actions';
 import MatchContainer from './MatchContainer';
 import { Spinner } from './common';
 import { locali } from '../../locales/i18n';
@@ -194,4 +194,4 @@ const mapStateToProps = state => {
   return { allMatches, matchesLeagues, newForm, pickerSelectedCountry, pickerMatches, pickerSelectedLeauge, textToSearch, dataToShowTeams };
 };
 
-export default connect(mapStateToProps, { cleanPickers, cleanSearch, handleSearch, reduxNav, fetchMatches, selectedPickerCountry, selectedPickerLeauge })(NewForm);
+export default connect(mapStateToProps, { cleanPickers, cleanSearch, handleSearch, reduxNav, selectedPickerCountry, selectedPickerLeauge })(NewForm);

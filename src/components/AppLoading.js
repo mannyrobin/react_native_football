@@ -12,7 +12,8 @@ import { GoogleSignin } from 'react-native-google-signin';
 import { AccessToken } from 'react-native-fbsdk';
 import RNFetchBlob from 'rn-fetch-blob';
 import Login from './Login';
-import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars } from '../actions';
+import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess,
+     reduxNav } from '../actions';
 import { PRIMARY_COLOR, COMPONENT_COLOR } from '../constants';
 import { FullScreenSpinner } from './common';
 
@@ -20,19 +21,12 @@ class AppLoading extends Component {
 
     componentDidMount() {
         this.getAuthorizationData();
-        this.fetchApplicationData();
     }
 
     getAuthorizationData() {
         this.configureGoogleSignIn();
         this.getCurrentGUser();
         this.getCurrentFBUser();
-    }
-
-    fetchApplicationData() {
-        this.props.fetchFriendlyLeagues();
-        this.props.fetchLeaguesAvatars();
-        this.props.fetchMatches();
     }
 
     getCurrentGUser() {
@@ -95,13 +89,11 @@ class AppLoading extends Component {
                     .set({ displayName: user.user.displayName });   
             }
 
-            const fetchUserNamesPromise = this.props.fetchUserNames();
-
             Promise.all([
                 FCMGetTokenPromise,
                 uploadProfilePicPromise,
                 pushNewUserDataPromise,
-                fetchUserNamesPromise
+                this.props.fetchUserNames()
             ])
             .then(() => {
                 console.log('success');
@@ -213,4 +205,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,
-    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars })(AppLoading);
+    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav })(AppLoading);

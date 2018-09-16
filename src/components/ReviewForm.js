@@ -6,21 +6,23 @@ import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
 import { RTLCustomSlider } from './common';
-import { submitForm, sliderValueChanged } from '../actions';
+import { submitForm } from '../actions';
 import SingleFormView from './SingleFormView';
 import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
 
 class ReviewForm extends Component {
-    state = { sliderValue: '0' };
+    constructor(props) {
+        super(props);
+        this.state = { sliderValue: '0' };
+    }
 
     render() {
         let fullForm = {};
         if (this.props.form.bets.length > 0) {
         const totalOdd =
                 this.props.form.bets.map(item => item.odd).reduce((prev, next) => prev * next);
-        const coins = this.props.sliderValue;
-        const totalCoins = totalOdd * this.props.sliderValue;
-        //const timestamp = Math.floor(new Date().getTime() / 1000);
+        const coins = this.state.sliderValue;
+        const totalCoins = totalOdd * this.state.sliderValue;
         const now = moment();
         const date = now.format('YYYY-MM-DD');
         const time = now.format('HH:mm');
@@ -37,7 +39,6 @@ class ReviewForm extends Component {
         return (
             
             <View style={styles.container}>
-            
                 <View style={styles.formContainer}>
                     <SingleFormView form={fullForm} />
                 </View>
@@ -47,7 +48,7 @@ class ReviewForm extends Component {
                             minimumValue={0}
                             maximumValue={this.props.currentLeagueUser.coins}
                             step={5}
-                            onValueChange={value => this.props.sliderValueChanged(value)}
+                            onValueChange={sliderValue => this.setState({ sliderValue })}
                             thumbImage={require('../images/Currency2Small.png')}
                             thumbStyle={{ width: 40, height: 40, borderWidth: 0 }}
                             thumbImageStyle={{ flex: 1, height: undefined, width: undefined }}
@@ -58,7 +59,7 @@ class ReviewForm extends Component {
                     <View style={styles.sliderLabel}>
                         <TextInput
                             style={styles.sliderLabelText}
-                            value={`${this.props.sliderValue}`}
+                            value={`${this.state.sliderValue}`}
                         //currently does not working because value is determined by the Slider.
                         //need to find another way to update value both from textInput
                         //and Slider.
@@ -71,11 +72,11 @@ class ReviewForm extends Component {
                         rkType='xlarge'
                         onPress={() => this.props.submitForm(
                             this.props.newForm,
-                            `${this.props.sliderValue}`,
+                            `${this.state.sliderValue}`,
                             this.props.league.uid,
                             this.props.navigation)}
-                            disabled={!this.props.sliderValue > 0}
-                            style={!this.props.sliderValue > 0 ? styles.buttonDisabled : styles.button}
+                            disabled={!this.state.sliderValue > 0}
+                            style={!this.state.sliderValue > 0 ? styles.buttonDisabled : styles.button}
                     >
                         שלח טופס
                     </RkButton>
@@ -132,7 +133,7 @@ const fetchMatch = (matchUid, matches) => {
 
 const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
     const { currentUser } = firebase.auth();
-    const { newForm, sliderValue } = forms;
+    const { newForm } = forms;
     const league = friendlyLeagues.friendlyLeaguesListFetch.find(leagueItem =>
         leagueItem.uid === friendlyLeagues.selectedFriendlyLeagueId);
     const currentLeagueUser = league.participants.find(participant =>
@@ -145,8 +146,8 @@ const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
     }));
 
     return {
-        form, newForm, league, currentLeagueUser, forms, sliderValue
+        form, newForm, league, currentLeagueUser, forms
     };
 };
 
-export default connect(mapStateToProps, { submitForm, sliderValueChanged })(ReviewForm);
+export default connect(mapStateToProps, { submitForm })(ReviewForm);

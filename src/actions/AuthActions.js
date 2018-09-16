@@ -3,6 +3,7 @@ import firebase from 'react-native-firebase';
 import { GoogleSignin } from 'react-native-google-signin';
 import { LoginManager } from 'react-native-fbsdk';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars } from '../actions';
 import { locali } from '../../locales/i18n';
 import {
 	EMAIL_CHANGED,
@@ -150,34 +151,42 @@ export const passwordRecovery = ({ email, navigation }) => {
 	};
 };
 
+const fetchApplicationData = dispatch => {
+	dispatch(fetchFriendlyLeagues());
+	dispatch(fetchMatches());
+	dispatch(fetchLeaguesAvatars());
+};
+
 const loginUserSuccess = (user, navigation, dispatch) => {
 	dispatch({
 		type: LOGIN_USER_SUCCESS,
 		payload: user
 	});
 
+	fetchApplicationData(dispatch);
 	dispatch(NavigationActions.navigate({ routeName: 'DrawerStack' }));
-	const resetAction = StackActions.reset({
+
+	navigation.dispatch(StackActions.reset({
 		index: 0,
 		key: 'Drawer',
 		actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
-	});
-	navigation.dispatch(resetAction);
+	}));
 };
 
 export const socialLoginUserSuccess = (user, navigation) => {
-	return (dispatch) => {
+	return dispatch => {
 		dispatch({
 			type: LOGIN_USER_SUCCESS,
 			payload: user.user
 		});
 
-		const resetAction = StackActions.reset({
+		fetchApplicationData(dispatch);
+
+		navigation.dispatch(StackActions.reset({
 			index: 0,
 			key: null,
 			actions: [NavigationActions.navigate({ routeName: 'DrawerStack' })],
-		});
-		navigation.dispatch(resetAction);
+		}));
 	};
 };
 

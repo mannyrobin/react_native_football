@@ -28,13 +28,6 @@ export const fetchMatchesList = () => {
 	};
 };
 
-export const sliderValueChanged = (value) => {
-	return {
-		type: SLIDER_VALUE_CHANGED,
-		payload: value
-	};
-};
-
 /* eslint-disable no-param-reassign */
 export const updateNewForm = (newForm, matchUid, bet, odd) => {
     const val = { matchUid, bet, odd };

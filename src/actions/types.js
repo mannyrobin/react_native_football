@@ -39,7 +39,6 @@ export const LEAGUE_INVITATION_REJECTED = 'league_invitation_rejected';
 // ** Forms **
 
 export const MATCHES_LIST_FETCH = 'matches_list_fetch';
-export const SLIDER_VALUE_CHANGED = 'slider_value_changed';
 export const NEW_FORM_UPDATE_PUSH = 'new_form_update_push';
 export const NEW_FORM_UPDATE_SLICE = 'new_form_update_slice';
 export const NEW_FORM_UPDATE_CHANGE_BET = 'new_form_update_change_bet';

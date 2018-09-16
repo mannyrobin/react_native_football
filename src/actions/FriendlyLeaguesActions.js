@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
@@ -36,7 +35,7 @@ export const friendEmailChanged = (friendEmail) => {
 	};
 };
 
-export const createNewFriendlyLeague = (leagueName, navigation) => {
+export const createNewFriendlyLeague = leagueName => {
 	return (dispatch) => {
 		const { uid, email } = firebase.auth().currentUser;
 		const league = {
@@ -65,8 +64,7 @@ export const inviteFriendToFriendlyLeague = (
 	friendEmail,
 	leagueUid,
 	friendlyLeagueName,
-	participants,
-	navigation) => {
+	participants) => {
 	return (dispatch) => {
 		const invite = {
 			friendEmail,
@@ -112,7 +110,7 @@ const fetchChats = ({ uid }, dispatch) =>
 			dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
 		});
 
-const fetchAvatars = (league, dispatch, navigation) => {
+const fetchAvatars = (league, dispatch) => {
 	const defaultPhoto = 'https://vignette.wikia.nocookie.net/joke-battles/images/4/49/UserIcon.png/revision/latest?cb=20161202233401';
 	const avatarPromises = league.participants.map(participant =>
 		firebase.storage().ref(`/users/${participant.uid}`)
@@ -213,13 +211,3 @@ export const fetchLeaguesAvatars = () =>
 					dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
 				}
 			});
-
-/* export const deleteFriendlyLeague = (leagueUid) => {
-	return dispatch => {
-		const { currentUser } = firebase.auth();
-		firebase.database()
-		.ref(`/friendlyLeagues/${leagueUid}/participants`)
-		.child(currentUser.uid)
-		.remove();		
-	};
-}; */

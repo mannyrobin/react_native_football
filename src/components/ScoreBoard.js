@@ -22,7 +22,10 @@ class ScoreBoard extends Component {
             <MaterialIconsIcon
               name='settings' color="#000" size={30}
               onPress={() =>
-                this.props.navigation.navigate('FriendlyLeagueSettings')}
+                this.props.navigation.navigate('FriendlyLeagueSettings', {
+                  leagueName: league.friendlyLeagueName,
+                  leagueUid: league.uid
+                })}
             />
             <View style={styles.headerSection}>
               <View style={styles.headerThumbnailContainer}>
@@ -36,7 +39,7 @@ class ScoreBoard extends Component {
                 >
                   <Image
                     style={styles.headerThumbnail}
-                    source={league.leaguePhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)}
+                    source={league.leaguePhoto !== defaultPhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)}
                     resizeMode='cover'
                   />
                 </PhotoUpload>
@@ -122,7 +125,6 @@ const styles = {
 };
 
 const mapStateToProps = ({ friendlyLeagues }) => {
-  const { friendlyLeaguesAvatars } = friendlyLeagues;
   const league = friendlyLeagues.friendlyLeaguesListFetch
     .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
   league.participants = league.participants.map(participant => ({
@@ -134,10 +136,6 @@ const mapStateToProps = ({ friendlyLeagues }) => {
       friendlyLeagues.friendlyLeagueAvatars.find(user =>
         user.uid === participant.uid).avatarURL
   }));
-  if (friendlyLeaguesAvatars.length > 0) {
-    league.leaguePhoto = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
-  }
-  console.log('leauge12345', league);
   return { league };
 };
 export default connect(mapStateToProps, { uploadLeagueAvatar })(ScoreBoard);

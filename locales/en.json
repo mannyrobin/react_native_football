@@ -88,7 +88,9 @@
         "invite_text_input_placeholder": "Type your friend email address",
         "invite_button": "Invite Friend",
         "invite_same_user": "You can't invite yourself to a league",
-        "invite_exist_user": "This user already exists in the league"
+        "invite_exist_user": "This user already exists in the league",
+        "delete_league_header": "Leave and delete ",
+        "delete_league_button": "Leave League"
       }
     },
     "league_invitations":

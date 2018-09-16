@@ -59,7 +59,6 @@ class NewForm extends Component {
 
   handleLeaguePicker() {
     const { pickerSelectedCountry, pickerSelectedLeauge } = this.props;
-    console.log('pickerSelectedCountry', pickerSelectedCountry);
     return (
       <Picker
         mode="dropdown"
@@ -89,7 +88,6 @@ class NewForm extends Component {
               icon={{ name: 'search', type: 'font-awesome' }}
               onPress={() => {
                 this.props.cleanSearch();
-                console.log('this.props.textToSearch', this.props.textToSearch);
                 this.props.cleanPickers();
                 this.searchBar.show();
               }}

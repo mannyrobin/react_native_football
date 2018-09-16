@@ -49,7 +49,8 @@ export const createNewFriendlyLeague = (leagueName, navigation) => {
 					formsLost: 0,
 					email
 				}
-			}
+			},
+			leaguePhoto: '../images/DefaultThumbnail.png'
 		};
 		firebase.database().ref('/friendlyLeagues')
 			.push(league)
@@ -160,7 +161,6 @@ export const fetchChat = (leagueUid) => {
 	return (dispatch) => {
 		firebase.database().ref(`/friendlyLeagues/${leagueUid}/chat`)
 			.on('value', snapshot => {
-				console.log('snapshot.val()', snapshot.val());
 				dispatch({ type: FETCH_CHAT, payload: snapshot.val() });
 			});
 	};
@@ -180,9 +180,18 @@ export const uploadLeagueAvatar = (avatar, uid) => {
 		const mime = 'image/png';
 		const imageRef = firebase.storage().ref(`/friendlyLeagues/${uid}`)
 			.child('friendly_league_profile_photo.png');
+			const imageRefDB = firebase.database().ref(`/friendlyLeagues/${uid}`);
 		return Blob.build(avatar, { type: `${mime};BASE64` })
 			.then(blob => {
-				const filePath = imageRef.put(blob._ref, { contentType: mime });
+				const filePath = imageRef.put(blob._ref, { contentType: mime })
+				.then(() => {
+					const urlPromise = firebase.storage().ref(`/friendlyLeagues/${uid}`)
+					.child('friendly_league_profile_photo.png')
+					.getDownloadURL()
+					.then(element => element);
+					urlPromise
+					.then(leaguePhoto => imageRefDB.update({ leaguePhoto }));
+				});
 				dispatch({
 					type: UPLOAD_FRIENDLY_LEAGUE_PHOTO,
 					payload: filePath
@@ -193,51 +202,24 @@ export const uploadLeagueAvatar = (avatar, uid) => {
 	};
 };
 
-export const fetchLeaguesAvatars = (friendlyLeagues) => {
-	return dispatch => {
-		console.log('friendlyLeagues', friendlyLeagues);
-		if (friendlyLeagues.length > 0) {
-		const avatarPromises = friendlyLeagues.map(league =>
-			firebase.storage().ref(`/friendlyLeagues/${league.uid}`)
-				.child('friendly_league_profile_photo.png')
-				.getDownloadURL()
-				.then(avatarURL => ({ uid: league.uid, avatarURL })));
-
-		Promise.all(avatarPromises)
-			.then(avatars => {
-				console.log('avatars', avatars);
-				dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
+export const fetchLeaguesAvatars = () =>
+	dispatch =>
+		firebase.database()
+			.ref('/friendlyLeagues')
+			.on('value', snapshot => {
+				if (snapshot.val()) {
+					const avatars = arraify(snapshot.val())
+					.map(league => ({ uid: league.uid, leaguePhoto: league.leaguePhoto }));
+					dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
+				}
 			});
-		}
+
+/* export const deleteFriendlyLeague = (leagueUid) => {
+	return dispatch => {
+		const { currentUser } = firebase.auth();
+		firebase.database()
+		.ref(`/friendlyLeagues/${leagueUid}/participants`)
+		.child(currentUser.uid)
+		.remove();		
 	};
-};
-
-/* uploadProfilePic({ user }) {
-	//sometimes crushes, aspecially after clicking logout or the yellow box in the bottom.
-	//after disabling yellowbox no more crushes.
-	//read: https://github.com/facebook/react-native/issues/18817
-	const Blob = RNFetchBlob.polyfill.Blob;
-
-	window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
-	window.Blob = Blob;
-
-	const url = user.photoURL + '?width=600';
-	const mime = 'image/jpg';
-	const { currentUser } = firebase.auth();
-	const imageRef = firebase.storage()
-	.ref(`/users/${currentUser.uid}`)
-	.child('profile_picture.jpg');
-	RNFetchBlob.config({ fileCache: true })
-		.fetch('GET', url)
-		.then(resp => resp.readFile('base64')
-			.then(data => {
-				return Blob.build(data, { type: `${mime};BASE64` });
-			})
-			.catch(error => console.log(error))
-		)
-		.catch(error => console.log(error))
-		.then(blob => {
-			return imageRef.put(blob._ref, { contentType: mime });
-		})
-		.catch(error => console.log(error));
-} */
+}; */

@@ -6,7 +6,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { Card } from './common';
 import { locali } from '../../locales/i18n';
-import { friendEmailChanged, inviteFriendToFriendlyLeague } from '../actions';
+import { friendEmailChanged, inviteFriendToFriendlyLeague, deleteFriendlyLeague } from '../actions';
 
 class FriendlyLeagueSettings extends Component {
 
@@ -24,7 +24,8 @@ class FriendlyLeagueSettings extends Component {
             fontSize: 26,
             textAlign: 'center'
            });
-
+    const leagueName = this.props.navigation.getParam('leagueName', '');
+    const leagueUid = this.props.navigation.getParam('leagueUid', '');
         return (
             <View>
                 <Card>
@@ -44,6 +45,18 @@ class FriendlyLeagueSettings extends Component {
                         </RkButton>
                     </View>
                 </Card>
+                <Card>
+                    <RkText rkType='customHeader'>{locali('friendly_leagues.friendly_league.settings.delete_league_header') + leagueName}</RkText>
+                    <View style={{ height: 60, justifyContent: 'center' }}>
+                        <RkButton
+                            style={{ justifyContent: 'center', alignSelf: 'center' }}
+                            /* onPress={() => this.props.deleteFriendlyLeague(leagueUid)}  */ 
+                        >
+                            {locali('friendly_leagues.friendly_league.settings.delete_league_button')}
+                        </RkButton>
+                    </View>
+                </Card>
+            
             </View>
         );
     }
@@ -61,4 +74,4 @@ const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFe
     ({ friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId });
 
 export default connect(mapStateToProps,
-    { friendEmailChanged, inviteFriendToFriendlyLeague })(FriendlyLeagueSettings);
+    { friendEmailChanged, inviteFriendToFriendlyLeague, deleteFriendlyLeague })(FriendlyLeagueSettings);

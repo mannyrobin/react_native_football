@@ -88,7 +88,9 @@
         "invite_text_input_placeholder": "הקלד דוא\"ל של חבר",
         "invite_button": "הזמן",
         "invite_same_user": "לא ניתן להזמין את עצמך לליגה",
-        "invite_exist_user": "משתמש זה כבר חבר בליגה"
+        "invite_exist_user": "משתמש זה כבר חבר בליגה",
+        "delete_league_header": "עזוב ומחק ",
+        "delete_league_button": "עזוב ליגה"
       }
     },
     "league_invitations":

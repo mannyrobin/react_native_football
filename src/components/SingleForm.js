@@ -5,7 +5,6 @@ import SingleFormView from './SingleFormView';
 
 class SingleForm extends Component {
     render() {
-        console.log('form', this.props.form);
         return (
             <SingleFormView form={this.props.form} />
         );

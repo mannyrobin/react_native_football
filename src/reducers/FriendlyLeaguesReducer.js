@@ -60,7 +60,6 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, friendlyLeagueAvatars: action.payload };
         }
         case FETCH_CHAT: {
-            console.log('chat fetched', action.payload);
             return { ...state, chat: action.payload || [] };
         }
         case MESSAGE_CHANGED: {

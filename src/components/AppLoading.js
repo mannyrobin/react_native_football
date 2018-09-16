@@ -12,7 +12,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import { AccessToken } from 'react-native-fbsdk';
 import RNFetchBlob from 'rn-fetch-blob';
 import Login from './Login';
-import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches } from '../actions';
+import { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars } from '../actions';
 import { PRIMARY_COLOR, COMPONENT_COLOR } from '../constants';
 import { FullScreenSpinner } from './common';
 
@@ -31,6 +31,7 @@ class AppLoading extends Component {
 
     fetchApplicationData() {
         this.props.fetchFriendlyLeagues();
+        this.props.fetchLeaguesAvatars();
         this.props.fetchMatches();
     }
 
@@ -212,4 +213,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,
-    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches })(AppLoading);
+    { fetchUserNames, socialLoginUserIn, socialLoginUserSuccess, reduxNav, fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars })(AppLoading);

@@ -127,17 +127,12 @@ DrawerContainer.defaultProps = {
 const mapStateToProps = ({ auth, friendlyLeagues }) => {
   const { user } = auth;
   const { displayNames } = friendlyLeagues;
-  console.log('userrrr11r', user.uid);
-  console.log('displayNamesdisplayNames', displayNames);
   let myDisplayName = displayNames.length > 0 ?
     displayNames.find(element =>
       element.uid === user.uid)
     : '';
-    console.log('myDisplayName1', myDisplayName);
     if (myDisplayName) myDisplayName = myDisplayName.displayName;
     else myDisplayName = '';
-    console.log('myDisplayName2', myDisplayName);
-
   return { user, myDisplayName };
 };
 

@@ -16,16 +16,20 @@ class ListItem extends Component {
 		const { leagues, friendlyLeaguesAvatars } = this.props;
 		const league = leagues.find(element => element.uid === this.props.friendlyLeague.uid);
 		if (friendlyLeaguesAvatars.length > 0) {
-		avatar = friendlyLeaguesAvatars.find(element => element.uid === league.uid).avatarURL;
+		avatar = friendlyLeaguesAvatars.find(element => element.uid === league.uid);
+		if (avatar) avatar = avatar.leaguePhoto;
 		}
-		if (avatar) return { uri: (league.leaguePhoto) };
-		return require(defaultPhoto);
+		if (avatar === defaultPhoto) return require(defaultPhoto);
+		return { uri: (avatar) };		
 }
 	render() {
+		let coins = '';
 		const friendlyLeague = this.props.friendlyLeague;
 		const { currentUser } = firebase.auth();
 		friendlyLeague.participants = _.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
-		const coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
+		if (friendlyLeague.participants.length > 0) {
+		coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
+		}
 		const rank = Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
 		return (
 			<TouchableOpacity
@@ -40,7 +44,6 @@ class ListItem extends Component {
 								</Text>
 							</View>
 							<Image
-							/* 	source={league.leaguePhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)} */
 							source={this.loadAvatar()}
 								style={{ height: 70, width: 70, borderRadius: 70 / 2, borderWidth: 3, borderColor: '#FFF' }}
 								resizeMode="cover"

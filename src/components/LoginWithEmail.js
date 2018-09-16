@@ -36,8 +36,8 @@ class LoginWithEmail extends Component {
 
   //TODO: Delete after developing app - this is a shortcut to logging in to user EtayRock.
   loginToEtayRock() {
-    const email = 'etayrock@gmail.com';
-    const password = 'password';
+    const email = 'test@test.com';
+    const password = '123456';
     const { navigation } = this.props;
 
     this.props.loginUser({ email, password, navigation });

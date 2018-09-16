@@ -4,7 +4,7 @@ import { RkButton, RkTheme } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { SearchBar } from 'react-native-elements';
-import { searchOnTextChange, handleSearch, reduxNav, fetchLeaguesAvatars } from '../actions';
+import { searchOnTextChange, handleSearch, reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
@@ -21,7 +21,7 @@ class FriendlyLeagues extends Component {
       }
     });
     const { dataToShowfriendlyLeague, friendlyLeagues } = this.props;
-    this.props.fetchLeaguesAvatars(friendlyLeagues);
+
     return (
       <View style={{ flex: 8 }}>
         <SearchBar
@@ -82,4 +82,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,
- { handleSearch, searchOnTextChange, reduxNav, fetchLeaguesAvatars })(FriendlyLeagues);
+ { handleSearch, searchOnTextChange, reduxNav })(FriendlyLeagues);

@@ -24,7 +24,6 @@ export const selectedPickerCountry = (countryChoice, allData) => {
         const dataAfterFilter = _.filter(allData, match => {
             return containsCountry(match, countryChoice === 'countryPlaceholder' ? true : countryChoice);
         });
-        console.log('dataAfterFilter', dataAfterFilter);
         dispatch({
             type: SELECTED_COUNTRY,
             payload: countryChoice
@@ -44,8 +43,6 @@ export const selectedPickerLeauge = (leaugeChoice, allData, countryChoice) => {
             const dataAfterFilter = _.filter(allData, match => {
                 return containsLeague(match, leaugeChoice);
             });
-
-            console.log('dataAfterFilter', dataAfterFilter);
 
             dispatch({
                 type: SELECTED_LEAGUE,

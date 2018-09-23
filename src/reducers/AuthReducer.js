@@ -3,14 +3,15 @@ import {
     PASSWORD_CHANGED,
     USERNAME_CHANGED,
     LOGGING_USER_IN,
-    SOCIAL_LOGGING_USER_IN,
     SIGN_UP_NAVIGATE,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     FORGOT_PASSWORD,
     PASSWORD_RECOVERY,
     LOGOUT,
-    RE_PASSWORD_CHANGED
+    RE_PASSWORD_CHANGED,
+    APP_DATA_LOAD_STARTED,
+    APP_DATA_LOAD_ENDED
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -20,7 +21,7 @@ const INITIAL_STATE = {
     username: '',
 	user: null,
 	error: '',
-    loading: false
+    appIsLoading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -36,12 +37,8 @@ export default (state = INITIAL_STATE, action) => {
         }
         case LOGGING_USER_IN: {
             return { ...state,
-				loading: true,
                 error: '' 
             };
-        }
-        case SOCIAL_LOGGING_USER_IN: {
-            return { ...state, loading: true, error: '' };
         }
         case LOGOUT: {
             return { ...INITIAL_STATE };
@@ -57,7 +54,6 @@ export default (state = INITIAL_STATE, action) => {
                 error: action.payload,
                 password: '',
                 rePassword: '',
-                loading: false
         };
         case RE_PASSWORD_CHANGED: {
             return { ...state, rePassword: action.payload };
@@ -66,6 +62,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...INITIAL_STATE, email: action.payload };
         case PASSWORD_RECOVERY:
             return state; //TODO - send instructions to recover password on email
+        case APP_DATA_LOAD_STARTED: 
+            return { ...state, appIsLoading: true };
+        case APP_DATA_LOAD_ENDED: 
+            return { ...state, appIsLoading: false };
         default: {
             return state;
         }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createStackNavigator } from 'react-navigation';
+import { createSwitchNavigator } from 'react-navigation';
 import {
   reduxifyNavigator,
   createReactNavigationReduxMiddleware,
@@ -9,6 +9,8 @@ import { Animated, Easing } from 'react-native';
 
 import LoginStack from './LoginStack';
 import DrawerStack from './DrawerStack';
+
+import AppLoading from '../AppLoading';
 
 export const middleware = createReactNavigationReduxMiddleware(
   'root',
@@ -24,11 +26,10 @@ const noTransitionConfig = () => ({
   }
 });
 
-export const RootNavigator = createStackNavigator({
+export const RootNavigator = createSwitchNavigator({
   LoginStack: { screen: LoginStack },
   DrawerStack: { screen: DrawerStack }
 }, {
-    // Default config for all screens
     headerMode: 'none',
     initialRouteName: 'LoginStack',
     transitionConfig: noTransitionConfig

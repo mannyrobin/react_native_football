@@ -1,7 +1,7 @@
 
 import firebase from 'react-native-firebase';
 import _ from 'lodash';
-import { arraify } from '../utils';
+import { arraify, fetchData } from '../utils';
 import {
     FETCH_MATCHES,
     SELECTED_COUNTRY,
@@ -10,14 +10,12 @@ import {
     CLEAN_PICKERS
 } from './types.js';
 
-export const fetchMatches = () => {
-    return (dispatch) => {
-        firebase.database().ref('/matches')
-            .on('value', snapshot => {
-                dispatch({ type: FETCH_MATCHES, payload: arraify(snapshot.val()) });
-            });
-    };
-};
+export const fetchMatches = () =>
+    dispatch =>
+        fetchData(firebase.database().ref('/matches'),
+            matchesSnapshot =>
+                dispatch({ type: FETCH_MATCHES, payload: arraify(matchesSnapshot.val()) }));
+
 
 export const selectedPickerCountry = (countryChoice, allData) => {
     return (dispatch) => {

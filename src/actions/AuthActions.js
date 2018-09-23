@@ -1,24 +1,28 @@
 import _ from 'lodash';
 import firebase from 'react-native-firebase';
 import { GoogleSignin } from 'react-native-google-signin';
-import { LoginManager } from 'react-native-fbsdk';
-import { StackActions, NavigationActions } from 'react-navigation';
-import { fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars } from '../actions';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { Platform } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import { fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars, reduxNav } from '../actions';
 import { locali } from '../../locales/i18n';
 import {
 	EMAIL_CHANGED,
 	PASSWORD_CHANGED,
 	USERNAME_CHANGED,
 	LOGGING_USER_IN,
-	SOCIAL_LOGGING_USER_IN,
 	SIGN_UP_NAVIGATE,
 	LOGIN_USER_SUCCESS,
 	LOGIN_USER_FAIL,
 	FORGOT_PASSWORD,
 	LOGOUT,
 	UPDATE_USERNAMES_DB,
-	RE_PASSWORD_CHANGED
+	RE_PASSWORD_CHANGED,
+	FETCH_USERNAMES_SUCCESS,
+	APP_DATA_LOAD_STARTED,
+	APP_DATA_LOAD_ENDED
 } from './types.js';
+import { arraify, fetchData } from '../utils';
 
 export const emailChanged = (email) => {
 	return {
@@ -53,7 +57,7 @@ export const loginUser = ({ email, password, navigation }) => {
 		dispatch({ type: LOGGING_USER_IN });
 
 		firebase.auth().signInWithEmailAndPassword(email, password)
-			.then(user => loginUserSuccess(user, navigation, dispatch))
+			.then(user => dispatch(loginUserSuccess(user)))
 			.catch((error) => {
 				switch (error.code) {
 					case 'auth/user-disabled':
@@ -90,8 +94,10 @@ export const signupUser = (email, username, password, navigation, displayNames) 
 								.set({ displayName: username });
 							firebase.messaging().getToken().then(token => {
 								firebase.database().ref(`/usersDb/${user.uid}`).update({ notificationToken: token });
-								dispatch({ type: UPDATE_USERNAMES_DB, 
-									payload: displayNames.push({ displayName: username, uid: user.uid, notificationToken: token }) });
+								dispatch({
+									type: UPDATE_USERNAMES_DB,
+									payload: displayNames.push({ displayName: username, uid: user.uid, notificationToken: token })
+								});
 							});
 							loginUserSuccess(user, navigation, dispatch);
 						}
@@ -151,101 +157,128 @@ export const passwordRecovery = ({ email, navigation }) => {
 	};
 };
 
-const fetchApplicationData = dispatch => {
-	dispatch(fetchFriendlyLeagues());
-	dispatch(fetchMatches());
-	dispatch(fetchLeaguesAvatars());
-};
+const configureGoogleSignIn = () => {
+	const configPlatform = {
+		...Platform.select({
+			ios: {},
+			android: {},
+		}),
+	};
 
-const loginUserSuccess = (user, navigation, dispatch) => {
-	dispatch({
-		type: LOGIN_USER_SUCCESS,
-		payload: user
+	GoogleSignin.configure({
+		...configPlatform,
+		webClientId: '951196383769-llhl0472tfa179fi5emhl3iikgikip4o.apps.googleusercontent.com',
+		offlineAccess: false,
 	});
-
-	fetchApplicationData(dispatch);
-	dispatch(NavigationActions.navigate({ routeName: 'DrawerStack' }));
-
-	navigation.dispatch(StackActions.reset({
-		index: 0,
-		key: 'Drawer',
-		actions: [NavigationActions.navigate({ routeName: 'Drawer' })],
-	}));
 };
 
-export const socialLoginUserSuccess = (user, navigation) => {
-	return dispatch => {
+const registerForNotifications = user => firebase.messaging().getToken().then(token =>
+	firebase.database().ref(`/usersDb/${user.uid}`).update({ notificationToken: token }));
+
+const signInSocialUser = authCredential =>
+	firebase.auth().signInAndRetrieveDataWithCredential(authCredential)
+		.then(userCredential => userCredential.user);
+
+const silentlySignInMailUser = () => {
+	const currentUser = firebase.auth().currentUser;
+
+	return (currentUser && Promise.resolve(currentUser)) || Promise.reject();
+};
+
+const silentlySignInGoogleUser = () =>
+	GoogleSignin.signInSilently()
+		.then(user =>
+			signInSocialUser(firebase.auth.GoogleAuthProvider.credential(user.idToken)));
+
+const silentlySignInFacebookUser = () =>
+	AccessToken.getCurrentAccessToken()
+		.then(token =>
+			signInSocialUser(firebase.auth.FacebookAuthProvider.credential(token.accessToken)));
+
+export const credentialsSetup = () =>
+	dispatch => {
+ 		configureGoogleSignIn();
+
+		const signInPromise = silentlySignInMailUser()
+			.catch(silentlySignInGoogleUser)
+			.catch(silentlySignInFacebookUser);
+		
+		signInPromise.then(registerForNotifications);
+		signInPromise
+			.then(user => dispatch(loginUserSuccess(user)))
+			.then(() => dispatch(reduxNav('Main')))
+			.catch(() => dispatch(reduxNav('Login')));
+	};
+
+const fetchApplicationData = dispatch =>
+	Promise.all([
+	dispatch(fetchFriendlyLeagues()),
+	dispatch(fetchMatches()),
+	dispatch(fetchLeaguesAvatars()),
+	dispatch(fetchUserNames())
+]);
+
+const loginUserSuccess = user =>
+	dispatch => {
 		dispatch({
 			type: LOGIN_USER_SUCCESS,
-			payload: user.user
+			payload: user
 		});
-
-		fetchApplicationData(dispatch);
-
-		navigation.dispatch(StackActions.reset({
-			index: 0,
-			key: null,
-			actions: [NavigationActions.navigate({ routeName: 'DrawerStack' })],
-		}));
-	};
-};
-
-export const socialLoginUserIn = () => {
-	return { type: SOCIAL_LOGGING_USER_IN };
-};
-
-export const logout = (user) => {
-	return (dispatch) => {
-		GoogleSignin.signOut().then(() => {
-			LoginManager.logOut();
-			dispatch({
-				type: LOGOUT,
-				payload: user
+		dispatch({
+			type: APP_DATA_LOAD_STARTED
+		});
+		fetchApplicationData(dispatch)
+			.then(() => {
+				dispatch({
+					type: APP_DATA_LOAD_ENDED
+				});
+				dispatch(reduxNav('DrawerStack'));
 			});
-		})
-			.catch('signout failed');
+	};
 
-		const resetAction = StackActions.reset({
-			index: 0,
-			key: null,
-			actions: [NavigationActions.navigate({ routeName: 'LoginStack' })],
-		});
-		dispatch(resetAction);
+export const loginFacebookUser = () =>
+	dispatch => {
+		LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+			.then(result => (result.isCancelled && Promise.reject()) || AccessToken.getCurrentAccessToken())
+			.then(token =>
+				signInSocialUser(firebase.auth.FacebookAuthProvider.credential(token.accessToken)))
+			.then(user => dispatch(loginUserSuccess(user)));
+	};
+
+export const loginGoogleUser = () =>
+	dispatch => {
+		GoogleSignin.hasPlayServices()
+			.then(() =>
+				GoogleSignin.signIn()
+					.then(user =>
+						signInSocialUser(firebase.auth.GoogleAuthProvider.credential(user.idToken))))
+			.then(user => dispatch(loginUserSuccess(user)));
+	};
+
+export const fetchUserNames = () =>
+	dispatch =>
+		fetchData(firebase.database().ref('/usersDb'), 
+			usernamesSnapshot => {
+				const usernames = arraify(usernamesSnapshot.val() || [])
+					.map(({ displayName, uid }) => ({ displayName, uid }));
+				dispatch({
+					type: FETCH_USERNAMES_SUCCESS,
+					payload: usernames
+				});
+			});
+
+export const logout = () => {
+	return dispatch => {
+		Promise.all([GoogleSignin.signOut(), LoginManager.logOut(), firebase.auth().signOut()])
+			.then(() => {
+				dispatch(reduxNav('LoginStack'));
+				dispatch({
+					type: LOGOUT
+				});
+			});
 	};
 };
 
 const loginUserFail = (dispatch, error) => {
 	dispatch({ type: LOGIN_USER_FAIL, payload: error });
 };
-
-/* const uploadProfilePic = (user) => {
-    return new Promise((resolve, reject) => {
-        //sometimes crushes, aspecially after clicking logout or the yellow box in the bottom.
-        //after disabling yellowbox no more crushes.
-        //read: https://github.com/facebook/react-native/issues/18817
-        const Blob = RNFetchBlob.polyfill.Blob;
-		const userURL = require('../images/Currency2Small.png');
-        window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
-        window.Blob = Blob;
-        const url = userURL + '?width=600';
-        const mime = 'image/jpg';
-        const { currentUser } = firebase.auth();
-        const imageRef = firebase.storage()
-            .ref(`/users/${currentUser.uid}`)
-            .child('profile_picture.jpg');
-        RNFetchBlob.config({ fileCache: true })
-            .fetch('GET', url)
-            .then(resp => resp.readFile('base64')
-                .then(data => {
-                    return Blob.build(data, { type: `${mime};BASE64` });
-                })
-                .catch(error => console.log(error))
-            )
-            .catch(error => console.log(error))
-            .then(blob => {
-                return imageRef.put(blob._ref, { contentType: mime });
-            })
-            .then(data => resolve(data))
-            .catch(error => reject(error));
-    });
-}; */

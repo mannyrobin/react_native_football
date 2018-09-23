@@ -9,11 +9,9 @@ export const readLeaguesInvitations = () =>
 
 export const fetchLeaguesInvitations = () =>
     dispatch => {
-        const { currentUser } = firebase.auth();
-
         firebase.database().ref('/invitations')
         .orderByChild('friendEmail')
-        .equalTo(currentUser.email)
+        .equalTo(firebase.auth().currentUser.email)
             .on('value', invitationsSnapshot =>
                 dispatch({
                     type: LEAGUE_INVITATIONS_FETCH_SUCCESS,

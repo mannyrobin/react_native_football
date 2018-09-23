@@ -24,3 +24,11 @@ export const arraiesToOneArray = matchesToShow => {
     const allMatches = [].concat.apply([], matchesToShow.map(item => item.matches));
     return allMatches;
 };
+
+export const fetchData = (ref, callback) =>
+    ref.once('value')
+        .then(snapshot => {
+            callback(snapshot);
+            ref.on('value', callback);
+        });
+

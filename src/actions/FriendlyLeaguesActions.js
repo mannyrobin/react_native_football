@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
-import { arraify } from '../utils';
+import { arraify, fetchData } from '../utils';
 import { locali } from '../../locales/i18n';
 import RNFetchBlob from 'rn-fetch-blob';
 
@@ -89,20 +89,16 @@ export const inviteFriendToFriendlyLeague = (
 };
 
 export const fetchFriendlyLeagues = () =>
-	dispatch =>
-		firebase.database()
-			.ref('/friendlyLeagues')
-			.on('value', snapshot => {
-				if (snapshot.val()) {
-					dispatch({
-						type: FRIENDLY_LEAGUES_FETCH_SUCCESS,
-						payload: arraify(snapshot.val())
-							.filter(league => league.participants
-								.find(user => user.uid === firebase.auth().currentUser.uid))
-					});
-				}
-			});
-
+	dispatch => 
+		fetchData(firebase.database().ref('/friendlyLeagues'),
+			friendlyLeaguesSnapshot =>
+				dispatch({
+					type: FRIENDLY_LEAGUES_FETCH_SUCCESS,
+					payload: arraify(friendlyLeaguesSnapshot.val() || [])
+						.filter(league => league.participants
+							.find(user => user.uid === firebase.auth().currentUser.uid))
+				})
+		);
 
 const fetchChats = ({ uid }, dispatch) =>
 	firebase.database().ref(`/friendlyLeagues/${uid}/chat`)
@@ -132,28 +128,6 @@ export const openFriendlyLeague = (league, navigation) =>
 		fetchChats(league, dispatch);
 		fetchAvatars(league, dispatch, navigation);
 	};
-
-export const fetchUserNames = () => {
-	return (dispatch) => {
-		return new Promise((resolve, reject) => {
-			firebase.database().ref('/usersDb')
-				.on('value', snapshot => {
-					if (snapshot.val()) {
-						const val = arraify(snapshot.val()).map(user => {
-							return { displayName: user.displayName, uid: user.uid };
-						});
-						dispatch({
-							type: FETCH_USERNAMES_SUCCESS,
-							payload: val
-						});
-						resolve('success');
-					} else {
-						reject('error fetching displayNames');
-					}
-				});
-		});
-	};
-};
 
 export const fetchChat = (leagueUid) => {
 	return (dispatch) => {
@@ -202,12 +176,9 @@ export const uploadLeagueAvatar = (avatar, uid) => {
 
 export const fetchLeaguesAvatars = () =>
 	dispatch =>
-		firebase.database()
-			.ref('/friendlyLeagues')
-			.on('value', snapshot => {
-				if (snapshot.val()) {
-					const avatars = arraify(snapshot.val())
+		fetchData(firebase.database().ref('/friendlyLeagues'),
+			avatarsSnapshot => {
+				const avatars = arraify(avatarsSnapshot.val() || [])
 					.map(league => ({ uid: league.uid, leaguePhoto: league.leaguePhoto }));
-					dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
-				}
+				dispatch({ type: FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS, payload: avatars });
 			});

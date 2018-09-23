@@ -1,8 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
 
 import { locali } from '../../../locales/i18n';
-
-import AppLoading from '../AppLoading';
 import Intro from '../Intro';
 import Login from '../Login';
 import LoginWithEmail from '../LoginWithEmail';
@@ -12,13 +10,7 @@ import ForgotPassword from '../ForgotPassword';
 import { PRIMARY_COLOR } from '../../constants';
 
 const LoginStack = createStackNavigator({
-
     Intro: { screen: Intro },
-    AppLoading: { screen: AppLoading,
-        navigationOptions: {
-            header: null
-        }
-    },
     Login: { screen: Login,
         navigationOptions: {
             header: null
@@ -37,6 +29,7 @@ const LoginStack = createStackNavigator({
         navigationOptions: { title: locali('navigation.titles.sign_up_with_email') }
     }
 }, {
+        initialRouteName: 'Intro',
         headerMode: 'float',
         navigationOptions: {
             headerStyle: { backgroundColor: PRIMARY_COLOR },

@@ -17,10 +17,6 @@ class ForgotPassword extends Component {
     }
 
     renderButtons() {
-        if (this.props.loading) {
-            return <Spinner size="large" />;
-        }
-
         return (
             <View style={{ height: 60, justifyContent: 'center' }}>
                 <RkButton
@@ -85,9 +81,9 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    const { email, loading, error } = state.auth;
+    const { email, error } = state.auth;
 
-    return { email, loading, error };
+    return { email, error };
 };
 
 export default connect(mapStateToProps, { passwordRecovery })(ForgotPassword);

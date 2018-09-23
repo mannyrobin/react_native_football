@@ -25,11 +25,7 @@ class SignUpWithEmail extends Component {
   }
 
   renderButtons() {
-    const { rePassword, email, password, username, loading, navigation, displayNames } = this.props;
-
-    if (loading) {
-      return <Spinner size="large" />;
-    }
+    const { rePassword, email, password, username, navigation, displayNames } = this.props;
 
     return (
       <View style={{ height: 60, justifyContent: 'center' }}>
@@ -137,10 +133,10 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  const { email, username, password, rePassword, error, loading } = state.auth;
+  const { email, username, password, rePassword, error } = state.auth;
   const { displayNames } = state.friendlyLeagues;
 
-  return { email, username, password, rePassword, error, loading, displayNames };
+  return { email, username, password, rePassword, error, displayNames };
 };
 
 export default connect(mapStateToProps,

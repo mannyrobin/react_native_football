@@ -95,7 +95,7 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => this.props.logout(this.props.user)}
+          onPress={() => this.props.logout()}
         >
           <View
             style={styles.drawerInActiveItem}

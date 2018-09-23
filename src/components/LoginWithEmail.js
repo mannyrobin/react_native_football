@@ -44,14 +44,6 @@ class LoginWithEmail extends Component {
   }
 
   renderButtons() {
-    if (this.props.loading) {
-      return (
-        <View style={{ height: 120 }}>
-          <Spinner size="large" />
-        </View>
-      );
-    }
-
     return (
       <View style={{ height: 120 }}>
         <View style={styles.buttonsContainer}>
@@ -168,7 +160,6 @@ const mapStateToProps = state => {
     email,
     password,
     user,
-    loading,
     error
   } = state.auth;
 
@@ -176,7 +167,6 @@ const mapStateToProps = state => {
     email,
     password,
     user,
-    loading,
     error
   };
 };

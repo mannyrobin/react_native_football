@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { connect } from 'react-redux';
-import { reduxNav } from '../actions';
+import { credentialsSetup } from '../actions';
 import { locali } from '../../locales/i18n';
 
 
@@ -68,8 +68,8 @@ class App extends Component {
       <AppIntroSlider
         slides={slides}
         renderItem={this._renderItem}
-        onDone={() => this.props.reduxNav('AppLoading')}
-        onSkip={() => this.props.reduxNav('AppLoading')}
+        onDone={() => this.props.credentialsSetup()}
+        onSkip={() => this.props.credentialsSetup()}
         skipLabel={locali('intro.button_skip')}
         nextLabel={locali('intro.button_next')}
         doneLabel={locali('intro.button_done')}
@@ -80,4 +80,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, { reduxNav })(App);
+export default connect(null, { credentialsSetup })(App);

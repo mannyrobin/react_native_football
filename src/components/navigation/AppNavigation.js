@@ -10,8 +10,6 @@ import { Animated, Easing } from 'react-native';
 import LoginStack from './LoginStack';
 import DrawerStack from './DrawerStack';
 
-import AppLoading from '../AppLoading';
-
 export const middleware = createReactNavigationReduxMiddleware(
   'root',
   state => state.nav

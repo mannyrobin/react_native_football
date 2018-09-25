@@ -10,7 +10,7 @@ export const FORGOT_PASSWORD = 'forgot_password';
 export const PASSWORD_RECOVERY = 'password_recovery';
 export const LOGOUT = 'logout';
 export const RE_PASSWORD_CHANGED = 'RE_PASSWORD_CHANGED';
-export const APP_DATA_LOAD_STARTED = 'load_app_data';
+export const APP_DATA_LOAD_STARTED = 'load_app_data_STARTED';
 export const APP_DATA_LOAD_ENDED = 'app_data_load_ended';
 
 // ** Friendly Leagues **

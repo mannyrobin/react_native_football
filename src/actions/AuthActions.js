@@ -193,6 +193,7 @@ const silentlySignInGoogleUser = () =>
 const silentlySignInFacebookUser = () =>
 	AccessToken.getCurrentAccessToken()
 		.then(token =>
+			(!token && Promise.reject()) ||
 			signInSocialUser(firebase.auth.FacebookAuthProvider.credential(token.accessToken)));
 
 export const credentialsSetup = () =>

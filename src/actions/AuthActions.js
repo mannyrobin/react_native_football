@@ -197,7 +197,7 @@ const silentlySignInFacebookUser = () =>
 
 export const credentialsSetup = () =>
 	dispatch => {
- 		configureGoogleSignIn();
+		configureGoogleSignIn();
 
 		const signInPromise = silentlySignInMailUser()
 			.catch(silentlySignInGoogleUser)
@@ -220,20 +220,11 @@ const fetchApplicationData = dispatch =>
 
 const loginUserSuccess = user =>
 	dispatch => {
-		dispatch({
-			type: LOGIN_USER_SUCCESS,
-			payload: user
-		});
-		dispatch({
-			type: APP_DATA_LOAD_STARTED
-		});
+		dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+		dispatch({ type: APP_DATA_LOAD_STARTED });
 		fetchApplicationData(dispatch)
-			.then(() => {
-				dispatch({
-					type: APP_DATA_LOAD_ENDED
-				});
-				dispatch(reduxNav('DrawerStack'));
-			});
+			.then(() => dispatch(reduxNav('DrawerStack')))
+			.finally(() => dispatch({ type: APP_DATA_LOAD_ENDED }));
 	};
 
 export const loginFacebookUser = () =>

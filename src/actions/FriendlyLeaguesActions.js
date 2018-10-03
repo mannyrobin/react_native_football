@@ -1,9 +1,10 @@
-import { Alert } from 'react-native';
+import { Alert, InteractionManager} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import { arraify, fetchData } from '../utils';
 import { locali } from '../../locales/i18n';
 import RNFetchBlob from 'rn-fetch-blob';
+import { reduxNav, reduxNavSetParams } from '../actions';
 
 import {
 	FRIENDLY_LEAGUE_NAME_CHANGED,
@@ -12,9 +13,6 @@ import {
 	INVITE_FRIEND_SUCCESS,
 	INVITE_FRIEND_FAILED,
 	FRIENDLY_LEAGUES_FETCH_SUCCESS,
-	OPEN_LEAGUE,
-	FETCH_USERNAMES_SUCCESS,
-	FETCH_PARTICIPANTS_AVATARS_SUCCESS,
 	FETCH_CHAT,
 	MESSAGE_CHANGED,
 	UPLOAD_FRIENDLY_LEAGUE_PHOTO,
@@ -37,7 +35,7 @@ export const friendEmailChanged = (friendEmail) => {
 
 export const createNewFriendlyLeague = leagueName => {
 	return (dispatch) => {
-		const { uid, email } = firebase.auth().currentUser;
+		const { uid } = firebase.auth().currentUser;
 		const league = {
 			friendlyLeagueName: leagueName,
 			admin: uid,
@@ -45,8 +43,7 @@ export const createNewFriendlyLeague = leagueName => {
 				[uid]: {
 					coins: 1000,
 					formsWon: 0,
-					formsLost: 0,
-					email
+					formsLost: 0
 				}
 			},
 			leaguePhoto: '../images/DefaultThumbnail.png'
@@ -101,33 +98,22 @@ export const fetchFriendlyLeagues = () =>
 		);
 
 const fetchChats = ({ uid }, dispatch) =>
-	firebase.database().ref(`/friendlyLeagues/${uid}/chat`)
-		.on('value', snapshot => {
+	fetchData(firebase.database().ref(`/friendlyLeagues/${uid}/chat`),
+		snapshot => {
 			dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
 		});
 
-const fetchAvatars = (league, dispatch) => {
-	const defaultPhoto = 'https://vignette.wikia.nocookie.net/joke-battles/images/4/49/UserIcon.png/revision/latest?cb=20161202233401';
-	const avatarPromises = league.participants.map(participant =>
-		firebase.storage().ref(`/users/${participant.uid}`)
-			.child('profile_picture.jpg')
-			.getDownloadURL()
-			.then(avatarURL => ({ uid: participant.uid, avatarURL }))
-			.catch(() => ({ uid: participant.uid, avatarURL: defaultPhoto })));
-
-	Promise.all(avatarPromises)
-		.then(avatars => {
-			dispatch({ type: OPEN_LEAGUE, payload: league.uid });
-			dispatch({ type: FETCH_PARTICIPANTS_AVATARS_SUCCESS, payload: avatars });
-			dispatch(NavigationActions.navigate({ routeName: 'FriendlyLeagueTab' }));
-		});
-};
-
-export const openFriendlyLeague = (league, navigation) =>
+export const openFriendlyLeague = league =>
 	dispatch => {
-		fetchChats(league, dispatch);
-		fetchAvatars(league, dispatch, navigation);
+		fetchChats(league, dispatch)
+		.then(() => {
+			dispatch(reduxNav('FriendlyLeaguesStack', { league }));
+			dispatch(reduxNav('FriendlyLeagueTab', { league }));
+		});
 	};
+
+export const closeFriendlyLeague = () =>
+	dispatch => dispatch(reduxNav('FriendlyLeaguesStack', { league: null }));
 
 export const fetchChat = (leagueUid) => {
 	return (dispatch) => {

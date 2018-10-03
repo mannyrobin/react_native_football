@@ -3,6 +3,7 @@ export * from './FriendlyLeaguesActions';
 export * from './InvitationsActions';
 export * from './FormsActions';
 export * from './MatchesActions';
+export * from './UsersActions';
 export * from './NavActions';
 export * from './SearchActions';
 export * from './HelpersActions';

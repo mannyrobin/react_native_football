@@ -27,19 +27,17 @@ const removeInvitation = (invitationUid, db) =>
 
 export const acceptInvitation = (invitationUid, leagueUid) => 
     dispatch => {
-        const { currentUser } = firebase.auth();
-        const { email } = firebase.auth().currentUser;
+        const { uid } = firebase.auth().currentUser;
         const db = firebase.database();
         
         removeInvitation(invitationUid, db)
             .then(() => {
                 db.ref('friendlyLeagues').child(leagueUid).child('participants')
-                .child(currentUser.uid)
+                .child(uid)
                 .set({
 					coins: 1000,
 					formsWon: 0,
-                    formsLost: 0,
-                    email
+                    formsLost: 0
 				})
                 .then(() => dispatch({
                     type: LEAGUE_INVITATION_ACCEPTED

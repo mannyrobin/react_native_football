@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     createStackNavigator,
     createBottomTabNavigator
 } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import FontawesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,6 +17,7 @@ import ScoreBoard from '../ScoreBoard';
 import Chat from '../Chat';
 
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants';
+import { closeFriendlyLeague } from '../../actions';
 
 const FormsViewStack = createStackNavigator({
     Forms: { screen: Forms },
@@ -42,7 +44,7 @@ const FillFormStack = createStackNavigator({
     }
 );
 
-const FriendlyLeagueTab = createBottomTabNavigator({
+const FriendlyLeagueTabNavigator = createBottomTabNavigator({
     ScoreBoard: {
         screen: ScoreBoard,
         navigationOptions: {
@@ -53,7 +55,7 @@ const FriendlyLeagueTab = createBottomTabNavigator({
         screen: FormsViewStack,
         navigationOptions: {
             title: locali('navigation.titles.friendly_leagues.my_forms')
-        }
+        } 
     },
     FillFormStack: {
         screen: FillFormStack,
@@ -113,4 +115,21 @@ const FriendlyLeagueTab = createBottomTabNavigator({
     }
 );
 
-export default FriendlyLeagueTab;
+class FriendlyLeagueTab extends Component {
+    static router = FriendlyLeagueTabNavigator.router;
+    
+    componentWillUnmount() {
+        this.props.closeFriendlyLeague();
+    }
+
+    render() {
+      return (
+        <FriendlyLeagueTabNavigator 
+        navigation={this.props.navigation}
+        screenProps={{ league: this.props.navigation.state.params.league }}
+        />
+      );
+    }
+}
+
+export default connect(null, { closeFriendlyLeague })(FriendlyLeagueTab);

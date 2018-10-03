@@ -5,7 +5,6 @@ import {
     UPDATE_MATCHES_AFTER_PICKER,
     CLEAN_PICKERS
  } from '../actions/types.js';
- import { arraiesToOneArray } from '../utils';
 
 const INITIAL_STATE = {
     matchesLeagues: [],

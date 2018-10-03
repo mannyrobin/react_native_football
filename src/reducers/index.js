@@ -6,6 +6,7 @@ import FriendlyLeaguesReducer from './FriendlyLeaguesReducer';
 import LeaguesInvitationReducer from './LeaguesInvitationReducer';
 import FormsReducer from './FormsReducer';
 import MatchesReducer from './MatchesReducer';
+import UsersReducer from './UsersReducer';
 import SearchReducer from './SearchReducer';
 import HelpersReducer from './HelpersReducer';
 
@@ -18,6 +19,7 @@ export default combineReducers({
     invitationsData: LeaguesInvitationReducer,
     forms: FormsReducer,
     matches: MatchesReducer,
+    usersData: UsersReducer,
     search: SearchReducer,
     helpers: HelpersReducer
 });

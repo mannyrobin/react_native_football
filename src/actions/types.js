@@ -21,15 +21,11 @@ export const NEW_FRIENDLY_LEAGUE_SUCCESS = 'new_friendly_league_success';
 export const INVITE_FRIEND_SUCCESS = 'invite_friend_success';
 export const INVITE_FRIEND_FAILED = 'INVITE_FRIEND_FAILED';
 export const FRIENDLY_LEAGUES_FETCH_SUCCESS = 'friendly_leagues_fetch_success';
-export const OPEN_LEAGUE = 'open_league';
-export const FETCH_USERNAMES_SUCCESS = 'fetch_usernames_success';
-export const FETCH_PARTICIPANTS_AVATARS_SUCCESS = 'fetch_participants_avatars_success';
 export const FETCH_CHAT = 'fetch_chat';
 export const MESSAGE_CHANGED = 'message_changed';
 export const SEND_MESSAGE = 'send_message';
 export const UPLOAD_FRIENDLY_LEAGUE_PHOTO = 'UPLOAD_FRIENDLY_LEAGUE_PHOTO';
 export const FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS = 'FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS';
-export const UPDATE_USERNAMES_DB = 'UPDATE_USERNAMES_DB';
 
 // ** Invitations ** 
 
@@ -50,6 +46,9 @@ export const OPEN_FORM = 'open_form';
 
 // ** Matches **
 export const FETCH_MATCHES = 'fetch_matches';
+
+// ** Users **
+export const USERS_LOADED = 'users_loaded';
 
 // ** Search **
 

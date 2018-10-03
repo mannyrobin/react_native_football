@@ -15,21 +15,29 @@ import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
 import LeagueInvitations from '../LeagueInvitations';
 import FriendlyLeaguesStack from './FriendlyLeaguesStack';
 
-import CustomHeader from '../CustomHeader';
+import AppHeader from '../AppHeader';
+import LeagueHeader from '../LeagueHeader';
 
 import { PRIMARY_COLOR } from '../../constants';
 
-const Drawer = createDrawerNavigator({
+const Stack = createStackNavigator({
     Main: { screen: Main },
     FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
     LeagueInvitations: { screen: LeagueInvitations },
     Account: { screen: Account },
 }, {
         initialRouteName: 'FriendlyLeaguesStack',
-        gesturesEnabled: false,
-        contentComponent: DrawerContainer,
-        drawerPosition: I18nManager.isRTL ? 'right' : 'left',
-        drawerBackgroundColor: PRIMARY_COLOR
+        headerMode: 'float',
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: { backgroundColor: PRIMARY_COLOR },
+            headerTitle: navigation.getParam('league') ?
+                <LeagueHeader league={navigation.getParam('league')} /> :
+                <AppHeader />,
+            headerTintColor: 'black',
+            gesturesEnabled: false,
+            headerLeft: drawerButton(navigation),
+            headerRight: renderHeaderRight(navigation)
+        })
     });
 
 const drawerButton = (navigation) =>
@@ -55,21 +63,18 @@ function renderHeaderRight(navigation) {
     );
 }
 
-const DrawerStack = createStackNavigator({
-    Drawer: { screen: Drawer }
-}, {
-        headerMode: 'float',
-        navigationOptions: ({ navigation }) => ({
-            headerStyle: { backgroundColor: PRIMARY_COLOR },
-            headerTitle: <CustomHeader navigation={navigation} />,
-            headerTintColor: 'black',
-            gesturesEnabled: false,
-            headerLeft: drawerButton(navigation),
-            headerRight: renderHeaderRight(navigation)
-        })
-    });
+const Drawer = createDrawerNavigator({
+    Stack: { screen: Stack } 
+}, 
+{
+    headerMode: 'none',
+    gesturesEnabled: false,
+    contentComponent: DrawerContainer,
+    drawerPosition: I18nManager.isRTL ? 'right' : 'left',
+    drawerBackgroundColor: PRIMARY_COLOR,
+});
 
-export default DrawerStack;
+export default Drawer;
 
 const styles = {
     DrawerMenuIcon: {

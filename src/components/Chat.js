@@ -13,7 +13,7 @@ class Chat extends Component {
             return { ...message, createdAt: new Date().toString() };
         });
         const appeandChat = [...messageContent, ...this.props.chat];
-        firebase.database().ref(`/friendlyLeagues/${this.props.selectedFriendlyLeagueId}/chat`)
+        firebase.database().ref(`/friendlyLeagues/${this.props.navigation.state.params.league.uid}/chat`)
             .set(appeandChat);
     }
     renderFooter() {
@@ -62,8 +62,8 @@ const { name } = props.currentMessage.user;
 
 
     render() {
-        const currentUserUid = firebase.auth().currentUser.uid;
-        const { displayNames, friendlyLeagueAvatars } = this.props;
+        const { uid, displayName, photoURL } = firebase.auth().currentUser;
+
         return (
             <GiftedChat
                 messages={this.props.chat}
@@ -74,21 +74,19 @@ const { name } = props.currentMessage.user;
                 onInputTextChanged={text => this.props.onMessageChanged(text)}
                 onSend={messages => this.onSend(messages)}
                 user={{
-                    _id: currentUserUid,
-                    name: _.find(displayNames, (item) => item.uid === currentUserUid).displayName,
-                    avatar: _.find(friendlyLeagueAvatars, (item) => item.uid === currentUserUid).avatarURL
+                    _id: uid,
+                    name: displayName,
+                    avatar: photoURL
                 }}
             />
         );
     }
 }
 
-const mapStateToProps = state => {
-    const { chat, selectedFriendlyLeagueId,
-        isTyping, displayNames,
-        friendlyLeagueAvatars } = state.friendlyLeagues;
+const mapStateToProps = ({ friendlyLeagues }) => {
+    const { chat, isTyping } = friendlyLeagues;
 
-    return { chat, selectedFriendlyLeagueId, isTyping, displayNames, friendlyLeagueAvatars };
+    return { chat, isTyping };
 };
 
 export default connect(mapStateToProps, { onMessageChanged, sendMessage })(Chat);

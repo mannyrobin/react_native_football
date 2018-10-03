@@ -4,7 +4,13 @@ import { GoogleSignin } from 'react-native-google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { Platform } from 'react-native';
 import { NavigationActions } from 'react-navigation';
-import { fetchFriendlyLeagues, fetchMatches, fetchLeaguesAvatars, reduxNav } from '../actions';
+import {
+	fetchFriendlyLeagues,
+	fetchMatches,
+	fetchLeaguesAvatars,
+	fetchUsers,
+	reduxNav
+} from '../actions';
 import { locali } from '../../locales/i18n';
 import {
 	EMAIL_CHANGED,
@@ -16,13 +22,10 @@ import {
 	LOGIN_USER_FAIL,
 	FORGOT_PASSWORD,
 	LOGOUT,
-	UPDATE_USERNAMES_DB,
 	RE_PASSWORD_CHANGED,
-	FETCH_USERNAMES_SUCCESS,
 	APP_DATA_LOAD_STARTED,
 	APP_DATA_LOAD_ENDED
 } from './types.js';
-import { arraify, fetchData } from '../utils';
 
 export const emailChanged = (email) => {
 	return {
@@ -52,7 +55,7 @@ export const userNameChanged = (username) => {
 	};
 };
 
-export const loginUser = ({ email, password, navigation }) => {
+export const loginUser = ({ email, password }) => {
 	return (dispatch) => {
 		dispatch({ type: LOGGING_USER_IN });
 
@@ -80,7 +83,7 @@ export const loginUser = ({ email, password, navigation }) => {
 	};
 };
 
-export const signupUser = (email, username, password, navigation, displayNames) => {
+export const signupUser = (email, username, password, navigation) => {
 	return (dispatch) => {
 		dispatch({ type: LOGGING_USER_IN });
 		firebase.database().ref('/usersDb')
@@ -93,11 +96,8 @@ export const signupUser = (email, username, password, navigation, displayNames) 
 							firebase.database().ref(`/usersDb/${user.uid}`)
 								.set({ displayName: username });
 							firebase.messaging().getToken().then(token => {
-								firebase.database().ref(`/usersDb/${user.uid}`).update({ notificationToken: token });
-								dispatch({
-									type: UPDATE_USERNAMES_DB,
-									payload: displayNames.push({ displayName: username, uid: user.uid, notificationToken: token })
-								});
+								firebase.database().ref(`/usersDb/${user.uid}`)
+								.update({ notificationToken: token });
 							});
 							loginUserSuccess(user, navigation, dispatch);
 						}
@@ -105,13 +105,15 @@ export const signupUser = (email, username, password, navigation, displayNames) 
 						.catch((error) => {
 							switch (error.code) {
 								case 'auth/email-already-in-use':
-									loginUserFail(dispatch, locali('login_with_email.signup.error_email_already_in_use'));
+									loginUserFail(dispatch, 
+										locali('login_with_email.signup.error_email_already_in_use'));
 									break;
 								case 'auth/invalid-email':
 									loginUserFail(dispatch, locali('login_with_email.signup.error_invalid_email'));
 									break;
 								case 'auth/operation-not-allowed':
-									loginUserFail(dispatch, locali('login_with_email.signup.error_operation_not_allowed'));
+									loginUserFail(dispatch, 
+										locali('login_with_email.signup.error_operation_not_allowed'));
 									break;
 								case 'auth/weak-password':
 									loginUserFail(dispatch, locali('login_with_email.signup.error_weak_password'));
@@ -134,21 +136,21 @@ const checkUserNameExistance = (snapshot, username) => {
 	return false;
 };
 
-export const signUpButton = ({ email, navigation }) => {
+export const signUpButton = ({ email }) => {
 	return (dispatch) => {
 		dispatch(NavigationActions.navigate({ routeName: 'SignUpWithEmail' }));
 		dispatch({ type: SIGN_UP_NAVIGATE, payload: email });
 	};
 };
 
-export const forgotPassword = ({ email, navigation }) => {
+export const forgotPassword = ({ email }) => {
 	return (dispatch) => {
 		dispatch({ type: FORGOT_PASSWORD, payload: email });
 		dispatch(NavigationActions.navigate({ routeName: 'ForgotPassword' }));
 	};
 };
 
-export const passwordRecovery = ({ email, navigation }) => {
+export const passwordRecovery = () => {
 	return (dispatch) => {
 		//dispatch({ type: LOGGING_USER_IN });
 		//dispatch({ type: PASSWORD_RECOVERY, payload: email });
@@ -172,8 +174,12 @@ const configureGoogleSignIn = () => {
 	});
 };
 
-const registerForNotifications = user => firebase.messaging().getToken().then(token =>
-	firebase.database().ref(`/usersDb/${user.uid}`).update({ notificationToken: token }));
+const updateUserInDB = ({ uid, email, displayName, photoURL }) => 
+	firebase.messaging().getToken()
+	.then(token => 
+			firebase.database().ref(`/usersDb/${uid}`)
+			.update({ email, displayName, photoURL, notificationToken: token }));
+
 
 const signInSocialUser = authCredential =>
 	firebase.auth().signInAndRetrieveDataWithCredential(authCredential)
@@ -204,7 +210,6 @@ export const credentialsSetup = () =>
 			.catch(silentlySignInGoogleUser)
 			.catch(silentlySignInFacebookUser);
 		
-		signInPromise.then(registerForNotifications);
 		signInPromise
 			.then(user => dispatch(loginUserSuccess(user)))
 			.then(() => dispatch(reduxNav('Main')))
@@ -216,22 +221,26 @@ const fetchApplicationData = dispatch =>
 	dispatch(fetchFriendlyLeagues()),
 	dispatch(fetchMatches()),
 	dispatch(fetchLeaguesAvatars()),
-	dispatch(fetchUserNames())
+	dispatch(fetchUsers())
 ]);
 
 const loginUserSuccess = user =>
 	dispatch => {
-		dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-		dispatch({ type: APP_DATA_LOAD_STARTED });
-		fetchApplicationData(dispatch)
-			.then(() => dispatch(reduxNav('DrawerStack')))
-			.finally(() => dispatch({ type: APP_DATA_LOAD_ENDED }));
+		updateUserInDB(user)
+			.then(() => {
+				dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
+				dispatch({ type: APP_DATA_LOAD_STARTED });
+				fetchApplicationData(dispatch)
+					.then(() => dispatch(reduxNav('DrawerStack')))
+					.finally(() => dispatch({ type: APP_DATA_LOAD_ENDED }));
+			});
 	};
 
 export const loginFacebookUser = () =>
 	dispatch => {
 		LoginManager.logInWithReadPermissions(['public_profile', 'email'])
-			.then(result => (result.isCancelled && Promise.reject()) || AccessToken.getCurrentAccessToken())
+			.then(result => (result.isCancelled && Promise.reject()) ||
+							AccessToken.getCurrentAccessToken())
 			.then(token =>
 				signInSocialUser(firebase.auth.FacebookAuthProvider.credential(token.accessToken)))
 			.then(user => dispatch(loginUserSuccess(user)));
@@ -246,18 +255,6 @@ export const loginGoogleUser = () =>
 						signInSocialUser(firebase.auth.GoogleAuthProvider.credential(user.idToken))))
 			.then(user => dispatch(loginUserSuccess(user)));
 	};
-
-export const fetchUserNames = () =>
-	dispatch =>
-		fetchData(firebase.database().ref('/usersDb'), 
-			usernamesSnapshot => {
-				const usernames = arraify(usernamesSnapshot.val() || [])
-					.map(({ displayName, uid }) => ({ displayName, uid }));
-				dispatch({
-					type: FETCH_USERNAMES_SUCCESS,
-					payload: usernames
-				});
-			});
 
 export const logout = () => {
 	return dispatch => {

@@ -10,7 +10,12 @@ import { uploadLeagueAvatar } from '../actions';
 const defaultPhoto = '../images/DefaultThumbnail.png';
 class ScoreBoard extends Component {
   render() {
-    const { league } = this.props;
+    const league = this.props.screenProps.league;
+    const participants = league.participants
+      .map(participant => 
+        ({ ...participant,
+           ...this.props.users.find(user => user.uid === participant.uid) }));
+
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -39,7 +44,9 @@ class ScoreBoard extends Component {
                 >
                   <Image
                     style={styles.headerThumbnail}
-                    source={league.leaguePhoto !== defaultPhoto ? { uri: (league.leaguePhoto) } : require(defaultPhoto)}
+                    source={league.leaguePhoto !== defaultPhoto ? 
+                    { uri: (league.leaguePhoto) } :
+                    require(defaultPhoto)}
                     resizeMode='cover'
                   />
                 </PhotoUpload>
@@ -49,11 +56,11 @@ class ScoreBoard extends Component {
         </ImageBackground>
         <Header style={{ marginTop: 60 }}>טבלת הליגה</Header>
         <LeaderboardContainer
-          data={this.props.league.participants}
+          data={participants}
           sortBy='coins'
           labelBy='displayName'
           labelStyle={{ justifyContent: 'flex-start', textAlign: 'left', paddingRight: 10 }}
-          icon='avatarURL'
+          icon='photoURL'
         />
       </View>
     );
@@ -124,18 +131,6 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ friendlyLeagues }) => {
-  const league = friendlyLeagues.friendlyLeaguesListFetch
-    .find(element => element.uid === friendlyLeagues.selectedFriendlyLeagueId);
-  league.participants = league.participants.map(participant => ({
-    ...participant,
-    displayName:
-      friendlyLeagues.displayNames.find(user =>
-        user.uid === participant.uid).displayName,
-    avatarURL:
-      friendlyLeagues.friendlyLeagueAvatars.find(user =>
-        user.uid === participant.uid).avatarURL
-  }));
-  return { league };
-};
+const mapStateToProps = ({ usersData }) => ({ users: usersData.users });
+
 export default connect(mapStateToProps, { uploadLeagueAvatar })(ScoreBoard);

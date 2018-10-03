@@ -124,16 +124,10 @@ DrawerContainer.defaultProps = {
   inactiveBackgroundColor: 'transparent',
 };
 
-const mapStateToProps = ({ auth, friendlyLeagues }) => {
+const mapStateToProps = ({ auth }) => {
   const { user } = auth;
-  const { displayNames } = friendlyLeagues;
-  let myDisplayName = displayNames.length > 0 ?
-    displayNames.find(element =>
-      element.uid === user.uid)
-    : '';
-    if (myDisplayName) myDisplayName = myDisplayName.displayName;
-    else myDisplayName = '';
-  return { user, myDisplayName };
+
+  return { user, myDisplayName: user ? user.displayName : '' };
 };
 
 export default connect(mapStateToProps, { logout, reduxNav, openAccount })(DrawerContainer);

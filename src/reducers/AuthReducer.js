@@ -11,7 +11,7 @@ import {
     LOGOUT,
     RE_PASSWORD_CHANGED,
     APP_DATA_LOAD_STARTED,
-    APP_DATA_LOAD_ENDED
+    APP_DATA_LOAD_ENDED,
  } from '../actions/types.js';
 
 const INITIAL_STATE = {

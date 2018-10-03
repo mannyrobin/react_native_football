@@ -23,14 +23,14 @@ const FriendlyLeaguesStack = createStackNavigator({
             title: locali('navigation.titles.friendly_leagues.new_friendly_league')
         }
     },
-    FriendlyLeagueTab: { screen: FriendlyLeagueTab },
+    FriendlyLeagueTab: { 
+        screen: FriendlyLeagueTab,
+     },
     FriendlyLeagueSettings: { screen: FriendlyLeagueSettings }
 }, {
         // Default config for all screens
         initialRouteName: 'FriendlyLeagues',
-        navigationOptions: {
-            header: null,
-        }
+        headerMode: 'none'
     }
 );
 

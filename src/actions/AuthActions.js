@@ -9,6 +9,7 @@ import {
 	fetchMatches,
 	fetchLeaguesAvatars,
 	fetchUsers,
+	fetchMainLeagues,
 	reduxNav
 } from '../actions';
 import { locali } from '../../locales/i18n';
@@ -212,16 +213,16 @@ export const credentialsSetup = () =>
 		
 		signInPromise
 			.then(user => dispatch(loginUserSuccess(user)))
-			.then(() => dispatch(reduxNav('Main')))
 			.catch(() => dispatch(reduxNav('Login')));
 	};
 
 const fetchApplicationData = dispatch =>
 	Promise.all([
 	dispatch(fetchFriendlyLeagues()),
+	dispatch(fetchMainLeagues()),
 	dispatch(fetchMatches()),
 	dispatch(fetchLeaguesAvatars()),
-	dispatch(fetchUsers())
+	dispatch(fetchUsers()),
 ]);
 
 const loginUserSuccess = user =>

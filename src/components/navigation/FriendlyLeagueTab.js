@@ -84,8 +84,7 @@ const FriendlyLeagueTabNavigator = createBottomTabNavigator({
                 } else if (routeName === 'Chat') {
                     iconName = 'wechat';
                 }
-                // You can return any component that you like here! We usually use an
-                // icon component from react-native-vector-icons
+               
                 return (
                     <FontawesomeIcon
                         name={iconName}

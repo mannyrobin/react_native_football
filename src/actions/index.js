@@ -1,5 +1,6 @@
 export * from './AuthActions';
 export * from './FriendlyLeaguesActions';
+export * from './MainLeaguesActions';
 export * from './InvitationsActions';
 export * from './FormsActions';
 export * from './MatchesActions';

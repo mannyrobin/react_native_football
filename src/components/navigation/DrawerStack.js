@@ -8,12 +8,12 @@ import {
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
-import Main from '../Main';
 import Account from '../Account';
 import DrawerContainer from '../DrawerContainer';
 import LeaguesInvitationBadge from '../LeaguesInvitationBadge';
 import LeagueInvitations from '../LeagueInvitations';
 import FriendlyLeaguesStack from './FriendlyLeaguesStack';
+import FriendlyLeagueTab from './FriendlyLeagueTab';
 
 import AppHeader from '../AppHeader';
 import LeagueHeader from '../LeagueHeader';
@@ -21,7 +21,7 @@ import LeagueHeader from '../LeagueHeader';
 import { PRIMARY_COLOR } from '../../constants';
 
 const Stack = createStackNavigator({
-    Main: { screen: Main },
+    MainLeague: { screen: FriendlyLeagueTab },
     FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
     LeagueInvitations: { screen: LeagueInvitations },
     Account: { screen: Account },

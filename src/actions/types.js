@@ -27,6 +27,10 @@ export const SEND_MESSAGE = 'send_message';
 export const UPLOAD_FRIENDLY_LEAGUE_PHOTO = 'UPLOAD_FRIENDLY_LEAGUE_PHOTO';
 export const FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS = 'FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS';
 
+// ** Main Leagues **
+
+export const MAIN_LEAGUES_LOADED = 'main_leagues_loaded';
+
 // ** Invitations ** 
 
 export const LEAGUE_INVITATIONS_FETCH_SUCCESS = 'league_invitations_fetch_success';

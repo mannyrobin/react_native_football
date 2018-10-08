@@ -78,7 +78,7 @@ export const openForm = (navigator, formUid) =>
 
 /* eslint-disable no-param-reassign */
 
-export const submitForm = (newForm, coins, leagueUid, navigation) => {
+export const submitForm = (newForm, coins, league) => {
     return (dispatch) => {
         const { currentUser } = firebase.auth();
         const totalOdd = newForm.map(item => item.odd).reduce((prev, next) => prev * next);
@@ -95,14 +95,14 @@ export const submitForm = (newForm, coins, leagueUid, navigation) => {
             totalCoins,
             won: -1,
             bets: newForm,
-            leagueUid
+            leagueUid: league.uid
         };
            dispatch({ type: SUBMIT_FORM });
             firebase.database().ref(`/forms/${currentUser.uid}`)
                 .push(val)
                 .then(() => {
-                    firebase.database().ref('friendlyLeagues')
-                        .child(leagueUid)
+                    firebase.database().ref(league.level ? 'mainLeagues' : 'friendlyLeagues')
+                        .child(league.uid)
                         .child('participants')
                         .child(currentUser.uid)
                         .child('coins')

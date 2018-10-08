@@ -1,10 +1,10 @@
-import { Alert, InteractionManager} from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import { arraify, fetchData } from '../utils';
 import { locali } from '../../locales/i18n';
 import RNFetchBlob from 'rn-fetch-blob';
-import { reduxNav, reduxNavSetParams } from '../actions';
+import { reduxNav } from '../actions';
 
 import {
 	FRIENDLY_LEAGUE_NAME_CHANGED,

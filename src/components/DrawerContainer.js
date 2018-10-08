@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
+import firebase from 'react-native-firebase';
 import { logout, reduxNav, openAccount } from '../actions';
 import { locali } from '../../locales/i18n';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
@@ -31,10 +32,10 @@ class DrawerContainer extends Component {
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback
-          onPress={() => this.props.reduxNav('Main')}
+          onPress={() => this.props.reduxNav('MainLeague', { league: this.props.currentUserMainLeague })}
         >
           <View
-            style={activeItemKey === 'Main' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+            style={activeItemKey === 'MainLeague' ? styles.drawerActiveItem : styles.drawerInActiveItem}
           >
 
             <View style={styles.DrawerItemIconContainer}>
@@ -43,7 +44,7 @@ class DrawerContainer extends Component {
             <View style={styles.DrawerItemTextContainer}>
               <Text
                 style={[styles.DrawerItemText,
-                { color: activeItemKey === 'Main' ? activeTintColor : inactiveTintColor }]}
+                { color: activeItemKey === 'MainLeague' ? activeTintColor : inactiveTintColor }]}
               >
                 {locali('navigation.titles.drawer.main_league')}
               </Text>
@@ -124,10 +125,14 @@ DrawerContainer.defaultProps = {
   inactiveBackgroundColor: 'transparent',
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { user } = auth;
+const mapStateToProps = ({ usersData, mainLeagues }) => {
+  const currentUser = firebase.auth().currentUser;
+  const currentUserMainLeagueUid = usersData.users
+    .find(user => user.uid === currentUser.uid).mainLeagueUid;
+  const currentUserMainLeague = mainLeagues.leagues
+    .find(mainLeague => mainLeague.uid === currentUserMainLeagueUid);
 
-  return { user, myDisplayName: user ? user.displayName : '' };
+  return { user: currentUser, myDisplayName: currentUser.displayName, currentUserMainLeague };
 };
 
 export default connect(mapStateToProps, { logout, reduxNav, openAccount })(DrawerContainer);

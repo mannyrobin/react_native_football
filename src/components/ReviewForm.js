@@ -17,6 +17,10 @@ class ReviewForm extends Component {
     }
 
     render() {
+        const league = this.props.screenProps.league;
+        const userLeagueData = league.participants
+            .find(participant => participant.uid === firebase.auth().currentUser.uid);
+
         let fullForm = {};
         if (this.props.form.bets.length > 0) {
         const totalOdd =
@@ -46,7 +50,7 @@ class ReviewForm extends Component {
                     <View style={styles.sliderSection}>
                         <RTLCustomSlider
                             minimumValue={0}
-                            maximumValue={this.props.currentLeagueUser.coins}
+                            maximumValue={userLeagueData.coins}
                             step={5}
                             onValueChange={sliderValue => this.setState({ sliderValue })}
                             thumbImage={require('../images/Currency2Small.png')}
@@ -60,10 +64,6 @@ class ReviewForm extends Component {
                         <TextInput
                             style={styles.sliderLabelText}
                             value={`${this.state.sliderValue}`}
-                        //currently does not working because value is determined by the Slider.
-                        //need to find another way to update value both from textInput
-                        //and Slider.
-                        //onChangeText={(text) => console.log(text)}
                         />
                     </View>
                 </View>
@@ -73,7 +73,7 @@ class ReviewForm extends Component {
                         onPress={() => this.props.submitForm(
                             this.props.newForm,
                             `${this.state.sliderValue}`,
-                            this.props.league.uid,
+                            league,
                             this.props.navigation)}
                             disabled={!this.state.sliderValue > 0}
                             style={!this.state.sliderValue > 0 ? styles.buttonDisabled : styles.button}
@@ -131,13 +131,9 @@ const fetchMatch = (matchUid, matches) => {
     return allMatches.find(match => match.uid === matchUid);
 };
 
-const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
-    const { currentUser } = firebase.auth();
+const mapStateToProps = ({ forms, matches }) => {
     const { newForm } = forms;
-    const league = friendlyLeagues.friendlyLeaguesListFetch.find(leagueItem =>
-        leagueItem.uid === friendlyLeagues.selectedFriendlyLeagueId);
-    const currentLeagueUser = league.participants.find(participant =>
-    participant.uid === currentUser.uid);
+   
     const form = [];
 
     form.bets = newForm.map(bet => ({
@@ -146,7 +142,7 @@ const mapStateToProps = ({ forms, matches, friendlyLeagues }) => {
     }));
 
     return {
-        form, newForm, league, currentLeagueUser, forms
+        form, newForm, forms
     };
 };
 

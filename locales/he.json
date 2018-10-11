@@ -73,6 +73,9 @@
       "button_forgot_password": "שחזר סיסמה"
     }
   },
+  "main_leagues": {
+    "league_level": "{{league_level}} רמת הליגה"
+  },
   "friendly_leagues": {
     "button_create_new": "צור ליגה חברתית חדשה",
     "new_friendly_leagues": {

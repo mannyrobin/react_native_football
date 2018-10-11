@@ -4,7 +4,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
-import { logout, reduxNav, openAccount } from '../actions';
+import { logout, reduxNav, openAccount, chooseDrawerRoute } from '../actions';
 import { locali } from '../../locales/i18n';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
 
@@ -12,30 +12,21 @@ class DrawerContainer extends Component {
 
   render() {
     const {
-      //items,
-      activeItemKey,
       activeTintColor,
-      //activeBackgroundColor,
       inactiveTintColor,
-      //inactiveBackgroundColor,
-      //getLabel,
-      //renderIcon,
-      //onItemPress,
-      //itemsContainerStyle,
-      //itemStyle,
-      //labelStyle,
-      //activeLabelStyle,
-      //inactiveLabelStyle,
-      //iconContainerStyle,
-      //drawerPosition
+      drawerRoute
     } = this.props;
+
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback
-          onPress={() => this.props.reduxNav('MainLeague', { league: this.props.currentUserMainLeague })}
+          onPress={() => {
+            this.props.reduxNav('MainLeague', { league: this.props.currentUserMainLeague });
+            this.props.chooseDrawerRoute('MainLeague');
+          }}
         >
           <View
-            style={activeItemKey === 'MainLeague' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+            style={drawerRoute === 'MainLeague' ? styles.drawerActiveItem : styles.drawerInActiveItem}
           >
 
             <View style={styles.DrawerItemIconContainer}>
@@ -44,7 +35,7 @@ class DrawerContainer extends Component {
             <View style={styles.DrawerItemTextContainer}>
               <Text
                 style={[styles.DrawerItemText,
-                { color: activeItemKey === 'MainLeague' ? activeTintColor : inactiveTintColor }]}
+                { color: drawerRoute === 'MainLeague' ? activeTintColor : inactiveTintColor }]}
               >
                 {locali('navigation.titles.drawer.main_league')}
               </Text>
@@ -53,10 +44,13 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => this.props.reduxNav('FriendlyLeaguesStack')}
+          onPress={() => {
+            this.props.reduxNav('FriendlyLeaguesStack');
+            this.props.chooseDrawerRoute('FriendlyLeaguesStack');
+          }}
         >
           <View
-            style={activeItemKey === 'FriendlyLeaguesStack' ?
+            style={drawerRoute === 'FriendlyLeaguesStack' ?
               styles.drawerActiveItem : styles.drawerInActiveItem}
           >
             <View style={styles.DrawerItemIconContainer}>
@@ -67,7 +61,7 @@ class DrawerContainer extends Component {
                 style={[
                   styles.DrawerItemText,
                   {
-                    color: activeItemKey === 'FriendlyLeaguesStack' ?
+                    color: drawerRoute === 'FriendlyLeaguesStack' ?
                       activeTintColor : inactiveTintColor
                   }]}
               >
@@ -77,10 +71,13 @@ class DrawerContainer extends Component {
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
-          onPress={() => this.props.openAccount(this.props.user.uid, this.props.myDisplayName)}
+          onPress={() => {
+            this.props.openAccount(this.props.user.uid, this.props.myDisplayName);
+            this.props.chooseDrawerRoute('Account');
+          }}
         >
           <View
-            style={activeItemKey === 'Account' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+            style={drawerRoute === 'Account' ? styles.drawerActiveItem : styles.drawerInActiveItem}
           >
             <View style={styles.DrawerItemIconContainer}>
               <FontAwesomeIcon style={styles.DrawerItemIcon} name='user' />
@@ -88,7 +85,7 @@ class DrawerContainer extends Component {
             <View style={styles.DrawerItemTextContainer}>
               <Text
                 style={[styles.DrawerItemText,
-                { color: activeItemKey === 'Account' ? activeTintColor : inactiveTintColor }]}
+                { color: drawerRoute === 'Account' ? activeTintColor : inactiveTintColor }]}
               >
                 {locali('navigation.titles.drawer.my_account')}
               </Text>
@@ -125,17 +122,28 @@ DrawerContainer.defaultProps = {
   inactiveBackgroundColor: 'transparent',
 };
 
-const mapStateToProps = ({ usersData, mainLeagues }) => {
+const mapStateToProps = ({ usersData, mainLeagues, helpers }) => {
   const currentUser = firebase.auth().currentUser;
   const currentUserMainLeagueUid = usersData.users
     .find(user => user.uid === currentUser.uid).mainLeagueUid;
   const currentUserMainLeague = mainLeagues.leagues
     .find(mainLeague => mainLeague.uid === currentUserMainLeagueUid);
+  const drawerRoute = helpers.drawerRoute;
 
-  return { user: currentUser, myDisplayName: currentUser.displayName, currentUserMainLeague };
+  return {
+    user: currentUser,
+    myDisplayName: currentUser.displayName,
+    currentUserMainLeague,
+    drawerRoute
+  };
 };
 
-export default connect(mapStateToProps, { logout, reduxNav, openAccount })(DrawerContainer);
+export default connect(mapStateToProps, {
+  logout,
+  reduxNav,
+  openAccount,
+  chooseDrawerRoute
+})(DrawerContainer);
 
 const styles = StyleSheet.create({
   container: {

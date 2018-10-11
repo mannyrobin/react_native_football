@@ -73,3 +73,4 @@ export const CLEAN_PICKERS = 'CLEAN_PICKERS';
 // ** Helpers **
 
 export const OPEN_ACCOUNT_SUCCESS = 'open_account_success';
+export const DRAWER_ROUTE_CHANGE = 'drawer_route_change';

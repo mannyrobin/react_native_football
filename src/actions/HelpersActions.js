@@ -2,7 +2,8 @@ import firebase from 'react-native-firebase';
 import { NavigationActions } from 'react-navigation';
 import { arraify } from '../utils';
 import {
-    OPEN_ACCOUNT_SUCCESS
+    OPEN_ACCOUNT_SUCCESS,
+    DRAWER_ROUTE_CHANGE
 } from './types.js';
 
 export const openAccount = (accountId, displayName) => {
@@ -24,3 +25,6 @@ export const openAccount = (accountId, displayName) => {
             });
     };
 };
+
+export const chooseDrawerRoute = routeName =>
+    dispatch => dispatch({ type: DRAWER_ROUTE_CHANGE, payload: routeName });

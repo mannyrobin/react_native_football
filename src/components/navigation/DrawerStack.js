@@ -20,7 +20,7 @@ import LeagueHeader from '../LeagueHeader';
 
 import { PRIMARY_COLOR } from '../../constants';
 
-const Stack = createStackNavigator({
+const MainStackNavigatior = createStackNavigator({
     MainLeague: { screen: FriendlyLeagueTab },
     FriendlyLeaguesStack: { screen: FriendlyLeaguesStack },
     LeagueInvitations: { screen: LeagueInvitations },
@@ -63,8 +63,8 @@ function renderHeaderRight(navigation) {
     );
 }
 
-const Drawer = createDrawerNavigator({
-    Stack: { screen: Stack } 
+const MainDrawerNavigator = createDrawerNavigator({
+    Stack: { screen: MainStackNavigatior } 
 }, 
 {
     headerMode: 'none',
@@ -74,7 +74,7 @@ const Drawer = createDrawerNavigator({
     drawerBackgroundColor: PRIMARY_COLOR,
 });
 
-export default Drawer;
+export default MainDrawerNavigator;
 
 const styles = {
     DrawerMenuIcon: {

@@ -15,10 +15,13 @@ class LoadingSpinner extends Component {
                         resizeMode: 'contain'
                     }}
             >
-                    טוען נתונים...
+                {this.props.loadingMessage}
             </FullScreenSpinner>
         );
     }
 }
 
-export default connect(({ auth }) => ({ appIsLoading: auth.appIsLoading }), null)(LoadingSpinner);
+export default connect(({ auth }) => ({ 
+    appIsLoading: auth.appIsLoading,
+    loadingMessage: auth.loadingMessage
+ }), null)(LoadingSpinner);

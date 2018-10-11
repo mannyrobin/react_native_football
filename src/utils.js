@@ -27,8 +27,5 @@ export const arraiesToOneArray = matchesToShow => {
 
 export const fetchData = (ref, callback) =>
     ref.once('value')
-        .then(snapshot => {
-            callback(snapshot);
-            ref.on('value', callback);
-        });
-
+        .then(snapshot => callback(snapshot))
+        .then(() => ref.on('value', callback));

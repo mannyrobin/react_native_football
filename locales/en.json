@@ -24,8 +24,9 @@
       }
     }
   },
-  "tools": {
-    "full_screen_spinner_logging_in": "Logging in..."
+  "app_load": {
+    "logging_in": "Logging in...",
+    "loading_data": "Loading data..."
   },
   "intro": {
     "button_next": "Next",

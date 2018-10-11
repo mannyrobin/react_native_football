@@ -24,8 +24,8 @@ import {
 	FORGOT_PASSWORD,
 	LOGOUT,
 	RE_PASSWORD_CHANGED,
-	APP_DATA_LOAD_STARTED,
-	APP_DATA_LOAD_ENDED
+	LOAD_STARTED,
+	LOAD_ENDED
 } from './types.js';
 
 export const emailChanged = (email) => {
@@ -153,9 +153,6 @@ export const forgotPassword = ({ email }) => {
 
 export const passwordRecovery = () => {
 	return (dispatch) => {
-		//dispatch({ type: LOGGING_USER_IN });
-		//dispatch({ type: PASSWORD_RECOVERY, payload: email });
-		//TODO - send instructions to recover password on email
 		dispatch(NavigationActions.back());
 	};
 };
@@ -205,15 +202,17 @@ const silentlySignInFacebookUser = () =>
 
 export const credentialsSetup = () =>
 	dispatch => {
+		dispatch(reduxNav('Login'));
+		dispatch({ type: LOAD_STARTED, payload: locali('app_load.logging_in') });
 		configureGoogleSignIn();
 
 		const signInPromise = silentlySignInMailUser()
 			.catch(silentlySignInGoogleUser)
-			.catch(silentlySignInFacebookUser);
+			.catch(silentlySignInFacebookUser)
+			.catch(() => dispatch({ type: LOAD_ENDED }));
 		
 		signInPromise
-			.then(user => dispatch(loginUserSuccess(user)))
-			.catch(() => dispatch(reduxNav('Login')));
+			.then(user => dispatch(loginUserSuccess(user)));
 	};
 
 const fetchApplicationData = dispatch =>
@@ -230,11 +229,12 @@ const loginUserSuccess = user =>
 		updateUserInDB(user)
 			.then(() => {
 				dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-				dispatch({ type: APP_DATA_LOAD_STARTED });
+				dispatch({ type: LOAD_STARTED, payload: locali('app_load.loading_data') });
 				fetchApplicationData(dispatch)
 					.then(() => dispatch(reduxNav('DrawerStack')))
-					.finally(() => dispatch({ type: APP_DATA_LOAD_ENDED }));
-			});
+					.finally(() => dispatch({ type: LOAD_ENDED }));
+			})
+			.catch(() => dispatch({ type: LOAD_ENDED }));
 	};
 
 export const loginFacebookUser = () =>

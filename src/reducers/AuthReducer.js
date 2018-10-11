@@ -10,8 +10,8 @@ import {
     PASSWORD_RECOVERY,
     LOGOUT,
     RE_PASSWORD_CHANGED,
-    APP_DATA_LOAD_STARTED,
-    APP_DATA_LOAD_ENDED,
+    LOAD_STARTED,
+    LOAD_ENDED,
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
@@ -21,7 +21,8 @@ const INITIAL_STATE = {
     username: '',
 	user: null,
 	error: '',
-    appIsLoading: false
+    appIsLoading: false,
+    loadingMessage: '',
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -62,9 +63,9 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...INITIAL_STATE, email: action.payload };
         case PASSWORD_RECOVERY:
             return state; //TODO - send instructions to recover password on email
-        case APP_DATA_LOAD_STARTED: 
-            return { ...state, appIsLoading: true };
-        case APP_DATA_LOAD_ENDED: 
+        case LOAD_STARTED: 
+            return { ...state, appIsLoading: true, loadingMessage: action.payload };
+        case LOAD_ENDED: 
             return { ...state, appIsLoading: false };
         default: {
             return state;

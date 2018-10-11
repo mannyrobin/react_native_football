@@ -24,8 +24,9 @@
       }
     }
   },
-  "tools": {
-    "full_screen_spinner_logging_in": "מתחבר..."
+  "app_load": {
+    "logging_in": "מתחבר...",
+    "loading_data": "טוען נתונים..."
   },
   "intro": {
     "button_next": "הבא",

@@ -29,7 +29,7 @@ export const FETCH_FRIENDLY_LEAGUES_AVATARS_SUCCESS = 'FETCH_FRIENDLY_LEAGUES_AV
 
 // ** Main Leagues **
 
-export const MAIN_LEAGUES_LOADED = 'main_leagues_loaded';
+export const MAIN_LEAGUE_LOADED = 'main_league_loaded';
 
 // ** Invitations ** 
 

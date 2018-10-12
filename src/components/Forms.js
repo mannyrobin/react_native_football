@@ -12,8 +12,13 @@ class Forms extends Component {
   }
 
   render() {
-    const league = this.props.screenProps.league;
-    const selectedLeagueForms = this.props.currentForms.filter(form => form.leagueUid === league.uid);
+    const leagueParam = this.props.screenProps.league;
+
+    const league = leagueParam.level ? 
+      this.props.mainLeague :
+      this.props.friendlyLeagues.find(({ uid }) => uid === leagueParam.uid);
+    const selectedLeagueForms = this.props.currentForms
+      .filter(form => form.leagueUid === league.uid);
 
     return (
       <View style={{ flex: 1, backgroundColor: BACKGROUND_COLOR }}>
@@ -34,10 +39,14 @@ class Forms extends Component {
   }
 }
 
-const mapStateToProps = ({ forms }) => {
+const mapStateToProps = ({ forms, mainLeagues, friendlyLeagues }) => {
   const { currentForms } = forms;
 
-  return { currentForms };
+  return {
+    currentForms,
+    mainLeague: mainLeagues.league,
+    friendlyLeagues: friendlyLeagues.friendlyLeaguesListFetch
+  };
 };
 
 export default connect(mapStateToProps, { fetchCurrentForms, openForm })(Forms);

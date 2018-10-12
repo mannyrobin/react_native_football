@@ -1,39 +1,26 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 
-import { locali } from '../../locales/i18n';
+import LeagueHeaderView from './LeagueHeaderView';
 
-export default ({ league }) => (
-    <View style={{ flexDirection: 'row', justifyContent: 'center', flex: 1 }}>
-        <View style={{ justifyContent: 'center', marginRight: 5 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-                {league.level ? 
-                    locali('main_leagues.league_level', { leagueLevel: league.level }) : 
-                    league.friendlyLeagueName}
-            </Text>
-        </View>
-        <View
-            style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: '#FFAF40',
-                borderRadius: 15,
-                paddingVertical: 3,
-                paddingHorizontal: 5
-            }}
-        >
-            <Text style={{ fontWeight: 'bold', fontSize: 16, marginRight: 5 }}>{
-                 league.participants
-                 .find(participant =>
-                     participant.uid === firebase.auth().currentUser.uid)
-                 .coins
-            }</Text>
-            <Image
-                source={require('../images/Currency2Small.png')}
-                style={{ height: 30, width: 30 }}
-                resizeMode="contain"
-            />
-        </View>
-    </View>
-);
+class LeagueHeader extends Component {
+    render() {
+        const leagueParam = this.props.league;
+
+        const league = leagueParam.level ?
+            this.props.mainLeague :
+            this.props.friendlyLeagues.find(({ uid }) => uid === leagueParam.uid);
+        
+        return (<LeagueHeaderView league={league} currentUser={firebase.auth().currentUser} />);
+    }
+}
+
+const mapStateToProps = ({ mainLeagues, friendlyLeagues }) =>
+    ({
+        mainLeague: mainLeagues.league,
+        friendlyLeagues: friendlyLeagues.friendlyLeaguesListFetch
+    });
+
+export default connect(mapStateToProps, null)(LeagueHeader);
+

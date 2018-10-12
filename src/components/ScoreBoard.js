@@ -10,7 +10,11 @@ import { uploadLeagueAvatar } from '../actions';
 const defaultPhoto = '../images/DefaultThumbnail.png';
 class ScoreBoard extends Component {
   render() {
-    const league = this.props.screenProps.league;
+    const leagueParam = this.props.screenProps.league;
+
+    const league = leagueParam.level ? 
+      this.props.mainLeague :
+      this.props.friendlyLeagues.find(({ uid }) => uid === leagueParam.uid);
     const participants = league.participants
       .map(participant => 
         ({ ...participant,
@@ -131,6 +135,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ usersData }) => ({ users: usersData.users });
+const mapStateToProps = ({ usersData, mainLeagues, friendlyLeagues }) =>
+  ({
+    users: usersData.users,
+    mainLeague: mainLeagues.league,
+    friendlyLeagues: friendlyLeagues.friendlyLeaguesListFetch
+  });
 
 export default connect(mapStateToProps, { uploadLeagueAvatar })(ScoreBoard);

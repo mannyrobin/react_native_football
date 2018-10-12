@@ -9,7 +9,7 @@ import {
 	fetchMatches,
 	fetchLeaguesAvatars,
 	fetchUsers,
-	fetchMainLeagues,
+	fetchMainLeague,
 	reduxNav
 } from '../actions';
 import { locali } from '../../locales/i18n';
@@ -217,12 +217,12 @@ export const credentialsSetup = () =>
 
 const fetchApplicationData = dispatch =>
 	Promise.all([
-	dispatch(fetchFriendlyLeagues()),
-	dispatch(fetchMainLeagues()),
-	dispatch(fetchMatches()),
-	dispatch(fetchLeaguesAvatars()),
-	dispatch(fetchUsers()),
-]);
+		dispatch(fetchMainLeague()),
+		dispatch(fetchFriendlyLeagues()),
+		dispatch(fetchMatches()),
+		dispatch(fetchLeaguesAvatars()),
+		dispatch(fetchUsers()),
+	]);
 
 const loginUserSuccess = user =>
 	dispatch => {

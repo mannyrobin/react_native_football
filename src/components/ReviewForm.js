@@ -17,7 +17,11 @@ class ReviewForm extends Component {
     }
 
     render() {
-        const league = this.props.screenProps.league;
+        const leagueParam = this.props.screenProps.league;
+    
+        const league = leagueParam.level ? 
+          this.props.mainLeague :
+          this.props.friendlyLeagues.find(({ uid }) => uid === leagueParam.uid);
         const userLeagueData = league.participants
             .find(participant => participant.uid === firebase.auth().currentUser.uid);
 
@@ -131,7 +135,7 @@ const fetchMatch = (matchUid, matches) => {
     return allMatches.find(match => match.uid === matchUid);
 };
 
-const mapStateToProps = ({ forms, matches }) => {
+const mapStateToProps = ({ forms, matches, mainLeagues, friendlyLeagues }) => {
     const { newForm } = forms;
    
     const form = [];
@@ -142,7 +146,11 @@ const mapStateToProps = ({ forms, matches }) => {
     }));
 
     return {
-        form, newForm, forms
+        form,
+        newForm,
+        forms,
+        mainLeague: mainLeagues.league,
+        friendlyLeagues: friendlyLeagues.friendlyLeaguesListFetch
     };
 };
 

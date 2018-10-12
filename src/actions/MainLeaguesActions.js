@@ -1,12 +1,30 @@
 import firebase from 'react-native-firebase';
 
-import { arraify, fetchData } from '../utils';
-import { MAIN_LEAGUES_LOADED } from './types';
+import { fetchData, arraify } from '../utils';
+import { MAIN_LEAGUE_LOADED, FETCH_CHAT } from './types';
+import { reduxNav } from '../actions';
 
-export const fetchMainLeagues = () =>
+export const fetchMainLeague = () =>
     dispatch =>
-        fetchData(firebase.database().ref('/mainLeagues'),
-            leaguesSnapshot => dispatch({
-                type: MAIN_LEAGUES_LOADED,
-                payload: arraify(leaguesSnapshot.val()) || []
-            }));
+        firebase.database().ref(`/usersDb/${firebase.auth().currentUser.uid}/mainLeagueUid`)
+            .once('value')
+            .then(mainLeagueUidSnapshot => {
+                const mainLeagueUid = mainLeagueUidSnapshot.val();
+
+                return fetchData(firebase.database().ref(`/mainLeagues/${mainLeagueUid}`),
+                    leaguesSnapshot => dispatch({
+                        type: MAIN_LEAGUE_LOADED,
+                        payload: arraify({ [mainLeagueUid]: leaguesSnapshot.val() })[0]
+                    }));
+            });
+
+const fetchChats = ({ uid }, dispatch) =>
+    fetchData(firebase.database().ref(`/mainLeagues/${uid}/chat`),
+        snapshot => {
+            dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
+        });
+
+export const openMainLeague = league =>
+    dispatch =>
+        fetchChats(league, dispatch)
+            .then(() => dispatch(reduxNav('MainLeague', { league })));

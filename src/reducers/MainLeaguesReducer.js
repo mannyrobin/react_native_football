@@ -1,15 +1,15 @@
 import { 
-    MAIN_LEAGUES_LOADED
+    MAIN_LEAGUE_LOADED
  } from '../actions/types.js';
 
 const INITIAL_STATE = {
-	leagues: []
+	league: null
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case MAIN_LEAGUES_LOADED: {
-            return { ...state, leagues: action.payload };
+        case MAIN_LEAGUE_LOADED: {
+            return { ...state, league: action.payload };
         }
         default: {
             return state;

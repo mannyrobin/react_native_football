@@ -4,7 +4,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
-import { logout, reduxNav, openAccount, chooseDrawerRoute } from '../actions';
+import { logout, reduxNav, openAccount, chooseDrawerRoute, openMainLeague } from '../actions';
 import { locali } from '../../locales/i18n';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
 
@@ -21,7 +21,7 @@ class DrawerContainer extends Component {
       <View style={styles.container}>
         <TouchableWithoutFeedback
           onPress={() => {
-            this.props.reduxNav('MainLeague', { league: this.props.currentUserMainLeague });
+            this.props.openMainLeague(this.props.currentUserMainLeague);
             this.props.chooseDrawerRoute('MainLeague');
           }}
         >
@@ -122,12 +122,9 @@ DrawerContainer.defaultProps = {
   inactiveBackgroundColor: 'transparent',
 };
 
-const mapStateToProps = ({ usersData, mainLeagues, helpers }) => {
+const mapStateToProps = ({ mainLeagues, helpers }) => {
   const currentUser = firebase.auth().currentUser;
-  const currentUserMainLeagueUid = usersData.users
-    .find(user => user.uid === currentUser.uid).mainLeagueUid;
-  const currentUserMainLeague = mainLeagues.leagues
-    .find(mainLeague => mainLeague.uid === currentUserMainLeagueUid);
+  const currentUserMainLeague = mainLeagues.league;
   const drawerRoute = helpers.drawerRoute;
 
   return {
@@ -142,7 +139,8 @@ export default connect(mapStateToProps, {
   logout,
   reduxNav,
   openAccount,
-  chooseDrawerRoute
+  chooseDrawerRoute,
+  openMainLeague
 })(DrawerContainer);
 
 const styles = StyleSheet.create({

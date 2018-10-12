@@ -19,9 +19,9 @@ export const fetchMainLeague = () =>
             });
 
 const fetchChats = ({ uid }, dispatch) =>
-    fetchData(firebase.database().ref(`/mainLeagues/${uid}/chat`),
+    fetchData(firebase.database().ref(`/mainLeagues/${uid}/chat`).orderByChild('createdAt'),
         snapshot => {
-            dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
+            dispatch({ type: FETCH_CHAT, payload: arraify(snapshot.val() || []) });
         });
 
 export const openMainLeague = league =>

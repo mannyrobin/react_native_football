@@ -8,13 +8,20 @@ import { onMessageChanged, sendMessage } from '../actions';
 import { SECONDARY_COLOR } from '../constants';
 
 class Chat extends Component {
-    onSend(messages) {
-        const messageContent = _.map(messages, (message) => {
-            return { ...message, createdAt: new Date().toString() };
-        });
-        const appeandChat = [...messageContent, ...this.props.chat];
-        firebase.database().ref(`/friendlyLeagues/${this.props.navigation.state.params.league.uid}/chat`)
-            .set(appeandChat);
+    onSend(message) {
+        const leagueParam = this.props.screenProps.league;
+
+        const league = leagueParam.level ?
+            this.props.mainLeague :
+            this.props.friendlyLeagues.find(({ uid }) => uid === leagueParam.uid);
+
+        firebase.database().ref(league.level ?
+            `mainLeagues/${league.uid}/chat` :
+            `friendlyLeagues/${league.uid}/chat`)
+            .push({
+                ...message[0],
+                createdAt: new Date().toString()
+            });
     }
     renderFooter() {
         if (this.props.isTyping) {
@@ -30,14 +37,14 @@ class Chat extends Component {
     }
 
 
- renderName(props) {
-const { name } = props.currentMessage.user;
-    return (
-        <Text>
-        {name.substr(0, name.indexOf(' '))}
-      </Text>
-    );
-}
+    renderName(props) {
+        const { name } = props.currentMessage.user;
+        return (
+            <Text>
+                {name.substr(0, name.indexOf(' '))}
+            </Text>
+        );
+    }
 
     renderBubble = (props) => {
         const currentUserUid = firebase.auth().currentUser.uid;
@@ -46,15 +53,15 @@ const { name } = props.currentMessage.user;
         return (
             <View>
                 <View style={isSelf ? styles.isSelf : styles.otherUser}>
-                {this.renderName(props)}
+                    {this.renderName(props)}
                 </View>
-                <Bubble 
-                {...props}
-                wrapperStyle={{
-                    right: {
-                      backgroundColor: SECONDARY_COLOR
-                    }
-                  }}
+                <Bubble
+                    {...props}
+                    wrapperStyle={{
+                        right: {
+                            backgroundColor: SECONDARY_COLOR
+                        }
+                    }}
                 />
             </View>
         );
@@ -83,10 +90,15 @@ const { name } = props.currentMessage.user;
     }
 }
 
-const mapStateToProps = ({ friendlyLeagues }) => {
+const mapStateToProps = ({ friendlyLeagues, mainLeagues }) => {
     const { chat, isTyping } = friendlyLeagues;
 
-    return { chat, isTyping };
+    return {
+        chat,
+        isTyping,
+        mainLeague: mainLeagues.league,
+        friendlyLeagues: friendlyLeagues.friendlyLeaguesListFetch
+    };
 };
 
 export default connect(mapStateToProps, { onMessageChanged, sendMessage })(Chat);

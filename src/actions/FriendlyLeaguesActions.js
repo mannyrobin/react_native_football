@@ -98,9 +98,9 @@ export const fetchFriendlyLeagues = () =>
 		);
 
 const fetchChats = ({ uid }, dispatch) =>
-	fetchData(firebase.database().ref(`/friendlyLeagues/${uid}/chat`),
+	fetchData(firebase.database().ref(`/friendlyLeagues/${uid}/chat`).orderByChild('createdAt'),
 		snapshot => {
-			dispatch({ type: FETCH_CHAT, payload: snapshot.val() || [] });
+			dispatch({ type: FETCH_CHAT, payload: arraify(snapshot.val() || []) });
 		});
 
 export const openFriendlyLeague = league =>

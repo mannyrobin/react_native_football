@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchCurrentForms, openForm } from '../actions';
+import { fetchCurrentForms, openForm } from '../../../../actions';
 import FormThumbnail from './FormThumbnail';
-import { BACKGROUND_COLOR } from '../constants';
+import { BACKGROUND_COLOR } from '../../../../constants';
 
 class Forms extends Component {
 

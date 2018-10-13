@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, ImageBackground } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { updateNewForm } from '../actions';
-import { locali } from '../../locales/i18n';
-import { AppComponent } from './common';
+import { updateNewForm } from '../../../actions';
+import { AppComponent } from '../../common';
 
-import { SECONDARY_COLOR, COMPONENT_COLOR } from '../constants';
+import { SECONDARY_COLOR, COMPONENT_COLOR } from '../../../constants';
 
 class MatchContainer extends Component {
     render() {
@@ -35,7 +33,7 @@ class MatchContainer extends Component {
                 shouldRasterizeIOS
             >
                 <ImageBackground
-                    source={require('../images/AppBG3.jpg')}
+                    source={require('../../../images/AppBG3.jpg')}
                     style={{ flex: 1, width: undefined, height: undefined }}
                     resizeMode='cover'
                 >
@@ -44,7 +42,7 @@ class MatchContainer extends Component {
                             <View style={styles.teamLogoSection}>
                                 <Image
                                     style={{ flex: 1, height: undefined, width: undefined }}
-                                    source={require('../images/Real_Madrid.png')}
+                                    source={require('../../../images/Real_Madrid.png')}
                                     resizeMode="contain"
                                 />
                             </View>
@@ -68,29 +66,55 @@ class MatchContainer extends Component {
                                 <View style={styles.oddsSection}>
 
                                     <RkButton
-                                        style={buttonSelected === '1' ? styles.oddButtonSelected : styles.oddButton}
+                                        style={buttonSelected === '1' ?
+                                            styles.oddButtonSelected :
+                                            styles.oddButton}
                                         rkType='circle outline'
-                                        onPress={() => this.props.updateNewForm(this.props.newForm, uid, '1', hometeamOdd)}
+                                        onPress={() =>
+                                            this.props
+                                                .updateNewForm(this.props.newForm,
+                                                    uid, '1',
+                                                    hometeamOdd)}
                                     >
-                                        <Text style={styles.oddButtonLable}>{hometeamOdd.toFixed(2)}</Text>
+                                        <Text style={styles.oddButtonLable}>
+                                            {hometeamOdd.toFixed(2)}
+                                        </Text>
                                     </RkButton>
                                 </View>
                                 <View style={[styles.oddsSection, { flex: 2 }]}>
                                     <RkButton
-                                        style={buttonSelected === 'x' ? styles.oddButtonSelected : styles.oddButton}
+                                        style={buttonSelected === 'x' ?
+                                            styles.oddButtonSelected :
+                                            styles.oddButton}
                                         rkType='circle outline'
-                                        onPress={() => this.props.updateNewForm(this.props.newForm, uid, 'x', drawOdd)}
+                                        onPress={() =>
+                                            this.props
+                                                .updateNewForm(this.props.newForm,
+                                                    uid,
+                                                    'x',
+                                                    drawOdd)}
                                     >
-                                        <Text style={styles.oddButtonLable}>{drawOdd.toFixed(2)}</Text>
+                                        <Text style={styles.oddButtonLable}>
+                                            {drawOdd.toFixed(2)}
+                                        </Text>
                                     </RkButton>
                                 </View>
                                 <View style={styles.oddsSection}>
                                     <RkButton
-                                        style={buttonSelected === '2' ? styles.oddButtonSelected : styles.oddButton}
+                                        style={buttonSelected === '2' ?
+                                            styles.oddButtonSelected :
+                                            styles.oddButton}
                                         rkType='circle outline'
-                                        onPress={() => this.props.updateNewForm(this.props.newForm, uid, '2', awayteamOdd)}
+                                        onPress={() =>
+                                            this.props
+                                                .updateNewForm(this.props.newForm,
+                                                    uid,
+                                                    '2',
+                                                    awayteamOdd)}
                                     >
-                                        <Text style={styles.oddButtonLable}>{awayteamOdd.toFixed(2)}</Text>
+                                        <Text style={styles.oddButtonLable}>
+                                            {awayteamOdd.toFixed(2)}
+                                        </Text>
                                     </RkButton>
                                 </View>
                             </View>
@@ -99,7 +123,7 @@ class MatchContainer extends Component {
                             <View style={styles.teamLogoSection}>
                                 <Image
                                     style={{ flex: 1, height: undefined, width: undefined }}
-                                    source={require('../images/Real_Madrid.png')}
+                                    source={require('../../../images/Real_Madrid.png')}
                                     resizeMode="contain"
                                 />
                             </View>

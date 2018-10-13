@@ -7,11 +7,18 @@ import SearchBar from 'react-native-searchbar';
 import { Avatar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { selectedPickerCountry, selectedPickerLeauge, reduxNav, handleSearch, cleanSearch, cleanPickers } from '../actions';
-import MatchContainer from './MatchContainer';
-import { Spinner } from './common';
-import { locali } from '../../locales/i18n';
-import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
+import {
+  selectedPickerCountry,
+  selectedPickerLeauge,
+  reduxNav,
+  handleSearch,
+  cleanSearch,
+  cleanPickers
+} from '../../../../actions';
+import MatchContainer from '../MatchContainer';
+import { Spinner } from '../../../common';
+import { locali } from '../../../../../locales/i18n';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../../../../constants';
 
 class NewForm extends Component {
   static navigationOptions = {
@@ -34,7 +41,9 @@ class NewForm extends Component {
   pickerItemLeague() {
     const { pickerSelectedCountry } = this.props;
     if (pickerSelectedCountry === 'England') {
-      return <Picker.Item label={locali('countries.england.leagues.championship')} value="Championship" />;
+      return (<Picker.Item
+        label={locali('countries.england.leagues.championship')} value="Championship"
+      />);
     }
     return <Picker.Item label={locali('countries.france.leagues.ligue2')} value="Ligue 2" />;
   }
@@ -64,7 +73,8 @@ class NewForm extends Component {
         mode="dropdown"
         style={{ width: undefined }}
         placeholder="Select a leauge..."
-        enabled={(!pickerSelectedCountry || pickerSelectedCountry === 'countryPlaceholder') ? false : true}
+        enabled={(!pickerSelectedCountry || pickerSelectedCountry === 'countryPlaceholder') ?
+          false : true}
         selectedValue={pickerSelectedLeauge}
         onValueChange={this.onValueChangeLeauge.bind(this)}
       >
@@ -101,7 +111,7 @@ class NewForm extends Component {
 
   render() {
     //console.log(`this.props.matchesLeaguesFiltered ${this.props.matchesLeaguesFiltered}`);
-    const { pickerMatches, dataToShowTeams, textToSearch, pickerSelectedLeauge, pickerSelectedCountry } = this.props;
+    const { pickerMatches, dataToShowTeams, textToSearch, pickerSelectedCountry } = this.props;
     if (this.props.allMatches.length > 0) {
       const formFilled = this.props.newForm.length > 0;
       return (
@@ -192,4 +202,12 @@ const mapStateToProps = state => {
   return { allMatches, matchesLeagues, newForm, pickerSelectedCountry, pickerMatches, pickerSelectedLeauge, textToSearch, dataToShowTeams };
 };
 
-export default connect(mapStateToProps, { cleanPickers, cleanSearch, handleSearch, reduxNav, selectedPickerCountry, selectedPickerLeauge })(NewForm);
+export default connect(mapStateToProps,
+  {
+    cleanPickers,
+    cleanSearch,
+    handleSearch,
+    reduxNav,
+    selectedPickerCountry,
+    selectedPickerLeauge
+  })(NewForm);

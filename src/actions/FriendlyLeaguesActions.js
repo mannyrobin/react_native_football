@@ -46,7 +46,7 @@ export const createNewFriendlyLeague = leagueName => {
 					formsLost: 0
 				}
 			},
-			leaguePhoto: '../images/DefaultThumbnail.png'
+			leaguePhoto: '../../../images/DefaultThumbnail.png'
 		};
 		firebase.database().ref('/friendlyLeagues')
 			.push(league)

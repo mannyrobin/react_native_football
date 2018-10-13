@@ -5,10 +5,10 @@ import moment from 'moment';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { RkButton } from 'react-native-ui-kitten';
-import { RTLCustomSlider } from './common';
-import { submitForm } from '../actions';
-import SingleFormView from './SingleFormView';
-import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
+import { RTLCustomSlider } from '../../../common';
+import { submitForm } from '../../../../actions';
+import SingleFormView from './singleForm/SingleFormView';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../../../../constants';
 
 class ReviewForm extends Component {
     constructor(props) {
@@ -57,7 +57,7 @@ class ReviewForm extends Component {
                             maximumValue={userLeagueData.coins}
                             step={5}
                             onValueChange={sliderValue => this.setState({ sliderValue })}
-                            thumbImage={require('../images/Currency2Small.png')}
+                            thumbImage={require('../../../../images/Currency2Small.png')}
                             thumbStyle={{ width: 40, height: 40, borderWidth: 0 }}
                             thumbImageStyle={{ flex: 1, height: undefined, width: undefined }}
                             minimumTrackTintColor='#13a9d6'
@@ -80,7 +80,9 @@ class ReviewForm extends Component {
                             league,
                             this.props.navigation)}
                             disabled={!this.state.sliderValue > 0}
-                            style={!this.state.sliderValue > 0 ? styles.buttonDisabled : styles.button}
+                            style={!this.state.sliderValue > 0 ? 
+                                styles.buttonDisabled :
+                                styles.button}
                     >
                         שלח טופס
                     </RkButton>

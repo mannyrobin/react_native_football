@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { AppComponent } from './common';
-import { locali } from '../../locales/i18n';
+import { AppComponent } from '../../../common';
+import { locali } from '../../../../../locales/i18n';
 
 class FormThumbnail extends Component {
 
@@ -48,7 +48,7 @@ class FormThumbnail extends Component {
                                 </View>
                                 <View style={{ marginHorizontal: 5, alignSelf: 'center' }}>
                                     <Image
-                                        source={require('../images/Currency2Small.png')}
+                                        source={require('../../../../images/Currency2Small.png')}
                                         style={{ height: 35, width: 35 }}
                                         resizeMode="contain"
                                     />
@@ -86,7 +86,7 @@ class FormThumbnail extends Component {
                                 </View>
                                 <View style={{ marginHorizontal: 5, alignSelf: 'center' }}>
                                     <Image
-                                        source={require('../images/Currency2Small.png')}
+                                        source={require('../../../../images/Currency2Small.png')}
                                         style={{ height: 35, width: 35 }}
                                         resizeMode="contain"
                                     />

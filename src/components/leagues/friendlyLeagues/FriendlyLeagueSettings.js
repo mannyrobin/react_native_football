@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { View, I18nManager } from 'react-native';
+import { View } from 'react-native';
 import _ from 'lodash';
 import { RkTheme, RkTextInput, RkText, RkButton } from 'react-native-ui-kitten';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { Card } from './common';
-import { locali } from '../../locales/i18n';
-import { friendEmailChanged, inviteFriendToFriendlyLeague, deleteFriendlyLeague } from '../actions';
+import { Card } from '../../common';
+import { locali } from '../../../../locales/i18n';
+import {
+    friendEmailChanged,
+    inviteFriendToFriendlyLeague,
+    deleteFriendlyLeague
+} from '../../../actions';
 
 class FriendlyLeagueSettings extends Component {
 
@@ -25,11 +29,12 @@ class FriendlyLeagueSettings extends Component {
             textAlign: 'center'
            });
     const leagueName = this.props.navigation.getParam('leagueName', '');
-    const leagueUid = this.props.navigation.getParam('leagueUid', '');
         return (
             <View>
                 <Card>
-                    <RkText rkType='customHeader'>{locali('friendly_leagues.friendly_league.settings.invite_friend_header')}</RkText>
+                    <RkText rkType='customHeader'>
+                        {locali('friendly_leagues.friendly_league.settings.invite_friend_header')}
+                    </RkText>
                     <RkTextInput
                         label={<FontAwesomeIcon style={styles.textInputIcon} name='user-plus' />}
                         placeholder={locali('friendly_leagues.friendly_league.settings.invite_text_input_placeholder')}
@@ -46,7 +51,9 @@ class FriendlyLeagueSettings extends Component {
                     </View>
                 </Card>
                 <Card>
-                    <RkText rkType='customHeader'>{locali('friendly_leagues.friendly_league.settings.delete_league_header') + leagueName}</RkText>
+                    <RkText rkType='customHeader'>
+                        {locali('friendly_leagues.friendly_league.settings.delete_league_header') + leagueName}
+                    </RkText>
                     <View style={{ height: 60, justifyContent: 'center' }}>
                         <RkButton
                             style={{ justifyContent: 'center', alignSelf: 'center' }}
@@ -70,8 +77,18 @@ const styles = {
     }
 };
 
-const mapStateToProps = ({ friendlyLeagues: { friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId } }) => 
-    ({ friendEmail, friendlyLeaguesListFetch, selectedFriendlyLeagueId });
+const mapStateToProps = ({ friendlyLeagues: { friendEmail,
+    friendlyLeaguesListFetch,
+    selectedFriendlyLeagueId } }) =>
+    ({
+        friendEmail,
+        friendlyLeaguesListFetch,
+        selectedFriendlyLeagueId
+    });
 
 export default connect(mapStateToProps,
-    { friendEmailChanged, inviteFriendToFriendlyLeague, deleteFriendlyLeague })(FriendlyLeagueSettings);
+    {
+        friendEmailChanged,
+        inviteFriendToFriendlyLeague,
+        deleteFriendlyLeague
+    })(FriendlyLeagueSettings);

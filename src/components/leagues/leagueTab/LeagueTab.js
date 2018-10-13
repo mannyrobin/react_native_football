@@ -4,20 +4,16 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 import { connect } from 'react-redux';
-
 import FontawesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import { locali } from '../../../locales/i18n';
+import { locali } from '../../../../locales/i18n';
 
-import Forms from '../Forms';
-import SingleForm from '../SingleForm';
-import NewForm from '../NewForm';
-import ReviewForm from '../ReviewForm';
-import ScoreBoard from '../ScoreBoard';
-import Chat from '../Chat';
+import { SingleForm, Forms, NewForm, ReviewForm } from './forms';
+import ScoreBoard from './ScoreBoard';
+import Chat from './Chat';
 
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants';
-import { closeFriendlyLeague } from '../../actions';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../../constants';
+import { closeFriendlyLeague } from '../../../actions';
 
 const FormsViewStack = createStackNavigator({
     Forms: { screen: Forms },

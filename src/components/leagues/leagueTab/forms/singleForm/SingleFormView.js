@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 import { RkButton } from 'react-native-ui-kitten';
-import { locali } from '../../locales/i18n';
+import { locali } from '../../../../../../locales/i18n';
 
-import { SECONDARY_COLOR, COMPONENT_COLOR } from '../constants';
+import { SECONDARY_COLOR, COMPONENT_COLOR } from '../../../../../constants';
 
 class SingleFormView extends Component {
 
   render() {
-    const { bets, totalCoins, totalOdd, coins, won } = this.props.form;
+    const { bets, totalCoins, totalOdd, coins } = this.props.form;
     return bets ? (
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={{ flex: 1 }}>
             <ImageBackground
-              source={require('../images/Form.png')}
+              source={require('../../../../../images/Form.png')}
               style={{ height: '100%', width: '100%' }}
               resizeMode='cover'
             >
@@ -26,7 +26,7 @@ class SingleFormView extends Component {
                         <View style={styles.teamLogoSection}>
                           <Image
                             style={{ height: 40, width: 40, alignSelf: 'center' }}
-                            source={require('../images/Real_Madrid.png')}
+                            source={require('../../../../../images/Real_Madrid.png')}
                             resizeMode="contain"
                           />
                         </View>
@@ -53,7 +53,9 @@ class SingleFormView extends Component {
                               style={bet === '1' ? styles.oddButtonSelected : styles.oddButton}
                               rkType='circle outline'
                             >
-                              <Text style={styles.oddButtonLable}>{match.hometeamOdd.toFixed(2)}</Text>
+                              <Text style={styles.oddButtonLable}>
+                                {match.hometeamOdd.toFixed(2)}
+                              </Text>
                             </RkButton>
                           </View>
                           <View style={[styles.oddsSection, { flex: 2 }]}>
@@ -69,7 +71,9 @@ class SingleFormView extends Component {
                               style={bet === '2' ? styles.oddButtonSelected : styles.oddButton}
                               rkType='circle outline'
                             >
-                              <Text style={styles.oddButtonLable}>{match.awayteamOdd.toFixed(2)}</Text>
+                              <Text style={styles.oddButtonLable}>
+                                {match.awayteamOdd.toFixed(2)}
+                              </Text>
                             </RkButton>
                           </View>
                         </View>
@@ -78,7 +82,7 @@ class SingleFormView extends Component {
                         <View style={styles.teamLogoSection}>
                           <Image
                             style={{ height: 40, width: 40, alignSelf: 'center' }}
-                            source={require('../images/Real_Madrid.png')}
+                            source={require('../../../../../images/Real_Madrid.png')}
                             resizeMode="contain"
                           />
                         </View>
@@ -145,7 +149,9 @@ class SingleFormView extends Component {
                       [styles.formDescriptionButton, { width: 150, height: 150 }]}
                     rkType='circle outline'
                   >
-                    <Text style={[styles.formDescriptionButtonLabel, { fontSize: 26 }]}>{totalCoins.toFixed(2)}</Text>
+                    <Text style={[styles.formDescriptionButtonLabel, { fontSize: 26 }]}>
+                      {totalCoins.toFixed(2)}
+                    </Text>
                   </RkButton>
                 </View>
               </View>

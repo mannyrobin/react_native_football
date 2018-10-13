@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, FlatList, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  FlatList,
+} from 'react-native';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import FormThumbnail from './FormThumbnail';
+import FormThumbnail from './leagues/leagueTab/forms/FormThumbnail';
 import { BACKGROUND_COLOR } from '../constants';
 
 class Account extends Component {
@@ -29,7 +36,6 @@ class Account extends Component {
       if (form.won === -1) return accumulator++;
     });
   }
-    console.log(`selectedAccountData ${selectedAccountData}`);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -55,11 +61,7 @@ class Account extends Component {
           <FlatList
             data={selectedAccountData.forms}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.openForm(this.props.navigation, item.uid)}
-              >
-                <FormThumbnail form={item} />
-              </TouchableOpacity>
+              <FormThumbnail form={item} />
             )
             }
             keyExtractor={form => form.uid.toString()}

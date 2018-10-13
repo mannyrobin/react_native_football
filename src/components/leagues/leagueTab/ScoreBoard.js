@@ -3,11 +3,11 @@ import { View, Image, ImageBackground } from 'react-native';
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import PhotoUpload from 'react-native-photo-upload';
-import { LeaderboardContainer, Header } from './common';
-import { BACKGROUND_COLOR } from '../constants';
-import { uploadLeagueAvatar } from '../actions';
+import { LeaderboardContainer, Header } from '../../common';
+import { BACKGROUND_COLOR } from '../../../constants';
+import { uploadLeagueAvatar } from '../../../actions';
 
-const defaultPhoto = '../images/DefaultThumbnail.png';
+const defaultPhoto = '../../../images/DefaultThumbnail.png';
 class ScoreBoard extends Component {
   render() {
     const leagueParam = this.props.screenProps.league;
@@ -23,7 +23,7 @@ class ScoreBoard extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={require('../images/CoverFriendlyLeague.jpg')}
+          source={require('../../../images/CoverFriendlyLeague.jpg')}
           style={{ width: '100%' }}
         >
 

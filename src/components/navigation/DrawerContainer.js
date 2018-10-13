@@ -4,9 +4,9 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
-import { logout, reduxNav, openAccount, chooseDrawerRoute, openMainLeague } from '../actions';
-import { locali } from '../../locales/i18n';
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../constants';
+import { logout, reduxNav, openAccount, chooseDrawerRoute, openMainLeague } from '../../actions';
+import { locali } from '../../../locales/i18n';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants';
 
 class DrawerContainer extends Component {
 
@@ -26,7 +26,9 @@ class DrawerContainer extends Component {
           }}
         >
           <View
-            style={drawerRoute === 'MainLeague' ? styles.drawerActiveItem : styles.drawerInActiveItem}
+            style={drawerRoute === 'MainLeague' ?
+            styles.drawerActiveItem :
+            styles.drawerInActiveItem}
           >
 
             <View style={styles.DrawerItemIconContainer}>

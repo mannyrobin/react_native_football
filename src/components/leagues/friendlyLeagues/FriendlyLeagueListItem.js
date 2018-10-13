@@ -4,11 +4,11 @@ import { Text, TouchableOpacity, View, Image } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
-import { openFriendlyLeague } from '../actions';
-import { AppComponent } from './common';
-import { COMPONENT_COLOR } from '../constants';
+import { openFriendlyLeague } from '../../../actions';
+import { AppComponent } from '../../common';
+import { COMPONENT_COLOR } from '../../../constants';
 
-const defaultPhoto = '../images/DefaultThumbnail.png';
+const defaultPhoto = '../../../images/DefaultThumbnail.png';
 
 class ListItem extends Component {
 	loadAvatar() {
@@ -26,11 +26,13 @@ class ListItem extends Component {
 		let coins = '';
 		const friendlyLeague = this.props.friendlyLeague;
 		const { currentUser } = firebase.auth();
-		friendlyLeague.participants = _.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
+		friendlyLeague.participants = 
+			_.orderBy(friendlyLeague.participants, user => user.coins, 'desc');
 		if (friendlyLeague.participants.length > 0) {
 		coins = _.find(friendlyLeague.participants, user => user.uid === currentUser.uid).coins;
 		}
-		const rank = Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
+		const rank = 
+			Number(_.findKey(friendlyLeague.participants, user => user.uid === currentUser.uid)) + 1;
 		return (
 			<TouchableOpacity
 				onPress={() => this.props.openFriendlyLeague(friendlyLeague, this.props.navigation)}
@@ -44,8 +46,14 @@ class ListItem extends Component {
 								</Text>
 							</View>
 							<Image
-							source={this.loadAvatar()}
-								style={{ height: 70, width: 70, borderRadius: 70 / 2, borderWidth: 3, borderColor: '#FFF' }}
+								source={this.loadAvatar()}
+								style={{
+									height: 70,
+									width: 70,
+									borderRadius: 70 / 2,
+									borderWidth: 3,
+									borderColor: '#FFF'
+								}}
 								resizeMode="cover"
 							/>
 						</View>
@@ -68,7 +76,7 @@ class ListItem extends Component {
 						<View style={{ flex: 1.5, flexDirection: 'row' }}>
 							<View style={[styles.coinsIconContainer, { flexDirection: 'row' }]}>
 								<Image
-									source={require('../images/Currency2Small.png')}
+									source={require('../../../images/Currency2Small.png')}
 									style={{ height: 30, width: 30 }}
 									resizeMode="contain"
 								/>

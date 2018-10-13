@@ -3,10 +3,10 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { RkTextInput, RkButton } from 'react-native-ui-kitten';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { AppComponent } from './common';
-import { friendlyLeagueNameChanged, createNewFriendlyLeague } from '../actions';
-import { locali } from '../../locales/i18n';
-import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
+import { AppComponent } from '../../common';
+import { friendlyLeagueNameChanged, createNewFriendlyLeague } from '../../../actions';
+import { locali } from '../../../../locales/i18n';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../../../constants';
 
 class NewFriendlyLeague extends Component {
 

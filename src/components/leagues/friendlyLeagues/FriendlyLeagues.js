@@ -4,11 +4,11 @@ import { RkButton, RkTheme } from 'react-native-ui-kitten';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { SearchBar } from 'react-native-elements';
-import { searchOnTextChange, handleSearch, reduxNav } from '../actions';
-import { locali } from '../../locales/i18n';
+import { searchOnTextChange, handleSearch, reduxNav } from '../../../actions';
+import { locali } from '../../../../locales/i18n';
 import FriendlyLeagueListItem from './FriendlyLeagueListItem';
 
-import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../constants';
+import { BACKGROUND_COLOR, SECONDARY_COLOR } from '../../../constants';
 
 class FriendlyLeagues extends Component {
   render() {

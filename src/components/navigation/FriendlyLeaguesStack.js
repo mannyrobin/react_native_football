@@ -2,11 +2,12 @@ import {
     createStackNavigator
 } from 'react-navigation';
 
-//import friendlyLeagues screens
-import FriendlyLeagues from '../FriendlyLeagues';
-import NewFriendlyLeague from '../NewFriendlyLeague';
-import FriendlyLeagueTab from './FriendlyLeagueTab';
-import FriendlyLeagueSettings from '../FriendlyLeagueSettings';
+import {
+    FriendlyLeagues,
+    NewFriendlyLeague,
+    LeagueTab,
+    FriendlyLeagueSettings
+} from '../leagues';
 
 import { locali } from '../../../locales/i18n';
 
@@ -24,7 +25,7 @@ const FriendlyLeaguesStack = createStackNavigator({
         }
     },
     FriendlyLeagueTab: { 
-        screen: FriendlyLeagueTab,
+        screen: LeagueTab,
      },
     FriendlyLeagueSettings: { screen: FriendlyLeagueSettings }
 }, {

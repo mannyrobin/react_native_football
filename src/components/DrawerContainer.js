@@ -129,7 +129,7 @@ const mapStateToProps = ({ mainLeagues, helpers }) => {
 
   return {
     user: currentUser,
-    myDisplayName: currentUser.displayName,
+    myDisplayName: currentUser && currentUser.displayName,
     currentUserMainLeague,
     drawerRoute
   };
